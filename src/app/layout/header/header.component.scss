@@ -39,17 +39,25 @@
   .menu-toggle span { display: block; width: 1.15rem; height: 2px; background: var(--color-navy); transition: transform var(--duration); }
   .menu-toggle[aria-expanded='true'] span:first-child { transform: translateY(4px) rotate(45deg); }
   .menu-toggle[aria-expanded='true'] span:last-child { transform: translateY(-4px) rotate(-45deg); }
-  .menu-backdrop { position: fixed; inset: 4.75rem 0 0; display: block; visibility: hidden; background: rgb(5 45 66 / 36%); opacity: 0; transition: opacity var(--duration), visibility var(--duration); }
+  .menu-backdrop { position: fixed; z-index: 1; inset: 4.75rem 0 0; display: block; visibility: hidden; background: rgb(5 45 66 / 36%); opacity: 0; transition: opacity var(--duration), visibility var(--duration); }
   .menu-backdrop.is-open { visibility: visible; opacity: 1; }
-  .mobile-nav { position: fixed; top: 4.75rem; right: 0; bottom: 0; display: flex; visibility: hidden; width: min(26rem, 92vw); flex-direction: column; padding: 2rem clamp(1.25rem, 5vw, 2.5rem); background: var(--color-navy); clip-path: inset(0 0 0 100%); color: white; pointer-events: none; transition: clip-path 280ms ease, visibility 280ms; }
-  .mobile-nav.is-open { visibility: visible; clip-path: inset(0); pointer-events: auto; }
+  .mobile-nav { position: fixed; z-index: 2; top: 4.75rem; right: 0; bottom: 0; display: flex; visibility: hidden; width: min(26rem, 92vw); flex-direction: column; overflow-y: auto; overscroll-behavior: contain; padding: clamp(1.25rem, 4vh, 2rem) clamp(1.25rem, 5vw, 2.5rem); background: var(--color-navy); color: white; opacity: 0; pointer-events: none; transform: translateX(100%); transition: transform 280ms ease, opacity 180ms ease, visibility 280ms; }
+  .mobile-nav.is-open { visibility: visible; opacity: 1; pointer-events: auto; transform: translateX(0); }
   .mobile-nav-label { margin: 0 0 1.25rem; color: var(--color-aqua-light); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; }
   .mobile-nav > a { display: flex; align-items: center; justify-content: space-between; padding: 1rem 0; border-bottom: 1px solid rgb(255 255 255 / 14%); color: white; font-size: clamp(1.35rem, 5vw, 1.8rem); letter-spacing: -0.03em; text-decoration: none; }
   .mobile-nav > a span:last-child { color: var(--color-aqua); font-size: 1rem; }
   .mobile-nav > a.active span:first-child { color: var(--color-aqua-light); }
-  .mobile-contact { display: grid; gap: 0.35rem; margin-top: auto; padding-top: 2rem; }
+  .mobile-nav > a.mobile-appointment { min-height: 3.25rem; justify-content: center; gap: 0.65rem; margin-top: 1.4rem; padding: 0.75rem 1rem; border: 1px solid rgb(255 255 255 / 28%); background: white; color: var(--color-navy); font-size: 0.88rem; font-weight: 800; }
+  .mobile-nav > a.mobile-appointment span:last-child { color: var(--color-blue); }
+  .mobile-contact { display: grid; gap: 0.35rem; margin-top: auto; padding-top: clamp(1.4rem, 5vh, 2.5rem); }
   .mobile-contact span { color: rgb(255 255 255 / 62%); font-size: 0.75rem; }
   .mobile-contact a { color: white; font-size: 1.25rem; font-weight: 700; }
+}
+
+@media (max-width: 68rem) and (max-height: 42rem) {
+  .mobile-nav-label { margin-bottom: 0.6rem; }
+  .mobile-nav > a { padding-block: 0.68rem; font-size: 1.15rem; }
+  .mobile-contact { margin-top: 0; padding-top: 1.25rem; }
 }
 
 @media (max-width: 24rem) {

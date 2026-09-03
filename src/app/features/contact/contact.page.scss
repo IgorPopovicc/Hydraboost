@@ -1,8 +1,13 @@
-.contact-grid { display: grid; grid-template-columns: 0.7fr 1.3fr; gap: clamp(3rem, 9vw, 9rem); align-items: start; }
-.contact-details { position: sticky; top: 7rem; }
+.contact-hero { background: var(--color-slate-light); }
+.contact-section { background: white; }
+.contact-grid { display: grid; grid-template-columns: 0.78fr 1.22fr; gap: 1rem; align-items: stretch; }
+.contact-details { padding: clamp(1.5rem, 4vw, 3rem); background: var(--color-slate-mist); }
 .contact-details h2, .form-heading h2 { margin: 0; color: var(--color-navy); font-size: clamp(2rem, 4.2vw, 3.8rem); line-height: 1.06; }
 .contact-links { margin-top: 2rem; border-top: 1px solid var(--color-line-strong); }
-.contact-links a { display: grid; gap: 0.18rem; padding: 1rem 0; border-bottom: 1px solid var(--color-line); color: var(--color-navy); text-decoration: none; }
+.contact-links a { display: grid; gap: 0.18rem; padding: 1rem 0; border-bottom: 1px solid rgb(7 59 85 / 18%); color: var(--color-navy); text-decoration: none; }
+.contact-links .phone-link { position: relative; margin-bottom: 0.5rem; padding: 1rem; border-bottom: 0; background: var(--color-navy); color: white; }
+.contact-links .phone-link span { color: rgb(255 255 255 / 65%); }
+.phone-link b { position: absolute; right: 1rem; bottom: 1rem; color: var(--color-aqua-light); font-weight: 500; }
 .contact-links span { color: var(--color-text-soft); font-size: 0.67rem; }
 .contact-links strong { font-size: 0.9rem; overflow-wrap: anywhere; }
 dl { margin: 2rem 0 0; }
@@ -10,7 +15,7 @@ dl div { margin-bottom: 1rem; }
 dt { color: var(--color-text-soft); font-size: 0.67rem; }
 dd { margin: 0.15rem 0 0; color: var(--color-navy); font-size: 0.86rem; font-weight: 650; }
 .contact-note { padding-left: 1rem; border-left: 2px solid var(--color-aqua); color: var(--color-text-soft); font-size: 0.78rem; }
-.form-wrap { padding: clamp(1.5rem, 4vw, 3rem); background: var(--color-off-white); }
+.form-wrap { padding: clamp(1.5rem, 4vw, 3rem); border: 1px solid var(--color-line); background: var(--color-off-white); }
 .form-heading p:last-child { max-width: 38rem; color: var(--color-text-soft); font-size: 0.83rem; line-height: 1.65; }
 form { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-top: 2rem; }
 .field { display: flex; min-width: 0; flex-direction: column; }

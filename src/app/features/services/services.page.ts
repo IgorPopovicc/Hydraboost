@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { PROCESS_STEPS } from '../../core/data/site.data';
+import { PROCESS_STEPS, SITE_INFO } from '../../core/data/site.data';
 import { SERVICES } from '../../core/data/services.data';
 import { AppointmentCtaComponent } from '../../shared/appointment-cta/appointment-cta.component';
 
@@ -14,4 +14,5 @@ import { AppointmentCtaComponent } from '../../shared/appointment-cta/appointmen
 export class ServicesPage {
   protected readonly services = SERVICES;
   protected readonly steps = PROCESS_STEPS;
+  protected readonly site = SITE_INFO;
 }

@@ -11,27 +11,27 @@ import { SeoConfig } from '../models/content.models';
 const SEO_BY_PATH: Readonly<Record<string, SeoConfig>> = {
   '/': {
     title: 'Mobilne infuzije Beograd | HydraBoost Infuzije',
-    description: 'Mobilne vitaminske i IV infuzije na kućnoj adresi, u kancelariji ili hotelu u Beogradu. Konsultacija, individualna procjena i stručni nadzor.',
+    description: 'Mobilne vitaminske i IV infuzije na kućnoj adresi, u kancelariji ili hotelu u Beogradu. Konsultacija, individualna procena i stručni nadzor.',
     path: '/',
   },
   '/usluge': {
     title: 'Usluge mobilne IV terapije | HydraBoost Beograd',
-    description: 'Hidratacija, vitaminska podrška i individualno prilagođene infuzione terapije na adresi u Beogradu, uz prethodnu medicinsku procjenu.',
+    description: 'Hidratacija, vitaminska podrška i individualno prilagođene infuzione terapije na adresi u Beogradu, uz prethodnu medicinsku procenu.',
     path: '/usluge',
   },
-  '/cjenovnik': {
-    title: 'Cjenovnik mobilnih infuzija | HydraBoost',
-    description: 'Saznajte kako se formira cijena HydraBoost mobilne infuzione terapije u Beogradu. Transparentna procjena troškova prije potvrde termina.',
-    path: '/cjenovnik',
+  '/cenovnik': {
+    title: 'Cenovnik mobilnih infuzija | HydraBoost',
+    description: 'Saznajte kako se formira cena HydraBoost mobilne infuzione terapije u Beogradu. Transparentna procena troškova pre potvrde termina.',
+    path: '/cenovnik',
   },
   '/o-nama': {
     title: 'O nama | HydraBoost mobilne infuzije Beograd',
-    description: 'Upoznajte pristup HydraBoost tima: licencirano medicinsko osoblje, sterilna oprema i individualna njega na Vašoj adresi u Beogradu.',
+    description: 'Upoznajte pristup HydraBoost tima: licencirano medicinsko osoblje, sterilna oprema i individualna nega na Vašoj adresi u Beogradu.',
     path: '/o-nama',
   },
   '/faq': {
     title: 'Česta pitanja o mobilnim infuzijama | HydraBoost',
-    description: 'Odgovori o zakazivanju, trajanju, procjeni, kontraindikacijama, cijeni i području dolaska HydraBoost mobilne IV terapije u Beogradu.',
+    description: 'Odgovori o zakazivanju, trajanju, proceni, kontraindikacijama, ceni i području dolaska HydraBoost mobilne IV terapije u Beogradu.',
     path: '/faq',
     faq: true,
   },

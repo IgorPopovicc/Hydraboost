@@ -1,9 +1,55 @@
 import { PricingItem } from '../models/content.models';
 
-// Jedinstveno mjesto za buduće odobrene cijene. Promijenite samo vrijednost `price`.
+// Jedinstveno mesto za buduće odobrene cene i izmene paketa.
 export const PRICING: readonly PricingItem[] = [
-  { serviceId: 'hidratacija-i-oporavak', serviceName: 'Hidratacija i oporavak', price: 'Cijena na upit', note: 'Prema sastavu terapije i lokaciji dolaska' },
-  { serviceId: 'imuno-podrska', serviceName: 'Imuno i vitaminska podrška', price: 'Cijena na upit', note: 'Prema individualno dogovorenom sastavu' },
-  { serviceId: 'energija-i-vitalnost', serviceName: 'Energija i vitalnost', price: 'Cijena na upit', note: 'Nakon konsultacije i procjene potreba' },
-  { serviceId: 'individualna-terapija', serviceName: 'Individualno prilagođena terapija', price: 'Cijena na upit', note: 'Zavisi od medicinske indikacije i sastava' },
+  {
+    id: 'osnovna-hidratacija',
+    name: 'Osnovna hidratacija',
+    description: 'Podrška nadoknadi tečnosti i elektrolita kada za to postoji odgovarajuća medicinska indikacija.',
+    features: ['Prethodna telefonska konsultacija', 'Dolazak na dogovorenu adresu', 'Procena i stručni nadzor'],
+    priceLabel: 'Cena na upit',
+    recommended: false,
+    combo: false,
+    cta: 'Proverite dostupnost',
+  },
+  {
+    id: 'hydraboost-vitaminski',
+    name: 'HydraBoost vitaminski paket',
+    description: 'Individualno razmotrena vitaminska podrška, prema potrebama, stanju i medicinskoj proceni.',
+    features: ['Konsultacija pre terapije', 'Individualno dogovoren sastav', 'Primena uz medicinski nadzor'],
+    priceLabel: 'Cena na upit',
+    recommended: true,
+    combo: false,
+    cta: 'Dogovorite konsultaciju',
+  },
+  {
+    id: 'energija-i-oporavak',
+    name: 'Energija i oporavak',
+    description: 'Pristup prilagođen periodima pojačanog napora i iscrpljenosti, nakon odgovarajuće procene.',
+    features: ['Procena trenutnog stanja', 'Sastav prema indikaciji', 'Termin na Vašoj adresi'],
+    priceLabel: 'Cena na upit',
+    recommended: false,
+    combo: false,
+    cta: 'Saznajte više',
+  },
+  {
+    id: 'individualni-premium',
+    name: 'Individualni premium paket',
+    description: 'Posebno razmatran plan za potrebe koje zahtevaju individualni sastav i organizaciju termina.',
+    features: ['Detaljnija prethodna konsultacija', 'Individualno definisan pristup', 'Dogovor termina i lokacije'],
+    priceLabel: 'Cena na upit',
+    recommended: false,
+    combo: false,
+    cta: 'Pošaljite upit',
+  },
+  {
+    id: 'kombo-paket',
+    name: 'Kombo paket',
+    description: 'Kombinacija odabranih usluga uz posebne uslove za povezane pakete, prema medicinskoj proceni.',
+    features: ['Izbor usluga tokom konsultacije', 'Usklađen raspored termina', 'Jasan dogovor pre potvrde'],
+    priceLabel: 'Cena na upit',
+    recommended: false,
+    combo: true,
+    cta: 'Kreirajte svoj paket',
+  },
 ] as const;

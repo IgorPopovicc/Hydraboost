@@ -1,11 +1,11 @@
 # HydraBoost Infuzije
 
-Produkcijski Angular sajt za **HydraBoost Infuzije**, mobilnu infuzionu terapiju na zakazanoj adresi u Beogradu i okolini. Projekat je potpuna zamjena prethodnog Webador sajta, sa novim vizuelnim sistemom, ispravljenim sadržajem na srpskom jeziku (latinica, ijekavica), prerenderovanim stranicama i centralizovanim poslovnim podacima.
+Produkcijski Angular sajt za **HydraBoost Infuzije**, mobilnu infuzionu terapiju na zakazanoj adresi u Beogradu i okolini. Projekat koristi prepoznatljiv vizuelni sistem, sadržaj na srpskom jeziku (latinica, ekavica), prerenderovane stranice i centralizovane poslovne podatke.
 
 ## Tehnologije
 
-- Angular 22.1 (standalone komponente, strogi TypeScript i stroga provjera templejta)
-- Angular Router sa lijenim učitavanjem svih javnih stranica
+- Angular 22.1 (standalone komponente, strogi TypeScript i stroga provera templejta)
+- Angular Router sa lenjim učitavanjem svih javnih stranica
 - Angular SSR / statički prerender
 - SCSS sa dizajn tokenima i lokalnim stilovima komponenti
 - Angular Reactive Forms
@@ -14,7 +14,7 @@ Produkcijski Angular sajt za **HydraBoost Infuzije**, mobilnu infuzionu terapiju
 
 ## Razvojno okruženje
 
-Projekat zahtijeva **Node.js 24.15.0** i npm 11.12.1. Verzija Node.js-a je zaključana u `.nvmrc` datoteci.
+Projekat zahteva **Node.js 24.15.0** i npm 11.12.1. Verzija Node.js-a je zaključana u `.nvmrc` datoteci.
 
 ```bash
 nvm install
@@ -28,7 +28,7 @@ Ne koristiti `--force` ili `--legacy-peer-deps`. `npm ci` koristi zaključane i 
 
 ```bash
 npm start          # razvojni server na http://localhost:4200
-npm run lint       # stroga TypeScript provjera aplikacije i testova
+npm run lint       # stroga TypeScript provera aplikacije i testova
 npm test           # testovi
 npx playwright install chromium  # jednokratna priprema E2E pregledača
 npm run test:e2e   # produkcijski build + responsive, navigacioni i validacioni E2E testovi
@@ -42,7 +42,7 @@ Produkcijski izlaz se generiše u `dist/Hydraboost/`. Statičke stranice nalaze 
 
 - `/` — početna stranica
 - `/usluge` — pregled terapija i standarda usluge
-- `/cjenovnik` — transparentan model cijena
+- `/cenovnik` — data-driven paketi i transparentan model cena
 - `/o-nama` — pristup, misija i tok dolaska
 - `/faq` — česta pitanja i medicinski važne napomene
 - `/kontakt` — direktne kontakt akcije i forma koja priprema e-poruku
@@ -55,10 +55,10 @@ Stare adrese `/our-services`, `/about-us` i `/contact` preusmjeravaju se na nove
 ```text
 src/app/
   core/
-    data/           # kontakt, usluge, cijene i FAQ kao jedini izvori podataka
+    data/           # kontakt, usluge, cene i FAQ kao jedini izvori podataka
     models/         # strogo tipizovani modeli sadržaja
     services/       # upravljanje metadata i JSON-LD podacima
-  features/         # lijeno učitane stranice
+  features/         # lenjo učitane stranice
   layout/           # zaglavlje i podnožje
   shared/           # FAQ harmonika i završni CTA
 public/assets/
@@ -67,11 +67,11 @@ public/assets/
   images/           # lokalne WebP/AVIF slike po namjeni
 ```
 
-## Sadržaj i cijene
+## Sadržaj i cene
 
 Legitiman sadržaj, usluge, FAQ, kontakt podaci, društvene mreže i fotografije migrirani su sa zvaničnog sajta `hydraboostinfuzije.com`. Medicinske formulacije su jezički uređene i ublažene tako da ne obećavaju ishode.
 
-Zvanične numeričke cijene nisu javno potvrđene. Zbog toga su sve stavke namjerno prikazane kao **„Cijena na upit“**. Kada cijene budu odobrene, mijenjaju se isključivo u:
+Zvanične numeričke cene nisu javno potvrđene. Zbog toga su sve stavke namerno prikazane kao **„Cena na upit“**. Kada cene budu odobrene, menjaju se isključivo u:
 
 ```text
 src/app/core/data/pricing.data.ts
@@ -99,9 +99,9 @@ Sajt uključuje:
 
 - AVIF i WebP varijante hero fotografije; lokalne optimizovane WebP slike za ostatak sajta
 - eksplicitne dimenzije slika radi sprečavanja CLS-a
-- hero slika ima visoki prioritet i nije lijeno učitana; slike ispod prevoja jesu
+- hero slika ima visoki prioritet i nije lenjo učitana; slike ispod prevoja jesu
 - jedan lokalni varijabilni font i jedan preload
-- lijeno učitavanje svake stranice na nivou rute
+- lenjo učitavanje svake stranice na nivou rute
 - gzip kompresiju HTML-a, CSS-a, JavaScripta i drugih tekstualnih resursa na Node serveru
 - semantički elementi, vidljiv fokus, tastaturna navigacija i pristupačna FAQ harmonika
 - mobilni meni sa zaključavanjem skrola, Escape komandom i upravljanjem fokusa
@@ -111,7 +111,7 @@ Sajt uključuje:
 
 Za statički hosting objaviti sadržaj `dist/Hydraboost/browser/` i podesiti fallback na odgovarajući prerenderovani `index.html`. Za Node hosting pokrenuti `dist/Hydraboost/server/server.mjs` iza HTTPS reverse proxyja.
 
-Produkcijski domen treba da ostane `https://www.hydraboostinfuzije.com`, jer su canonical, sitemap i Open Graph URL-ovi pripremljeni za taj domen. Prilikom migracije DNS-a podesiti trajna preusmjerenja sa starih ruta i provjeriti da hosting vraća stvarni HTTP 404 status za nepostojeće adrese.
+Produkcijski domen treba da ostane `https://www.hydraboostinfuzije.com`, jer su canonical, sitemap i Open Graph URL-ovi pripremljeni za taj domen. Prilikom migracije DNS-a podesiti trajna preusmerenja sa starih ruta i proveriti da hosting vraća stvarni HTTP 404 status za nepostojeće adrese.
 
 ## Autor
 

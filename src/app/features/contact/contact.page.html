@@ -3,7 +3,7 @@
     <nav class="breadcrumbs" aria-label="Putanja"><a routerLink="/">Početna</a><span>/</span><span>Kontakt</span></nav>
     <p class="eyebrow">Kontakt i zakazivanje</p>
     <h1>Dogovorimo termin koji Vam odgovara.</h1>
-    <p class="lead">Kontaktirajte nas za konsultaciju, provjeru dostupnosti i tačnu procjenu cijene prije dolaska.</p>
+    <p class="lead">Kontaktirajte nas za konsultaciju, proveru dostupnosti i tačnu procenu cene pre dolaska.</p>
   </div>
 </section>
 
@@ -13,13 +13,13 @@
       <p class="eyebrow">Direktan kontakt</p>
       <h2 id="contact-title">Najbrže telefonom ili Viberom.</h2>
       <div class="contact-links">
-        <a [href]="site.phoneHref"><span>Poziv</span><strong>{{ site.phoneDisplay }}</strong></a>
+        <a class="phone-link" [href]="site.phoneHref"><span>Pozovite odmah</span><strong>{{ site.phoneDisplay }}</strong><b aria-hidden="true">→</b></a>
         <a [href]="site.viberHref"><span>Viber</span><strong>Pošaljite poruku</strong></a>
         <a [href]="site.emailHref"><span>E-pošta</span><strong>{{ site.email }}</strong></a>
       </div>
       <dl>
         <div><dt>Područje dolaska</dt><dd>{{ site.serviceArea }}</dd></div>
-        <div><dt>Radno vrijeme terenske službe</dt><dd>{{ site.workingHours }}</dd></div>
+        <div><dt>Radno vreme terenske službe</dt><dd>{{ site.workingHours }}</dd></div>
       </dl>
       <p class="contact-note">Za dolazak van standardne zone kontaktirajte nas radi dodatnog dogovora.</p>
     </div>
@@ -40,7 +40,7 @@
         <div class="field">
           <label for="email">E-pošta</label>
           <input id="email" type="email" formControlName="email" autocomplete="email" [attr.aria-invalid]="submitted() && contactForm.controls.email.invalid" />
-          @if (submitted() && contactForm.controls.email.invalid) { <small class="error">Provjerite adresu e-pošte.</small> }
+          @if (submitted() && contactForm.controls.email.invalid) { <small class="error">Proverite adresu e-pošte.</small> }
         </div>
         <div class="field full">
           <label for="location">Željena lokacija <span aria-hidden="true">*</span></label>
@@ -52,7 +52,7 @@
           <textarea id="message" formControlName="message" rows="5" placeholder="Napišite kada Vam odgovara termin i osnovni razlog javljanja." [attr.aria-invalid]="submitted() && contactForm.controls.message.invalid"></textarea>
           @if (submitted() && contactForm.controls.message.invalid) { <small class="error">Poruka treba da sadrži najmanje 10 znakova.</small> }
         </div>
-        <p class="privacy-note">Ne unosite osjetljive zdravstvene podatke. Detalje ćemo provjeriti u direktnom razgovoru.</p>
+        <p class="privacy-note">Ne unosite osetljive zdravstvene podatke. Detalje ćemo proveriti u direktnom razgovoru.</p>
         <button class="button button-primary" type="submit">Otvorite poruku za slanje</button>
       </form>
     </div>

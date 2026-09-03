@@ -17,7 +17,7 @@ describe('App shell', () => {
     const navigation = root.querySelector('.desktop-nav')?.textContent ?? '';
 
     expect(navigation).toContain('Početna');
-    expect(navigation).toContain('Cjenovnik');
+    expect(navigation).toContain('Cenovnik');
     expect(root.textContent).toContain('Dizajn i razvoj: Igor Popovic');
   });
 });

@@ -10,14 +10,20 @@ export interface ServiceItem {
   readonly description: string;
   readonly context: string;
   readonly image: string;
+  readonly imageSrcset?: string;
+  readonly imageAvifSrcset?: string;
   readonly imageAlt: string;
 }
 
 export interface PricingItem {
-  readonly serviceId: string;
-  readonly serviceName: string;
-  readonly price: string;
-  readonly note: string;
+  readonly id: string;
+  readonly name: string;
+  readonly description: string;
+  readonly features: readonly string[];
+  readonly priceLabel: string;
+  readonly recommended: boolean;
+  readonly combo: boolean;
+  readonly cta: string;
 }
 
 export interface FaqItem {

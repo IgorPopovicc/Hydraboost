@@ -2,8 +2,8 @@
   <div class="container">
     <nav class="breadcrumbs" aria-label="Putanja"><a routerLink="/">Početna</a><span>/</span><span>FAQ</span></nav>
     <p class="eyebrow">Česta pitanja</p>
-    <h1>Informacije prije zakazivanja.</h1>
-    <p class="lead">Odgovori o procjeni, trajanju, cijeni, području dolaska i bezbjednosti mobilne infuzione terapije.</p>
+    <h1>Informacije pre zakazivanja.</h1>
+    <p class="lead">Odgovori o proceni, trajanju, ceni, području dolaska i bezbednosti mobilne infuzione terapije.</p>
   </div>
 </section>
 
@@ -12,17 +12,17 @@
     <aside>
       <p class="eyebrow">Pitanja i odgovori</p>
       <h2 id="faq-list-title">Niste pronašli odgovor?</h2>
-      <p>Pozovite nas. Kratak razgovor je najbolji način da provjerimo da li je usluga odgovarajuća za Vas.</p>
+      <p>Teme obuhvataju procenu, tok termina, područje dolaska, cenu i situacije u kojima usluga nije odgovarajuća.</p>
       <a class="button button-primary" [href]="site.phoneHref">Pozovite {{ site.phoneDisplay }}</a>
     </aside>
-    <app-faq-list [items]="faqs" />
+    <div class="faq-panel"><p class="faq-category">Zakazivanje · terapija · bezbednost</p><app-faq-list [items]="faqs" /></div>
   </div>
 </section>
 
 <section class="emergency-note section-compact" aria-labelledby="emergency-title">
   <div class="container emergency-grid">
     <div><p class="eyebrow">Hitna stanja</p><h2 id="emergency-title">HydraBoost nije hitna medicinska služba.</h2></div>
-    <div><p>U slučaju naglog pogoršanja zdravstvenog stanja, otežanog disanja, gubitka svijesti, jakog bola ili drugog hitnog medicinskog problema odmah pozovite Hitnu pomoć.</p><a [href]="site.emergencyHref">Hitna pomoć: {{ site.emergencyPhone }}</a></div>
+    <div><p>U slučaju naglog pogoršanja zdravstvenog stanja, otežanog disanja, gubitka svesti, jakog bola ili drugog hitnog medicinskog problema odmah pozovite Hitnu pomoć.</p><a [href]="site.emergencyHref">Hitna pomoć: {{ site.emergencyPhone }}</a></div>
   </div>
 </section>
 

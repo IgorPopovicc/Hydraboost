@@ -1,42 +1,59 @@
-<section class="page-hero">
-  <div class="container">
-    <nav class="breadcrumbs" aria-label="Putanja"><a routerLink="/">Početna</a><span>/</span><span>Cjenovnik</span></nav>
-    <p class="eyebrow">Transparentno prije dolaska</p>
-    <h1>Cjenovnik bez skrivenih troškova.</h1>
-    <p class="lead">Tačnu cijenu dogovaramo prije potvrde termina, kada znamo vrstu terapije, individualne potrebe i lokaciju dolaska.</p>
+<section class="page-hero pricing-hero">
+  <div class="container pricing-hero-grid">
+    <div>
+      <nav class="breadcrumbs" aria-label="Putanja"><a routerLink="/">Početna</a><span>/</span><span>Cenovnik</span></nav>
+      <p class="eyebrow">Jasan dogovor pre dolaska</p>
+      <h1>Paketi prilagođeni razlogu Vašeg poziva.</h1>
+      <p class="lead">Tačnu cenu potvrđujemo pre termina, kada znamo vrstu terapije, medicinske potrebe i lokaciju dolaska.</p>
+    </div>
+    <aside class="pricing-hero-note" aria-label="Napomena o cenama">
+      <span>Važno</span>
+      <strong>Sve cene su trenutno na upit.</strong>
+      <p>Ne prikazujemo neodobrene iznose. Konačan dogovor zavisi od procene i sastava usluge.</p>
+    </aside>
   </div>
 </section>
 
-<section class="pricing-section section" aria-labelledby="pricing-list-title">
-  <div class="container pricing-layout">
-    <div class="pricing-intro">
-      <p class="eyebrow">Pregled usluga</p>
-      <h2 id="pricing-list-title">Cijena se određuje individualno.</h2>
-      <p>Na zvaničnim HydraBoost kanalima trenutno nisu objavljene odobrene fiksne cijene. Zato prikazujemo jasan status za svaku uslugu, bez izmišljenih iznosa.</p>
-      <a class="button button-primary" [href]="site.phoneHref">Zatražite tačnu cijenu</a>
+<section class="packages-section section" aria-labelledby="packages-title">
+  <div class="container">
+    <div class="packages-heading">
+      <div><p class="eyebrow">Pregled paketa</p><h2 id="packages-title">Polazna tačka za razgovor, ne univerzalna terapija.</h2></div>
+      <p>Paketi olakšavaju pregled ponude. Konačan sastav se ne bira samo preko sajta, već se dogovara nakon konsultacije i provere mogućih kontraindikacija.</p>
     </div>
 
-    <div class="pricing-table" role="table" aria-label="Cjenovnik HydraBoost usluga">
-      <div class="pricing-head" role="row"><span role="columnheader">Usluga</span><span role="columnheader">Cijena</span></div>
-      @for (item of pricing; track item.serviceId; let index = $index) {
-        <div class="pricing-row" role="row">
-          <div role="cell"><span class="row-number">0{{ index + 1 }}</span><div><strong>{{ item.serviceName }}</strong><small>{{ item.note }}</small></div></div>
-          <span class="price" role="cell">{{ item.price }}</span>
-        </div>
+    <div class="package-grid">
+      @for (item of pricing; track item.id) {
+        <article class="package" [class.recommended]="item.recommended" [class.combo]="item.combo">
+          @if (item.recommended) { <p class="package-label">Preporučeni paket</p> }
+          @if (item.combo) { <p class="package-label">Kombinovane usluge</p> }
+          <div class="package-top">
+            <h3>{{ item.name }}</h3>
+            <p>{{ item.description }}</p>
+          </div>
+          <ul>
+            @for (feature of item.features; track feature) { <li>{{ feature }}</li> }
+          </ul>
+          <div class="package-bottom">
+            <strong>{{ item.priceLabel }}</strong>
+            <a class="button" [class.button-light]="item.recommended" [class.button-primary]="!item.recommended" routerLink="/kontakt">{{ item.cta }}</a>
+          </div>
+        </article>
       }
     </div>
   </div>
 </section>
 
 <section class="price-factors section section-muted" aria-labelledby="factors-title">
-  <div class="container">
-    <div class="section-header"><p class="eyebrow">Kako se formira cijena</p><h2 id="factors-title">Tri informacije daju tačan iznos.</h2></div>
-    <div class="factor-grid">
-      <article><span>01</span><h3>Vrsta i sastav terapije</h3><p>Potrebni preparati i količina određuju se prema dogovorenoj terapiji.</p></article>
-      <article><span>02</span><h3>Medicinska procjena</h3><p>Individualne potrebe i indikacija mogu uticati na sastav i trajanje usluge.</p></article>
-      <article><span>03</span><h3>Lokacija dolaska</h3><p>Dolazak van standardne zone u Beogradu i okolini dogovara se posebno.</p></article>
+  <div class="container factors-layout">
+    <div class="section-header"><p class="eyebrow">Kako se formira cena</p><h2 id="factors-title">Tri informacije daju tačan iznos.</h2></div>
+    <div>
+      <div class="factor-grid">
+        <article><span>01</span><h3>Vrsta i sastav terapije</h3><p>Potrebni preparati i količina određuju se prema dogovorenoj terapiji.</p></article>
+        <article><span>02</span><h3>Medicinska procena</h3><p>Individualne potrebe i indikacija mogu uticati na sastav i trajanje usluge.</p></article>
+        <article><span>03</span><h3>Lokacija dolaska</h3><p>Dolazak van standardne zone u Beogradu i okolini dogovara se posebno.</p></article>
+      </div>
+      <p class="price-assurance"><strong>Pre dolaska znate tačan iznos.</strong> Procenu troškova saopštavamo u razgovoru, a termin potvrđujete tek nakon toga.</p>
     </div>
-    <p class="price-assurance"><strong>Prije dolaska znate tačan iznos.</strong> Procjenu troškova saopštavamo u razgovoru, a termin potvrđujete tek nakon toga.</p>
   </div>
 </section>
 

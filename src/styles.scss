@@ -15,6 +15,8 @@
   --color-aqua: #27b8c3;
   --color-aqua-light: #82dce0;
   --color-mist: #e7f4f3;
+  --color-slate-mist: #ced9e0;
+  --color-slate-light: #edf2f5;
   --color-off-white: #f4f7f4;
   --color-paper: #fbfcfa;
   --color-line: #dce5e3;
@@ -23,7 +25,7 @@
   --font-sans: 'Manrope', 'Avenir Next', Avenir, 'Segoe UI', sans-serif;
   --container: 76rem;
   --gutter: clamp(1rem, 4vw, 2.25rem);
-  --section: clamp(4.5rem, 10vw, 8.5rem);
+  --section: clamp(3.75rem, 7vw, 6.5rem);
   --radius-sm: 0.35rem;
   --radius-md: 1rem;
   --radius-lg: 1.75rem;
@@ -48,7 +50,7 @@ h1, h2, h3 { color: inherit; font-weight: 650; letter-spacing: -0.045em; }
 
 .container { width: min(calc(100% - (2 * var(--gutter))), var(--container)); margin-inline: auto; }
 .section { padding-block: var(--section); }
-.section-compact { padding-block: clamp(3.5rem, 7vw, 6rem); }
+.section-compact { padding-block: clamp(2.75rem, 5vw, 4.5rem); }
 .section-muted { background: var(--color-off-white); }
 .section-dark { background: var(--color-navy); color: white; }
 .section-grid { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: clamp(2.5rem, 8vw, 8rem); }
@@ -70,7 +72,7 @@ h1, h2, h3 { color: inherit; font-weight: 650; letter-spacing: -0.045em; }
 .button-light { background: white; color: var(--color-navy); }
 .button-outline-light { border-color: rgb(255 255 255 / 45%); color: white; }
 
-.page-hero { position: relative; overflow: hidden; padding-block: clamp(4rem, 10vw, 8rem); background: var(--color-off-white); }
+.page-hero { position: relative; overflow: hidden; padding-block: clamp(3.5rem, 7vw, 6.5rem); background: var(--color-off-white); }
 .page-hero::after { position: absolute; top: -8rem; right: -5rem; width: 26rem; height: 26rem; border: 1px solid rgb(39 184 195 / 20%); border-radius: 50%; content: ''; }
 .page-hero .container { position: relative; z-index: 1; }
 .breadcrumbs { display: flex; gap: 0.45rem; margin-bottom: 2rem; color: var(--color-text-soft); font-size: 0.74rem; }
@@ -89,7 +91,7 @@ h1, h2, h3 { color: inherit; font-weight: 650; letter-spacing: -0.045em; }
 @media (max-width: 32rem) {
   :root { --gutter: 1rem; }
   .button-row .button { width: 100%; }
-  .page-hero { padding-block: 3.5rem; }
+  .page-hero { padding-block: 3rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {

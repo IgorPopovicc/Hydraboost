@@ -2,8 +2,8 @@
   <div class="container hero-grid">
     <div class="hero-copy">
       <p class="kicker-line">Mobilna IV terapija · Beograd</p>
-      <h1>Medicinska njega, tamo gdje se osjećate najudobnije.</h1>
-      <p class="lead">Vitaminske i infuzione terapije u Vašem domu, kancelariji ili hotelu — uz prethodnu konsultaciju, individualnu procjenu i stručni nadzor.</p>
+      <h1>Medicinska nega, tamo gde se osećate najudobnije.</h1>
+      <p class="lead">Vitaminske i infuzione terapije u Vašem domu, kancelariji ili hotelu — uz prethodnu konsultaciju, individualnu procenu i stručni nadzor.</p>
       <div class="button-row">
         <a class="button button-primary" [href]="site.phoneHref">Zakažite termin</a>
         <a class="button button-secondary" routerLink="/usluge">Pogledajte usluge</a>
@@ -19,7 +19,7 @@
   </div>
   <div class="trust-rail container" aria-label="Osnovne informacije o usluzi">
     <p><span>01</span>Licencirano medicinsko osoblje</p>
-    <p><span>02</span>Individualna procjena</p>
+    <p><span>02</span>Individualna procena</p>
     <p><span>03</span>Po pozivu i zakazanom terminu</p>
   </div>
 </section>
@@ -27,7 +27,7 @@
 <section class="services-intro section section-dark" aria-labelledby="services-title">
   <div class="container">
     <div class="services-heading">
-      <div><p class="eyebrow">Naše usluge</p><h2 id="services-title">Pristup prilagođen čovjeku, ne paketu.</h2></div>
+      <div><p class="eyebrow">Naše usluge</p><h2 id="services-title">Pristup prilagođen čoveku, ne paketu.</h2></div>
       <p>Svaka terapija počinje razgovorom. Sastav se određuje prema potrebama, zdravstvenom stanju i medicinskoj indikaciji — bez univerzalnih obećanja.</p>
     </div>
     <div class="service-index">
@@ -58,9 +58,9 @@
   <div class="container care-grid">
     <div class="image-frame care-image"><picture><source type="image/avif" srcset="/assets/images/about/profesionalna-medicinska-njega-480.avif 480w, /assets/images/about/profesionalna-medicinska-njega-720.avif 720w, /assets/images/about/profesionalna-medicinska-njega-1000.avif 1000w" sizes="(max-width: 768px) 92vw, 48vw" /><img src="/assets/images/about/profesionalna-medicinska-njega.webp" width="1000" height="700" loading="lazy" decoding="async" alt="Medicinski radnik pruža infuzionu terapiju pacijentu kod kuće" /></picture></div>
     <div class="care-copy">
-      <p class="eyebrow">Profesionalna njega</p>
-      <h2 id="care-title">Bezbjednost prije brzine. Pažnja prije rutine.</h2>
-      <p class="lead">Prije primjene terapije provjeravaju se osnovni vitalni parametri i obavlja kratka konsultacija. Koristimo sterilnu opremu i svakom dolasku pristupamo individualno.</p>
+      <p class="eyebrow">Profesionalna nega</p>
+      <h2 id="care-title">Bezbednost pre brzine. Pažnja pre rutine.</h2>
+      <p class="lead">Pre primene terapije proveravaju se osnovni vitalni parametri i obavlja kratka konsultacija. Koristimo sterilnu opremu i svakom dolasku pristupamo individualno.</p>
       <ul><li>Licencirano medicinsko osoblje</li><li>Kompletna sterilna oprema</li><li>Diskretan dolazak na dogovorenu lokaciju</li></ul>
       <a class="text-link" routerLink="/o-nama">Saznajte više o našem pristupu <span aria-hidden="true">→</span></a>
     </div>
@@ -69,26 +69,26 @@
 
 <section class="pricing-preview section" aria-labelledby="pricing-title">
   <div class="container pricing-grid">
-    <div class="pricing-copy"><p class="eyebrow">Cjenovnik</p><h2 id="pricing-title">Jasna cijena prije nego što potvrdite termin.</h2><p>Cijena zavisi od sastava terapije, medicinske procjene i lokacije. Tačan iznos saopštavamo tokom konsultacije — unaprijed i bez skrivenih troškova.</p><a class="button button-secondary" routerLink="/cjenovnik">Pogledajte cjenovnik</a></div>
+    <div class="pricing-copy"><p class="eyebrow">Cenovnik</p><h2 id="pricing-title">Jasna cena pre nego što potvrdite termin.</h2><p>Cena zavisi od sastava terapije, medicinske procene i lokacije. Tačan iznos saopštavamo tokom konsultacije — unapred i bez skrivenih troškova.</p><a class="button button-secondary" routerLink="/cenovnik">Pogledajte cenovnik</a></div>
     <div class="price-list">
-      @for (item of pricing; track item.serviceId) {
-        <div><span>{{ item.serviceName }}</span><strong>{{ item.price }}</strong></div>
+      @for (item of pricing.slice(0, 4); track item.id) {
+        <div><span>{{ item.name }}</span><strong>{{ item.priceLabel }}</strong></div>
       }
     </div>
   </div>
 </section>
 
-<section class="testimonial section-compact" aria-label="Iskustvo pacijenta">
-  <div class="container quote-wrap">
-    <span class="quote-mark" aria-hidden="true">“</span>
-    <blockquote>HydraBoost mi je pružio profesionalnu i pažljivu medicinsku njegu u stanu kada sam se osjećao potpuno iscrpljeno.</blockquote>
-    <p>Marko P. <span>· Beograd</span></p>
+<section class="care-promise section-compact" aria-labelledby="care-promise-title">
+  <div class="container promise-wrap">
+    <p class="eyebrow">Naš standard</p>
+    <h2 id="care-promise-title">Dovoljno vremena za procenu, razgovor i pažljivu primenu.</h2>
+    <p>Termin se organizuje tek kada su poznate osnovne informacije o zdravstvenom stanju, lokaciji i vrsti usluge.</p>
   </div>
 </section>
 
 <section class="faq-preview section" aria-labelledby="faq-title">
   <div class="container faq-grid">
-    <div class="faq-heading"><p class="eyebrow">Česta pitanja</p><h2 id="faq-title">Prije nego što zakažete.</h2><p>Najvažnije informacije o procjeni, trajanju, zakazivanju i području dolaska.</p><a routerLink="/faq">Sva pitanja i odgovori →</a></div>
+    <div class="faq-heading"><p class="eyebrow">Česta pitanja</p><h2 id="faq-title">Pre nego što zakažete.</h2><p>Najvažnije informacije o proceni, trajanju, zakazivanju i području dolaska.</p><a routerLink="/faq">Sva pitanja i odgovori →</a></div>
     <app-faq-list [items]="faqs" />
   </div>
 </section>

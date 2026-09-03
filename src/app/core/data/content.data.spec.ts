@@ -4,10 +4,12 @@ import { SITE_INFO } from './site.data';
 import { SERVICES } from './services.data';
 
 describe('Centralized public content', () => {
-  it('keeps one price entry for every service without fabricated numeric prices', () => {
-    expect(PRICING).toHaveLength(SERVICES.length);
-    expect(PRICING.every((item) => item.price === 'Cijena na upit')).toBe(true);
-    expect(new Set(PRICING.map((item) => item.serviceId))).toEqual(new Set(SERVICES.map((item) => item.id)));
+  it('keeps data-driven packages without fabricated numeric prices', () => {
+    expect(PRICING.every((item) => item.priceLabel === 'Cena na upit')).toBe(true);
+    expect(new Set(PRICING.map((item) => item.id)).size).toBe(PRICING.length);
+    expect(PRICING.filter((item) => item.recommended)).toHaveLength(1);
+    expect(PRICING.some((item) => item.combo)).toBe(true);
+    expect(SERVICES.length).toBeGreaterThan(0);
   });
 
   it('uses one verified contact source and preserves the emergency guidance', () => {

@@ -22,7 +22,7 @@ export const SITE_INFO = {
 export const NAVIGATION: readonly NavigationItem[] = [
   { label: 'Početna', path: '/' },
   { label: 'Usluge', path: '/usluge' },
-  { label: 'Cjenovnik', path: '/cjenovnik' },
+  { label: 'Cenovnik', path: '/cenovnik' },
   { label: 'O nama', path: '/o-nama' },
   { label: 'FAQ', path: '/faq' },
   { label: 'Kontakt', path: '/kontakt' },
@@ -31,7 +31,7 @@ export const NAVIGATION: readonly NavigationItem[] = [
 export const PROCESS_STEPS = [
   { number: '01', title: 'Kontaktirate nas', text: 'Pozovite nas ili pošaljite osnovne informacije o terminu i lokaciji.' },
   { number: '02', title: 'Kratka konsultacija', text: 'Razgovaramo o zdravstvenom stanju, terapiji, alergijama i mogućim kontraindikacijama.' },
-  { number: '03', title: 'Dogovaramo termin', text: 'Potvrđujemo vrijeme dolaska, lokaciju i cijenu prije polaska.' },
+  { number: '03', title: 'Dogovaramo termin', text: 'Potvrđujemo vreme dolaska, lokaciju i cenu pre polaska.' },
   { number: '04', title: 'Dolazimo na adresu', text: 'Medicinsko osoblje donosi kompletnu sterilnu opremu u Vaš dom, kancelariju ili hotel.' },
-  { number: '05', title: 'Stručni nadzor', text: 'Prije primjene provjeravaju se vitalni parametri, a terapija se sprovodi uz nadzor.' },
+  { number: '05', title: 'Stručni nadzor', text: 'Pre primene proveravaju se vitalni parametri, a terapija se sprovodi uz nadzor.' },
 ] as const;

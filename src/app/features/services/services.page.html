@@ -1,16 +1,25 @@
-<section class="page-hero">
-  <div class="container">
-    <nav class="breadcrumbs" aria-label="Putanja"><a routerLink="/">Početna</a><span>/</span><span>Usluge</span></nav>
-    <p class="eyebrow">Mobilna IV terapija</p>
-    <h1>Njega prilagođena Vašim potrebama.</h1>
-    <p class="lead">Hidratacija, vitaminska podrška i individualno sastavljene terapije na dogovorenoj adresi u Beogradu — nakon konsultacije i procjene.</p>
+<section class="page-hero services-hero">
+  <div class="container services-hero-grid">
+    <div class="services-hero-copy">
+      <nav class="breadcrumbs" aria-label="Putanja"><a routerLink="/">Početna</a><span>/</span><span>Usluge</span></nav>
+      <p class="eyebrow">Mobilna IV terapija</p>
+      <h1>Nega prilagođena Vašim potrebama.</h1>
+      <p class="lead">Hidratacija, vitaminska podrška i individualno sastavljene terapije na dogovorenoj adresi u Beogradu — nakon konsultacije i procene.</p>
+    </div>
+    <div class="services-hero-image image-frame">
+      <picture>
+        <source type="image/avif" srcset="/assets/images/editorial/kucna-medicinska-konsultacija-480.avif 480w, /assets/images/editorial/kucna-medicinska-konsultacija-800.avif 800w, /assets/images/editorial/kucna-medicinska-konsultacija-1200.avif 1200w" sizes="(max-width: 800px) 92vw, 42vw" />
+        <img src="/assets/images/editorial/kucna-medicinska-konsultacija-1200.webp" srcset="/assets/images/editorial/kucna-medicinska-konsultacija-480.webp 480w, /assets/images/editorial/kucna-medicinska-konsultacija-800.webp 800w, /assets/images/editorial/kucna-medicinska-konsultacija-1200.webp 1200w" sizes="(max-width: 800px) 92vw, 42vw" width="1200" height="800" fetchpriority="high" decoding="async" alt="Medicinska konsultacija sa pacijentom u kućnom okruženju" />
+      </picture>
+      <p>Procena prethodi svakom dogovoru o terapiji.</p>
+    </div>
   </div>
 </section>
 
 <section class="services-overview section" aria-labelledby="overview-title">
   <div class="container overview-grid">
     <div><p class="eyebrow">Naše usluge</p><h2 id="overview-title">Nema univerzalne infuzije za svakoga.</h2></div>
-    <div><p class="lead">Izbor i sastav terapije zavise od zdravstvenog stanja, anamneze, postojećih terapija i medicinske indikacije. Zato svaki termin počinje razgovorom.</p><p class="note">Informacije na sajtu služe upoznavanju sa uslugom i ne predstavljaju medicinski savjet, dijagnozu ili zamjenu za pregled ljekara.</p></div>
+    <div><p class="lead">Izbor i sastav terapije zavise od zdravstvenog stanja, anamneze, postojećih terapija i medicinske indikacije. Zato svaki termin počinje razgovorom.</p><p class="note">Informacije na sajtu služe upoznavanju sa uslugom i ne predstavljaju medicinski savet, dijagnozu ili zamenu za pregled lekara.</p></div>
   </div>
 </section>
 
@@ -18,13 +27,18 @@
   <div class="container">
     @for (service of services; track service.id; let index = $index) {
       <article class="service-row" [id]="service.id">
-        <div class="service-image image-frame"><img [src]="service.image" width="760" height="570" loading="lazy" decoding="async" [alt]="service.imageAlt" /></div>
+        <div class="service-image image-frame">
+          <picture>
+            @if (service.imageAvifSrcset) { <source type="image/avif" [srcset]="service.imageAvifSrcset" sizes="(max-width: 800px) 92vw, 42vw" /> }
+            <img [src]="service.image" [attr.srcset]="service.imageSrcset ?? null" sizes="(max-width: 800px) 92vw, 42vw" width="760" height="570" loading="lazy" decoding="async" [alt]="service.imageAlt" />
+          </picture>
+        </div>
         <div class="service-copy">
           <span class="service-number">0{{ index + 1 }}</span>
           <h2>{{ service.name }}</h2>
           <p>{{ service.description }}</p>
           <p class="service-context">{{ service.context }}</p>
-          <a class="text-link" routerLink="/kontakt">Provjerite dostupnost <span aria-hidden="true">→</span></a>
+          <a class="text-link" routerLink="/kontakt">Proverite dostupnost <span aria-hidden="true">→</span></a>
         </div>
       </article>
     }
@@ -35,11 +49,18 @@
   <div class="container standards-grid">
     <div><p class="eyebrow">Standard usluge</p><h2 id="standards-title">Šta možete da očekujete od svakog dolaska.</h2></div>
     <div class="standards-list">
-      <div><span>01</span><h3>Prethodna procjena</h3><p>Razgovor o stanju, alergijama, postojećoj terapiji i mogućim kontraindikacijama.</p></div>
-      <div><span>02</span><h3>Provjera parametara</h3><p>Prije aplikacije provjeravaju se osnovni vitalni parametri i uslovi za terapiju.</p></div>
-      <div><span>03</span><h3>Sterilna oprema</h3><p>Medicinsko osoblje dolazi sa kompletnom opremom potrebnom za bezbjednu primjenu.</p></div>
+      <div><span>01</span><h3>Prethodna procena</h3><p>Razgovor o stanju, alergijama, postojećoj terapiji i mogućim kontraindikacijama.</p></div>
+      <div><span>02</span><h3>Provera parametara</h3><p>Pre aplikacije proveravaju se osnovni vitalni parametri i uslovi za terapiju.</p></div>
+      <div><span>03</span><h3>Sterilna oprema</h3><p>Medicinsko osoblje dolazi sa kompletnom opremom potrebnom za bezbednu primenu.</p></div>
       <div><span>04</span><h3>Stručni nadzor</h3><p>Terapija se sprovodi uz prisustvo licenciranog medicinskog radnika.</p></div>
     </div>
+  </div>
+</section>
+
+<section class="assessment section-compact" aria-labelledby="assessment-title">
+  <div class="container assessment-grid">
+    <div><p class="eyebrow">Pre zakazivanja</p><h2 id="assessment-title">Niste sigurni koja usluga odgovara Vašoj situaciji?</h2></div>
+    <div><p>Ne morate da birate paket unapred. U kratkom razgovoru proveravamo osnovne informacije i objašnjavamo naredne korake.</p><a class="button button-primary" [href]="site.phoneHref">Pozovite za procenu</a></div>
   </div>
 </section>
 
