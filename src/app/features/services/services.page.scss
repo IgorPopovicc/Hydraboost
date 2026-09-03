@@ -1,0 +1,33 @@
+.overview-grid { display: grid; grid-template-columns: 0.8fr 1fr; gap: clamp(3rem, 9vw, 9rem); }
+.overview-grid h2 { max-width: 14ch; margin: 0; color: var(--color-navy); font-size: clamp(2.2rem, 4.5vw, 4rem); line-height: 1.05; }
+.overview-grid .lead { margin-top: 0; }
+.overview-grid .note { margin-top: 2rem; }
+.service-list { padding-top: 0; }
+.service-row { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: clamp(2.5rem, 9vw, 9rem); align-items: center; padding-block: clamp(3.5rem, 8vw, 7rem); border-top: 1px solid var(--color-line); scroll-margin-top: 5rem; }
+.service-row:nth-child(even) .service-image { order: 2; }
+.service-image { aspect-ratio: 4 / 3; }
+.service-copy { max-width: 35rem; }
+.service-number { color: var(--color-blue); font-size: 0.7rem; font-weight: 750; letter-spacing: 0.14em; }
+.service-copy h2 { margin: 1rem 0 1.2rem; color: var(--color-navy); font-size: clamp(2rem, 4vw, 3.6rem); line-height: 1.05; }
+.service-copy > p { color: var(--color-text-soft); line-height: 1.75; }
+.service-context { margin: 1.5rem 0 1.8rem; padding-left: 1rem; border-left: 2px solid var(--color-aqua); font-size: 0.86rem; }
+.text-link { color: var(--color-navy); font-size: 0.84rem; font-weight: 750; text-decoration: none; }
+.standards-grid { display: grid; grid-template-columns: 0.7fr 1.3fr; gap: clamp(3rem, 9vw, 9rem); }
+.standards-grid h2 { max-width: 15ch; margin: 0; color: var(--color-navy); font-size: clamp(2.2rem, 4.5vw, 4rem); line-height: 1.05; }
+.standards-list { display: grid; grid-template-columns: 1fr 1fr; }
+.standards-list div { min-height: 13rem; padding: 1.35rem; border-top: 1px solid var(--color-line-strong); }
+.standards-list div:nth-child(odd) { border-right: 1px solid var(--color-line-strong); }
+.standards-list span { color: var(--color-blue); font-size: 0.65rem; }
+.standards-list h3 { margin: 2rem 0 0.5rem; color: var(--color-navy); font-size: 1rem; }
+.standards-list p { margin: 0; color: var(--color-text-soft); font-size: 0.8rem; line-height: 1.65; }
+
+@media (max-width: 50rem) {
+  .overview-grid, .service-row, .standards-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .service-row:nth-child(even) .service-image { order: 0; }
+  .service-copy { max-width: none; }
+}
+
+@media (max-width: 30rem) {
+  .standards-list { grid-template-columns: 1fr; }
+  .standards-list div:nth-child(odd) { border-right: 0; }
+}

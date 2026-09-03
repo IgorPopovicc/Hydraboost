@@ -1,0 +1,9 @@
+.appointment-section { background: var(--color-blue-deep); color: white; }
+.appointment-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: clamp(2rem, 8vw, 8rem); align-items: end; }
+.eyebrow { color: var(--color-aqua-light); }
+h2 { max-width: 16ch; margin: 0; font-size: clamp(2.15rem, 5vw, 4.8rem); line-height: 1.02; }
+.appointment-copy p { margin: 0 0 1.75rem; color: rgb(255 255 255 / 72%); line-height: 1.75; }
+
+@media (max-width: 50rem) {
+  .appointment-grid { grid-template-columns: 1fr; align-items: start; }
+}

@@ -1,0 +1,67 @@
+<section class="page-hero contact-hero">
+  <div class="container">
+    <nav class="breadcrumbs" aria-label="Putanja"><a routerLink="/">Početna</a><span>/</span><span>Kontakt</span></nav>
+    <p class="eyebrow">Kontakt i zakazivanje</p>
+    <h1>Dogovorimo termin koji Vam odgovara.</h1>
+    <p class="lead">Kontaktirajte nas za konsultaciju, provjeru dostupnosti i tačnu procjenu cijene prije dolaska.</p>
+  </div>
+</section>
+
+<section class="contact-section section" aria-labelledby="contact-title">
+  <div class="container contact-grid">
+    <div class="contact-details">
+      <p class="eyebrow">Direktan kontakt</p>
+      <h2 id="contact-title">Najbrže telefonom ili Viberom.</h2>
+      <div class="contact-links">
+        <a [href]="site.phoneHref"><span>Poziv</span><strong>{{ site.phoneDisplay }}</strong></a>
+        <a [href]="site.viberHref"><span>Viber</span><strong>Pošaljite poruku</strong></a>
+        <a [href]="site.emailHref"><span>E-pošta</span><strong>{{ site.email }}</strong></a>
+      </div>
+      <dl>
+        <div><dt>Područje dolaska</dt><dd>{{ site.serviceArea }}</dd></div>
+        <div><dt>Radno vrijeme terenske službe</dt><dd>{{ site.workingHours }}</dd></div>
+      </dl>
+      <p class="contact-note">Za dolazak van standardne zone kontaktirajte nas radi dodatnog dogovora.</p>
+    </div>
+
+    <div class="form-wrap">
+      <div class="form-heading"><p class="eyebrow">Upit e-poštom</p><h2>Pripremite poruku</h2><p>Forma otvara popunjenu poruku u Vašoj aplikaciji za e-poštu. Poruka nije poslata dok je tamo ne potvrdite.</p></div>
+      <form [formGroup]="contactForm" (ngSubmit)="prepareEmail()" novalidate>
+        <div class="field full">
+          <label for="fullName">Ime i prezime <span aria-hidden="true">*</span></label>
+          <input id="fullName" type="text" formControlName="fullName" autocomplete="name" [attr.aria-invalid]="submitted() && contactForm.controls.fullName.invalid" />
+          @if (submitted() && contactForm.controls.fullName.invalid) { <small class="error">Unesite ime i prezime.</small> }
+        </div>
+        <div class="field">
+          <label for="phone">Telefon <span aria-hidden="true">*</span></label>
+          <input id="phone" type="tel" formControlName="phone" autocomplete="tel" placeholder="06x/xxx-xxxx" [attr.aria-invalid]="submitted() && contactForm.controls.phone.invalid" />
+          @if (submitted() && contactForm.controls.phone.invalid) { <small class="error">Unesite ispravan broj telefona.</small> }
+        </div>
+        <div class="field">
+          <label for="email">E-pošta</label>
+          <input id="email" type="email" formControlName="email" autocomplete="email" [attr.aria-invalid]="submitted() && contactForm.controls.email.invalid" />
+          @if (submitted() && contactForm.controls.email.invalid) { <small class="error">Provjerite adresu e-pošte.</small> }
+        </div>
+        <div class="field full">
+          <label for="location">Željena lokacija <span aria-hidden="true">*</span></label>
+          <input id="location" type="text" formControlName="location" autocomplete="street-address" placeholder="Naselje ili adresa u Beogradu" [attr.aria-invalid]="submitted() && contactForm.controls.location.invalid" />
+          @if (submitted() && contactForm.controls.location.invalid) { <small class="error">Unesite lokaciju dolaska.</small> }
+        </div>
+        <div class="field full">
+          <label for="message">Poruka <span aria-hidden="true">*</span></label>
+          <textarea id="message" formControlName="message" rows="5" placeholder="Napišite kada Vam odgovara termin i osnovni razlog javljanja." [attr.aria-invalid]="submitted() && contactForm.controls.message.invalid"></textarea>
+          @if (submitted() && contactForm.controls.message.invalid) { <small class="error">Poruka treba da sadrži najmanje 10 znakova.</small> }
+        </div>
+        <p class="privacy-note">Ne unosite osjetljive zdravstvene podatke. Detalje ćemo provjeriti u direktnom razgovoru.</p>
+        <button class="button button-primary" type="submit">Otvorite poruku za slanje</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section class="social-section section-compact">
+  <div class="container social-grid">
+    <div><p class="eyebrow">Pratite nas</p><h2>HydraBoost na Instagramu.</h2></div>
+    <a [href]="site.instagramHref" target="_blank" rel="noopener noreferrer"><span>{{ site.instagramLabel }}</span><span aria-hidden="true">↗</span></a>
+  </div>
+</section>

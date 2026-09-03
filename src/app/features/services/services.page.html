@@ -1,0 +1,46 @@
+<section class="page-hero">
+  <div class="container">
+    <nav class="breadcrumbs" aria-label="Putanja"><a routerLink="/">Početna</a><span>/</span><span>Usluge</span></nav>
+    <p class="eyebrow">Mobilna IV terapija</p>
+    <h1>Njega prilagođena Vašim potrebama.</h1>
+    <p class="lead">Hidratacija, vitaminska podrška i individualno sastavljene terapije na dogovorenoj adresi u Beogradu — nakon konsultacije i procjene.</p>
+  </div>
+</section>
+
+<section class="services-overview section" aria-labelledby="overview-title">
+  <div class="container overview-grid">
+    <div><p class="eyebrow">Naše usluge</p><h2 id="overview-title">Nema univerzalne infuzije za svakoga.</h2></div>
+    <div><p class="lead">Izbor i sastav terapije zavise od zdravstvenog stanja, anamneze, postojećih terapija i medicinske indikacije. Zato svaki termin počinje razgovorom.</p><p class="note">Informacije na sajtu služe upoznavanju sa uslugom i ne predstavljaju medicinski savjet, dijagnozu ili zamjenu za pregled ljekara.</p></div>
+  </div>
+</section>
+
+<section class="service-list section-compact" aria-label="Pregled usluga">
+  <div class="container">
+    @for (service of services; track service.id; let index = $index) {
+      <article class="service-row" [id]="service.id">
+        <div class="service-image image-frame"><img [src]="service.image" width="760" height="570" loading="lazy" decoding="async" [alt]="service.imageAlt" /></div>
+        <div class="service-copy">
+          <span class="service-number">0{{ index + 1 }}</span>
+          <h2>{{ service.name }}</h2>
+          <p>{{ service.description }}</p>
+          <p class="service-context">{{ service.context }}</p>
+          <a class="text-link" routerLink="/kontakt">Provjerite dostupnost <span aria-hidden="true">→</span></a>
+        </div>
+      </article>
+    }
+  </div>
+</section>
+
+<section class="standards section section-muted" aria-labelledby="standards-title">
+  <div class="container standards-grid">
+    <div><p class="eyebrow">Standard usluge</p><h2 id="standards-title">Šta možete da očekujete od svakog dolaska.</h2></div>
+    <div class="standards-list">
+      <div><span>01</span><h3>Prethodna procjena</h3><p>Razgovor o stanju, alergijama, postojećoj terapiji i mogućim kontraindikacijama.</p></div>
+      <div><span>02</span><h3>Provjera parametara</h3><p>Prije aplikacije provjeravaju se osnovni vitalni parametri i uslovi za terapiju.</p></div>
+      <div><span>03</span><h3>Sterilna oprema</h3><p>Medicinsko osoblje dolazi sa kompletnom opremom potrebnom za bezbjednu primjenu.</p></div>
+      <div><span>04</span><h3>Stručni nadzor</h3><p>Terapija se sprovodi uz prisustvo licenciranog medicinskog radnika.</p></div>
+    </div>
+  </div>
+</section>
+
+<app-appointment-cta />

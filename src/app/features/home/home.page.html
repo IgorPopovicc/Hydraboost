@@ -1,0 +1,96 @@
+<section class="home-hero">
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <p class="kicker-line">Mobilna IV terapija · Beograd</p>
+      <h1>Medicinska njega, tamo gdje se osjećate najudobnije.</h1>
+      <p class="lead">Vitaminske i infuzione terapije u Vašem domu, kancelariji ili hotelu — uz prethodnu konsultaciju, individualnu procjenu i stručni nadzor.</p>
+      <div class="button-row">
+        <a class="button button-primary" [href]="site.phoneHref">Zakažite termin</a>
+        <a class="button button-secondary" routerLink="/usluge">Pogledajte usluge</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <picture>
+        <source type="image/avif" srcset="/assets/images/hero/mobile-iv-care-448.avif 448w, /assets/images/hero/mobile-iv-care-672.avif 672w, /assets/images/hero/mobile-iv-care-896.avif 896w" sizes="(max-width: 800px) 92vw, 42vw" />
+        <img src="/assets/images/hero/mobile-iv-care-896.webp" srcset="/assets/images/hero/mobile-iv-care-448.webp 448w, /assets/images/hero/mobile-iv-care-672.webp 672w, /assets/images/hero/mobile-iv-care-896.webp 896w" sizes="(max-width: 800px) 92vw, 42vw" width="896" height="1200" fetchpriority="high" decoding="async" alt="Medicinska radnica priprema mobilnu infuziju u kućnom ambijentu" />
+      </picture>
+      <div class="hero-caption"><span>Dolazak na adresu</span><strong>Beograd i okolina</strong></div>
+    </div>
+  </div>
+  <div class="trust-rail container" aria-label="Osnovne informacije o usluzi">
+    <p><span>01</span>Licencirano medicinsko osoblje</p>
+    <p><span>02</span>Individualna procjena</p>
+    <p><span>03</span>Po pozivu i zakazanom terminu</p>
+  </div>
+</section>
+
+<section class="services-intro section section-dark" aria-labelledby="services-title">
+  <div class="container">
+    <div class="services-heading">
+      <div><p class="eyebrow">Naše usluge</p><h2 id="services-title">Pristup prilagođen čovjeku, ne paketu.</h2></div>
+      <p>Svaka terapija počinje razgovorom. Sastav se određuje prema potrebama, zdravstvenom stanju i medicinskoj indikaciji — bez univerzalnih obećanja.</p>
+    </div>
+    <div class="service-index">
+      @for (service of services; track service.id; let index = $index) {
+        <a routerLink="/usluge" [fragment]="service.id">
+          <span class="service-number">0{{ index + 1 }}</span>
+          <span class="service-name">{{ service.name }}</span>
+          <span class="service-description">{{ service.shortDescription }}</span>
+          <span class="service-arrow" aria-hidden="true">↗</span>
+        </a>
+      }
+    </div>
+  </div>
+</section>
+
+<section class="process section" aria-labelledby="process-title">
+  <div class="container">
+    <div class="section-header"><p class="eyebrow">Kako funkcioniše</p><h2 id="process-title">Od prvog poziva do dolaska na adresu.</h2></div>
+    <ol class="process-list">
+      @for (step of steps; track step.number) {
+        <li><span>{{ step.number }}</span><h3>{{ step.title }}</h3><p>{{ step.text }}</p></li>
+      }
+    </ol>
+  </div>
+</section>
+
+<section class="care-section section section-muted" aria-labelledby="care-title">
+  <div class="container care-grid">
+    <div class="image-frame care-image"><picture><source type="image/avif" srcset="/assets/images/about/profesionalna-medicinska-njega-480.avif 480w, /assets/images/about/profesionalna-medicinska-njega-720.avif 720w, /assets/images/about/profesionalna-medicinska-njega-1000.avif 1000w" sizes="(max-width: 768px) 92vw, 48vw" /><img src="/assets/images/about/profesionalna-medicinska-njega.webp" width="1000" height="700" loading="lazy" decoding="async" alt="Medicinski radnik pruža infuzionu terapiju pacijentu kod kuće" /></picture></div>
+    <div class="care-copy">
+      <p class="eyebrow">Profesionalna njega</p>
+      <h2 id="care-title">Bezbjednost prije brzine. Pažnja prije rutine.</h2>
+      <p class="lead">Prije primjene terapije provjeravaju se osnovni vitalni parametri i obavlja kratka konsultacija. Koristimo sterilnu opremu i svakom dolasku pristupamo individualno.</p>
+      <ul><li>Licencirano medicinsko osoblje</li><li>Kompletna sterilna oprema</li><li>Diskretan dolazak na dogovorenu lokaciju</li></ul>
+      <a class="text-link" routerLink="/o-nama">Saznajte više o našem pristupu <span aria-hidden="true">→</span></a>
+    </div>
+  </div>
+</section>
+
+<section class="pricing-preview section" aria-labelledby="pricing-title">
+  <div class="container pricing-grid">
+    <div class="pricing-copy"><p class="eyebrow">Cjenovnik</p><h2 id="pricing-title">Jasna cijena prije nego što potvrdite termin.</h2><p>Cijena zavisi od sastava terapije, medicinske procjene i lokacije. Tačan iznos saopštavamo tokom konsultacije — unaprijed i bez skrivenih troškova.</p><a class="button button-secondary" routerLink="/cjenovnik">Pogledajte cjenovnik</a></div>
+    <div class="price-list">
+      @for (item of pricing; track item.serviceId) {
+        <div><span>{{ item.serviceName }}</span><strong>{{ item.price }}</strong></div>
+      }
+    </div>
+  </div>
+</section>
+
+<section class="testimonial section-compact" aria-label="Iskustvo pacijenta">
+  <div class="container quote-wrap">
+    <span class="quote-mark" aria-hidden="true">“</span>
+    <blockquote>HydraBoost mi je pružio profesionalnu i pažljivu medicinsku njegu u stanu kada sam se osjećao potpuno iscrpljeno.</blockquote>
+    <p>Marko P. <span>· Beograd</span></p>
+  </div>
+</section>
+
+<section class="faq-preview section" aria-labelledby="faq-title">
+  <div class="container faq-grid">
+    <div class="faq-heading"><p class="eyebrow">Česta pitanja</p><h2 id="faq-title">Prije nego što zakažete.</h2><p>Najvažnije informacije o procjeni, trajanju, zakazivanju i području dolaska.</p><a routerLink="/faq">Sva pitanja i odgovori →</a></div>
+    <app-faq-list [items]="faqs" />
+  </div>
+</section>
+
+<app-appointment-cta />

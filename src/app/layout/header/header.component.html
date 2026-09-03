@@ -1,0 +1,34 @@
+<header class="site-header" [class.is-compact]="compact()">
+  <div class="header-inner container">
+    <a class="brand" routerLink="/">
+      <img ngSrc="/assets/brand/logo-112.webp" width="56" height="56" priority alt="" />
+      <span><strong>HydraBoost</strong><small>Infuzije</small></span>
+    </a>
+
+    <nav class="desktop-nav" aria-label="Glavna navigacija">
+      @for (item of navigation; track item.path) {
+        <a [routerLink]="item.path" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: item.path === '/' }">{{ item.label }}</a>
+      }
+    </nav>
+
+    <a class="header-cta button button-primary" [href]="site.phoneHref">Zakažite termin</a>
+
+    <button class="menu-toggle" type="button" (click)="toggleMenu()" [attr.aria-expanded]="menuOpen()" aria-controls="mobile-navigation" [attr.aria-label]="menuOpen() ? 'Zatvorite meni' : 'Otvorite meni'">
+      <span></span><span></span>
+    </button>
+  </div>
+
+  <div class="menu-backdrop" [class.is-open]="menuOpen()" (click)="closeMenu()"></div>
+  <nav id="mobile-navigation" class="mobile-nav" [class.is-open]="menuOpen()" [attr.aria-hidden]="!menuOpen()" aria-label="Mobilna navigacija">
+    <p class="mobile-nav-label">Navigacija</p>
+    @for (item of navigation; track item.path; let first = $first) {
+      <a #firstMobileLink [routerLink]="item.path" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: item.path === '/' }" [tabIndex]="menuOpen() ? 0 : -1">
+        <span>{{ item.label }}</span><span aria-hidden="true">↗</span>
+      </a>
+    }
+    <div class="mobile-contact">
+      <span>Zakazivanje i konsultacije</span>
+      <a [href]="site.phoneHref" [tabIndex]="menuOpen() ? 0 : -1">{{ site.phoneDisplay }}</a>
+    </div>
+  </nav>
+</header>

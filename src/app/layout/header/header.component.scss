@@ -1,0 +1,57 @@
+.site-header {
+  position: sticky;
+  z-index: 100;
+  top: 0;
+  height: 5.5rem;
+  border-bottom: 1px solid transparent;
+  background: rgb(251 252 250 / 92%);
+  backdrop-filter: blur(16px);
+  transition: height var(--duration), border-color var(--duration), box-shadow var(--duration);
+}
+
+.site-header.is-compact {
+  height: 4.75rem;
+  border-color: var(--color-line);
+  box-shadow: 0 10px 30px rgb(5 45 66 / 5%);
+}
+
+.header-inner { height: 100%; display: flex; align-items: center; gap: 2rem; }
+.brand { display: inline-flex; align-items: center; gap: 0.7rem; color: var(--color-navy); text-decoration: none; }
+.brand img { width: 3rem; height: 3rem; border-radius: 50%; }
+.brand span { display: grid; line-height: 1; }
+.brand strong { font-size: 1.05rem; letter-spacing: -0.03em; text-transform: uppercase; }
+.brand small { margin-top: 0.3rem; color: var(--color-blue); font-size: 0.63rem; font-weight: 700; letter-spacing: 0.27em; text-transform: uppercase; }
+
+.desktop-nav { display: flex; align-items: center; gap: clamp(1rem, 2vw, 1.85rem); margin-left: auto; }
+.desktop-nav a { position: relative; padding: 0.6rem 0; color: var(--color-text-soft); font-size: 0.84rem; font-weight: 650; text-decoration: none; }
+.desktop-nav a::after { position: absolute; right: 0; bottom: 0.2rem; left: 0; height: 2px; background: var(--color-aqua); content: ''; transform: scaleX(0); transform-origin: right; transition: transform var(--duration); }
+.desktop-nav a:hover, .desktop-nav a.active { color: var(--color-navy); }
+.desktop-nav a:hover::after, .desktop-nav a.active::after { transform: scaleX(1); transform-origin: left; }
+.header-cta { flex: 0 0 auto; padding: 0.78rem 1.1rem; font-size: 0.82rem; }
+.menu-toggle { display: none; }
+.mobile-nav, .menu-backdrop { display: none; }
+
+@media (max-width: 68rem) {
+  .site-header, .site-header.is-compact { height: 4.75rem; }
+  .desktop-nav, .header-cta { display: none; }
+  .header-inner { justify-content: space-between; }
+  .menu-toggle { display: grid; width: 2.9rem; height: 2.9rem; place-content: center; gap: 0.42rem; border: 1px solid var(--color-line); border-radius: 50%; background: white; }
+  .menu-toggle span { display: block; width: 1.15rem; height: 2px; background: var(--color-navy); transition: transform var(--duration); }
+  .menu-toggle[aria-expanded='true'] span:first-child { transform: translateY(4px) rotate(45deg); }
+  .menu-toggle[aria-expanded='true'] span:last-child { transform: translateY(-4px) rotate(-45deg); }
+  .menu-backdrop { position: fixed; inset: 4.75rem 0 0; display: block; visibility: hidden; background: rgb(5 45 66 / 36%); opacity: 0; transition: opacity var(--duration), visibility var(--duration); }
+  .menu-backdrop.is-open { visibility: visible; opacity: 1; }
+  .mobile-nav { position: fixed; top: 4.75rem; right: 0; bottom: 0; display: flex; visibility: hidden; width: min(26rem, 92vw); flex-direction: column; padding: 2rem clamp(1.25rem, 5vw, 2.5rem); background: var(--color-navy); clip-path: inset(0 0 0 100%); color: white; pointer-events: none; transition: clip-path 280ms ease, visibility 280ms; }
+  .mobile-nav.is-open { visibility: visible; clip-path: inset(0); pointer-events: auto; }
+  .mobile-nav-label { margin: 0 0 1.25rem; color: var(--color-aqua-light); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; }
+  .mobile-nav > a { display: flex; align-items: center; justify-content: space-between; padding: 1rem 0; border-bottom: 1px solid rgb(255 255 255 / 14%); color: white; font-size: clamp(1.35rem, 5vw, 1.8rem); letter-spacing: -0.03em; text-decoration: none; }
+  .mobile-nav > a span:last-child { color: var(--color-aqua); font-size: 1rem; }
+  .mobile-nav > a.active span:first-child { color: var(--color-aqua-light); }
+  .mobile-contact { display: grid; gap: 0.35rem; margin-top: auto; padding-top: 2rem; }
+  .mobile-contact span { color: rgb(255 255 255 / 62%); font-size: 0.75rem; }
+  .mobile-contact a { color: white; font-size: 1.25rem; font-weight: 700; }
+}
+
+@media (max-width: 24rem) {
+  .brand span { display: none; }
+}

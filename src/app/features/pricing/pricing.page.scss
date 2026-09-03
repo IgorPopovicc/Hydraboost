@@ -1,0 +1,34 @@
+.pricing-layout { display: grid; grid-template-columns: 0.65fr 1.35fr; gap: clamp(3rem, 9vw, 9rem); align-items: start; }
+.pricing-intro { position: sticky; top: 7rem; }
+.pricing-intro h2 { margin: 0 0 1.25rem; color: var(--color-navy); font-size: clamp(2rem, 4vw, 3.7rem); line-height: 1.06; }
+.pricing-intro > p:not(.eyebrow) { margin-bottom: 2rem; color: var(--color-text-soft); line-height: 1.75; }
+.pricing-table { border-top: 1px solid var(--color-line-strong); }
+.pricing-head { display: grid; grid-template-columns: 1fr auto; gap: 1rem; padding: 0.7rem 0; color: var(--color-text-soft); font-size: 0.68rem; font-weight: 750; letter-spacing: 0.12em; text-transform: uppercase; }
+.pricing-row { display: grid; grid-template-columns: 1fr auto; gap: 1rem; align-items: center; padding: 1.8rem 0; border-top: 1px solid var(--color-line); }
+.pricing-row > div { display: flex; gap: 1rem; align-items: flex-start; }
+.row-number { color: var(--color-blue); font-size: 0.64rem; }
+.pricing-row strong { display: block; color: var(--color-navy); font-size: 1rem; }
+.pricing-row small { display: block; margin-top: 0.25rem; color: var(--color-text-soft); font-size: 0.74rem; }
+.price { color: var(--color-blue-deep); font-size: 0.86rem; font-weight: 750; white-space: nowrap; }
+.factor-grid { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--color-line-strong); }
+.factor-grid article { min-height: 16rem; padding: 1.5rem; border-right: 1px solid var(--color-line); }
+.factor-grid article:last-child { border-right: 0; }
+.factor-grid span { color: var(--color-blue); font-size: 0.67rem; }
+.factor-grid h3 { margin: 4rem 0 0.7rem; color: var(--color-navy); font-size: 1.15rem; }
+.factor-grid p { margin: 0; color: var(--color-text-soft); font-size: 0.82rem; line-height: 1.65; }
+.price-assurance { margin: 2.5rem 0 0; padding: 1.2rem 1.4rem; border-left: 3px solid var(--color-aqua); background: white; color: var(--color-text-soft); font-size: 0.85rem; }
+.price-assurance strong { color: var(--color-navy); }
+
+@media (max-width: 48rem) {
+  .pricing-layout { grid-template-columns: 1fr; }
+  .pricing-intro { position: static; }
+  .factor-grid { grid-template-columns: 1fr; }
+  .factor-grid article { min-height: auto; border-right: 0; border-bottom: 1px solid var(--color-line); }
+  .factor-grid h3 { margin-top: 2rem; }
+}
+
+@media (max-width: 28rem) {
+  .pricing-head { display: none; }
+  .pricing-row { grid-template-columns: 1fr; }
+  .price { padding-left: 1.9rem; }
+}

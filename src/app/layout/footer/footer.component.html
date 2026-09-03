@@ -1,0 +1,40 @@
+<footer class="site-footer">
+  <div class="footer-main container">
+    <div class="footer-intro">
+      <a class="footer-brand" routerLink="/">HydraBoost <span>Infuzije</span></a>
+      <p>Mobilna infuziona terapija na zakazanoj adresi u Beogradu i okolini, uz prethodnu konsultaciju i stručni medicinski nadzor.</p>
+      <div class="social-links">
+        <a [href]="site.instagramHref" target="_blank" rel="noopener noreferrer">Instagram</a>
+        <a [href]="site.whatsappHref" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+      </div>
+    </div>
+
+    <div class="footer-column">
+      <h2>Navigacija</h2>
+      @for (item of navigation; track item.path) { <a [routerLink]="item.path">{{ item.label }}</a> }
+    </div>
+
+    <div class="footer-column">
+      <h2>Usluge</h2>
+      @for (service of services; track service.id) { <a routerLink="/usluge" [fragment]="service.id">{{ service.name }}</a> }
+    </div>
+
+    <address class="footer-column">
+      <h2>Kontakt</h2>
+      <span>{{ site.serviceArea }}</span>
+      <span>{{ site.workingHours }}</span>
+      <a [href]="site.phoneHref">{{ site.phoneDisplay }}</a>
+      <a [href]="site.emailHref">{{ site.email }}</a>
+    </address>
+  </div>
+
+  <div class="emergency container">
+    <p><strong>Važno:</strong> HydraBoost nije služba hitne medicinske pomoći.</p>
+    <a [href]="site.emergencyHref">Hitna pomoć: {{ site.emergencyPhone }}</a>
+  </div>
+
+  <div class="footer-bottom container">
+    <span>© {{ year }} HydraBoost Infuzije</span>
+    <span>Dizajn i razvoj: Igor Popovic</span>
+  </div>
+</footer>

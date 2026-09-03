@@ -1,0 +1,14 @@
+.faq-layout { display: grid; grid-template-columns: 0.55fr 1fr; gap: clamp(3rem, 9vw, 9rem); align-items: start; }
+.faq-layout aside { position: sticky; top: 7rem; }
+.faq-layout aside h2 { margin: 0; color: var(--color-navy); font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1.06; }
+.faq-layout aside > p:not(.eyebrow) { margin: 1.2rem 0 1.8rem; color: var(--color-text-soft); line-height: 1.75; }
+.emergency-note { background: #eef3f1; }
+.emergency-grid { display: grid; grid-template-columns: 1fr 0.8fr; gap: clamp(3rem, 8vw, 8rem); align-items: end; }
+.emergency-grid h2 { max-width: 18ch; margin: 0; color: var(--color-navy); font-size: clamp(2rem, 4vw, 3.6rem); line-height: 1.06; }
+.emergency-grid div:last-child p { color: var(--color-text-soft); line-height: 1.75; }
+.emergency-grid a { color: var(--color-navy); font-weight: 800; text-decoration: none; }
+
+@media (max-width: 48rem) {
+  .faq-layout, .emergency-grid { grid-template-columns: 1fr; }
+  .faq-layout aside { position: static; }
+}

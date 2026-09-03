@@ -1,0 +1,15 @@
+<section class="appointment-section section" aria-labelledby="appointment-title">
+  <div class="container appointment-grid">
+    <div>
+      <p class="eyebrow">Dogovorite konsultaciju</p>
+      <h2 id="appointment-title">Stručna njega dolazi na Vašu adresu.</h2>
+    </div>
+    <div class="appointment-copy">
+      <p>Pozovite nas da provjerimo da li je usluga odgovarajuća za Vas, dogovorimo termin i potvrdimo cijenu prije dolaska.</p>
+      <div class="button-row">
+        <a class="button button-light" [href]="site.phoneHref">Pozovite {{ site.phoneDisplay }}</a>
+        <a class="button button-outline-light" routerLink="/kontakt">Kontakt</a>
+      </div>
+    </div>
+  </div>
+</section>
