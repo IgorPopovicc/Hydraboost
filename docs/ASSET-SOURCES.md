@@ -14,3 +14,16 @@ Dve fotografije opreme na stranici Usluge takođe su lokalno optimizovane u WebP
 - Licenca za obe fotografije: https://www.pexels.com/license/
 
 Postojeće fotografije koje su prethodno migrirane iz originalnog projekta ostaju nepromenjene.
+
+## Fotografije za interne stranice
+
+Fotografije u nastavku preuzete su sa Pexels-a i lokalno pripremljene u responzivnim WebP i AVIF varijantama. Služe kao uredničke ilustracije i ne prikazuju članove HydraBoost tima.
+
+- `usluge-konsultacija-*` — Cedric Fauntleroy, https://www.pexels.com/photo/nurses-having-a-conversation-4269202/
+- `cenovnik-konsultacija-*` — Lucas Guimarães Bueno, https://www.pexels.com/photo/doctor-talking-with-woman-in-white-long-sleeve-shirt-12599544/
+- `faq-razgovor-*` — SHVETS production, https://www.pexels.com/photo/doctor-writing-on-a-clipboard-8413178/
+- `kontakt-podrska-*` — Anhelina Vasylyk, https://www.pexels.com/photo/healthcare-professional-consulting-with-patient-34159000/
+- `o-nama-medicinski-tim-*` — Gustavo Fring, https://www.pexels.com/photo/healthcare-professionals-looking-at-the-document-on-the-clipboard-7446988/
+- Licenca: https://www.pexels.com/license/
+
+Postojeća fotografija `mobilna-usluga-na-adresi.webp` dodatno je izvezena u tri responzivne WebP i AVIF veličine za stranicu „O nama“.

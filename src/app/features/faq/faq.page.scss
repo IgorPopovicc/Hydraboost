@@ -1,17 +1,22 @@
-.faq-section { background: var(--color-slate-light); }
+.faq-hero { padding-block: clamp(3rem, 6vw, 5.5rem); background: var(--surface-base); }
+.faq-hero-grid { display: grid; grid-template-columns: 1fr 0.62fr; gap: clamp(2.5rem, 8vw, 8rem); align-items: center; }
+.faq-hero-image { aspect-ratio: 4 / 3; border-radius: 0.5rem 5rem 0.5rem 0.5rem; }
+.faq-hero-image picture { display: block; height: 100%; }
+.faq-section { border-bottom: 1px solid var(--border-soft); background: var(--surface-soft); }
 .faq-layout { display: grid; grid-template-columns: 0.55fr 1fr; gap: clamp(3rem, 8vw, 8rem); align-items: start; }
 .faq-layout aside { position: sticky; top: 7rem; }
 .faq-layout aside h2 { margin: 0; color: var(--color-navy); font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1.06; }
 .faq-layout aside > p:not(.eyebrow) { margin: 1.2rem 0 1.8rem; color: var(--color-text-soft); line-height: 1.75; }
-.faq-panel { padding: clamp(1.25rem, 3vw, 2.5rem); background: white; box-shadow: 0 18px 50px rgb(5 45 66 / 6%); }
+.faq-panel { padding: clamp(1.25rem, 3vw, 2.5rem); border: 1px solid var(--border-soft); background: var(--surface-white); box-shadow: var(--shadow-card); }
 .faq-category { margin: 0 0 0.75rem; color: var(--color-blue); font-size: 0.65rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; }
-.emergency-note { background: #eef3f1; }
+.emergency-note { background: var(--surface-muted); }
 .emergency-grid { display: grid; grid-template-columns: 1fr 0.8fr; gap: clamp(3rem, 8vw, 8rem); align-items: end; }
 .emergency-grid h2 { max-width: 18ch; margin: 0; color: var(--color-navy); font-size: clamp(2rem, 4vw, 3.6rem); line-height: 1.06; }
 .emergency-grid div:last-child p { color: var(--color-text-soft); line-height: 1.75; }
 .emergency-grid a { color: var(--color-navy); font-weight: 800; text-decoration: none; }
 
 @media (max-width: 48rem) {
-  .faq-layout, .emergency-grid { grid-template-columns: 1fr; }
+  .faq-hero-grid, .faq-layout, .emergency-grid { grid-template-columns: 1fr; }
+  .faq-hero-image { width: min(100%, 34rem); border-radius: 0.5rem 4rem 0.5rem 0.5rem; }
   .faq-layout aside { position: static; }
 }

@@ -44,11 +44,17 @@
 </section>
 
 <section class="process section" aria-labelledby="process-title">
-  <div class="container">
-    <div class="section-header"><p class="eyebrow">Kako funkcioniše</p><h2 id="process-title">Od prvog poziva do dolaska na adresu.</h2></div>
-    <ol class="process-list">
+  <div class="container process-shell">
+    <div class="process-heading">
+      <div><p class="eyebrow">Kako funkcioniše</p><h2 id="process-title">Od prvog poziva do dolaska na adresu.</h2></div>
+      <p>Jasan medicinski put u pet koraka, sa procenom pre dogovora i proverom pre primene terapije.</p>
+    </div>
+    <ol class="process-list" aria-label="Tok zakazivanja i dolaska">
       @for (step of steps; track step.number) {
-        <li><span>{{ step.number }}</span><h3>{{ step.title }}</h3><p>{{ step.text }}</p></li>
+        <li>
+          <div class="process-marker" aria-hidden="true"><span>{{ step.number }}</span></div>
+          <div class="process-copy"><h3>{{ step.title }}</h3><p>{{ step.text }}</p></div>
+        </li>
       }
     </ol>
   </div>

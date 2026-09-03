@@ -60,3 +60,10 @@ test('FAQ and contact validation expose accessible UI state', async ({ page }) =
   await expect(page.getByText('Unesite ime i prezime.')).toBeVisible();
   await expect(page.locator('#fullName')).toHaveAttribute('aria-invalid', 'true');
 });
+
+test('unknown URLs render the branded 404 page with the correct response status', async ({ page }) => {
+  const response = await page.goto('/ne-postoji');
+  expect(response?.status()).toBe(404);
+  await expect(page.getByRole('heading', { name: 'Izgleda da ova adresa više nije dostupna.' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Početna stranica' })).toBeVisible();
+});

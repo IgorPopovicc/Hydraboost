@@ -1,10 +1,14 @@
-.about-hero { padding-bottom: 0; }
+.about-hero { padding-bottom: 0; background: var(--surface-base); }
 .about-hero-grid { display: grid; grid-template-columns: 1fr 0.8fr; gap: clamp(2.5rem, 7vw, 7rem); align-items: center; }
-.hero-image { align-self: end; aspect-ratio: 5 / 4; border-radius: 8rem 8rem 0 0; }
-.mission { background: white; }
-.mission-grid { display: grid; grid-template-columns: 1fr 0.8fr; gap: clamp(3rem, 8vw, 8rem); }
+.hero-image { position: relative; align-self: end; aspect-ratio: 5 / 4; border-radius: 8rem 8rem 0 0; box-shadow: none; }
+.hero-image picture { display: block; height: 100%; }
+.hero-image p { position: absolute; right: 1rem; bottom: 1rem; width: min(15rem, calc(100% - 2rem)); margin: 0; padding: 0.85rem 1rem; border: 1px solid var(--border-soft); background: rgb(255 255 255 / 94%); color: var(--color-navy); font-size: 0.72rem; font-weight: 700; box-shadow: var(--shadow-soft); }
+.mission { border-bottom: 1px solid var(--border-soft); background: var(--surface-white); }
+.mission-grid { display: grid; grid-template-columns: 1fr 0.8fr; gap: clamp(2.5rem, 6vw, 6rem); }
 .mission h2 { max-width: 17ch; margin: 0; color: var(--color-navy); font-size: clamp(2.2rem, 4.8vw, 4.3rem); line-height: 1.04; }
 .mission-copy p { margin-top: 0; color: var(--color-text-soft); line-height: 1.75; }
+.mission-image { grid-column: 1 / -1; width: min(100%, 62rem); min-height: 24rem; margin: clamp(0.5rem, 2vw, 1.5rem) auto 0; border-radius: 7rem 0.5rem 0.5rem 0.5rem; }
+.mission-image picture { display: block; height: 100%; }
 .arrival-grid { display: grid; grid-template-columns: 0.9fr 1fr; gap: clamp(3rem, 8vw, 8rem); align-items: center; }
 .arrival-image { min-height: 35rem; }
 .arrival-image picture { display: block; height: 100%; }
@@ -14,7 +18,7 @@
 .arrival-copy li > span { color: var(--color-blue); font-size: 0.66rem; }
 .arrival-copy h3 { margin: 0 0 0.4rem; color: var(--color-navy); font-size: 1rem; }
 .arrival-copy li p { margin: 0; color: var(--color-text-soft); font-size: 0.8rem; line-height: 1.6; }
-.principles { background: var(--color-slate-light); }
+.principles { border-top: 1px solid var(--border-soft); background: var(--surface-soft); }
 .principle-list { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--color-line-strong); }
 .principle-list article { min-height: 13rem; padding: 1.5rem 1.2rem; border-right: 1px solid var(--color-line); }
 .principle-list article:last-child { border-right: 0; }
@@ -24,12 +28,16 @@
 @media (max-width: 52rem) {
   .about-hero-grid, .mission-grid, .arrival-grid { grid-template-columns: 1fr; }
   .hero-image { max-height: 34rem; }
+  .mission-image { min-height: 20rem; border-radius: 4rem 0.5rem 0.5rem; }
   .arrival-image { min-height: 28rem; }
   .principle-list { grid-template-columns: 1fr 1fr; }
   .principle-list article { border-bottom: 1px solid var(--color-line); }
 }
 
 @media (max-width: 30rem) {
+  .hero-image { border-radius: 4rem 4rem 0 0; }
+  .hero-image p { right: 0.6rem; bottom: 0.6rem; }
+  .mission-image { min-height: 16rem; }
   .principle-list { grid-template-columns: 1fr; }
   .principle-list article { min-height: auto; border-right: 0; }
   .principle-list p { margin-top: 1.5rem; }

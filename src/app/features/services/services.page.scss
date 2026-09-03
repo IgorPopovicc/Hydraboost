@@ -1,9 +1,9 @@
-.services-hero { padding-bottom: 0; background: var(--color-slate-light); }
+.services-hero { padding-bottom: 0; background: var(--surface-soft); }
 .services-hero-grid { display: grid; grid-template-columns: 0.95fr 1.05fr; gap: clamp(2.5rem, 7vw, 7rem); align-items: center; }
 .services-hero-copy { padding-bottom: clamp(3.5rem, 7vw, 6.5rem); }
-.services-hero-image { position: relative; align-self: end; aspect-ratio: 4 / 3; border-radius: 7rem 7rem 0 0; }
+.services-hero-image { position: relative; align-self: end; aspect-ratio: 4 / 3; border-radius: 7rem 7rem 0 0; box-shadow: none; }
 .services-hero-image picture { display: block; height: 100%; }
-.services-hero-image p { position: absolute; right: 1rem; bottom: 1rem; max-width: 15rem; margin: 0; padding: 0.8rem 1rem; background: rgb(255 255 255 / 94%); color: var(--color-navy); font-size: 0.75rem; font-weight: 700; box-shadow: var(--shadow-soft); }
+.services-hero-image p { position: absolute; right: 1rem; bottom: 1rem; max-width: 15rem; margin: 0; padding: 0.8rem 1rem; border: 1px solid var(--border-soft); background: rgb(255 255 255 / 94%); color: var(--color-navy); font-size: 0.75rem; font-weight: 700; box-shadow: var(--shadow-soft); }
 .overview-grid { display: grid; grid-template-columns: 0.8fr 1fr; gap: clamp(3rem, 9vw, 9rem); }
 .overview-grid h2 { max-width: 14ch; margin: 0; color: var(--color-navy); font-size: clamp(2.2rem, 4.5vw, 4rem); line-height: 1.05; }
 .overview-grid .lead { margin-top: 0; }
@@ -27,7 +27,7 @@
 .standards-list span { color: var(--color-blue); font-size: 0.65rem; }
 .standards-list h3 { margin: 2rem 0 0.5rem; color: var(--color-navy); font-size: 1rem; }
 .standards-list p { margin: 0; color: var(--color-text-soft); font-size: 0.8rem; line-height: 1.65; }
-.assessment { background: var(--color-slate-mist); }
+.assessment { border-block: 1px solid var(--border-default); background: var(--surface-accent); }
 .assessment-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: clamp(2rem, 8vw, 8rem); align-items: end; }
 .assessment-grid h2 { max-width: 19ch; margin: 0; color: var(--color-navy); font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1.08; }
 .assessment-grid div:last-child p { margin: 0 0 1.5rem; color: #405660; line-height: 1.75; }
