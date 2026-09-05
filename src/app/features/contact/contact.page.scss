@@ -1,7 +1,6 @@
 .contact-hero { padding-block: clamp(3rem, 6vw, 5.5rem); background: var(--surface-soft); }
 .contact-hero-grid { display: grid; grid-template-columns: 1fr 0.58fr; gap: clamp(2.5rem, 8vw, 8rem); align-items: center; }
-.contact-hero-image { aspect-ratio: 4 / 3; border-radius: 5rem 0.5rem 0.5rem 0.5rem; }
-.contact-hero-image picture { display: block; height: 100%; }
+.contact-hero-image { align-self: center; border-radius: 5rem 0.5rem 0.5rem 0.5rem; }
 .contact-section { background: var(--surface-white); }
 .contact-grid { display: grid; grid-template-columns: 0.78fr 1.22fr; gap: 1rem; align-items: stretch; }
 .contact-details { padding: clamp(1.5rem, 4vw, 3rem); border: 1px solid var(--border-default); background: var(--surface-accent); }
@@ -10,7 +9,7 @@
 .contact-links a { display: grid; gap: 0.18rem; padding: 1rem 0; border-bottom: 1px solid rgb(7 59 85 / 18%); color: var(--color-navy); text-decoration: none; }
 .contact-links .phone-link { position: relative; margin-bottom: 0.5rem; padding: 1rem; border-bottom: 0; background: var(--color-navy); color: white; }
 .contact-links .phone-link span { color: rgb(255 255 255 / 65%); }
-.phone-link b { position: absolute; right: 1rem; bottom: 1rem; color: var(--color-aqua-light); font-weight: 500; }
+.phone-link app-icon { position: absolute; right: 1rem; bottom: 1rem; width: 1rem; height: 1rem; color: var(--color-aqua-light); }
 .contact-links span { color: var(--color-text-soft); font-size: 0.67rem; }
 .contact-links strong { font-size: 0.9rem; overflow-wrap: anywhere; }
 dl { margin: 2rem 0 0; }
@@ -38,6 +37,7 @@ form .button { justify-self: start; }
 .social-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: end; }
 .social-grid h2 { margin: 0; color: var(--color-navy); font-size: clamp(2rem, 4vw, 3.5rem); }
 .social-grid > a { display: flex; align-items: center; justify-content: space-between; padding: 1rem 0; border-top: 1px solid var(--color-line-strong); border-bottom: 1px solid var(--color-line-strong); color: var(--color-navy); font-weight: 750; text-decoration: none; }
+.social-grid app-icon { width: 1.1rem; height: 1.1rem; }
 
 @media (max-width: 50rem) {
   .contact-hero-grid, .contact-grid, .social-grid { grid-template-columns: 1fr; }

@@ -6,7 +6,7 @@
       <h1>Dogovorimo termin koji Vam odgovara.</h1>
       <p class="lead">Kontaktirajte nas za konsultaciju, proveru dostupnosti i tačnu procenu cene pre dolaska.</p>
     </div>
-    <div class="contact-hero-image image-frame"><picture><source type="image/avif" srcset="/assets/images/editorial/kontakt-podrska-480.avif 480w, /assets/images/editorial/kontakt-podrska-800.avif 800w, /assets/images/editorial/kontakt-podrska-1200.avif 1200w" sizes="(max-width: 800px) 92vw, 31vw" /><img src="/assets/images/editorial/kontakt-podrska-1200.webp" srcset="/assets/images/editorial/kontakt-podrska-480.webp 480w, /assets/images/editorial/kontakt-podrska-800.webp 800w, /assets/images/editorial/kontakt-podrska-1200.webp 1200w" sizes="(max-width: 800px) 92vw, 31vw" width="1200" height="900" fetchpriority="high" decoding="async" alt="Medicinska radnica razgovara sa pacijentkinjom o narednim koracima" /></picture></div>
+    <div class="contact-hero-image image-frame image-frame--landscape"><picture><source type="image/avif" srcset="/assets/images/editorial/kontakt-podrska-480.avif 480w, /assets/images/editorial/kontakt-podrska-800.avif 800w, /assets/images/editorial/kontakt-podrska-1200.avif 1200w" sizes="(max-width: 800px) 92vw, 31vw" /><img src="/assets/images/editorial/kontakt-podrska-1200.webp" srcset="/assets/images/editorial/kontakt-podrska-480.webp 480w, /assets/images/editorial/kontakt-podrska-800.webp 800w, /assets/images/editorial/kontakt-podrska-1200.webp 1200w" sizes="(max-width: 800px) 92vw, 31vw" width="1200" height="900" fetchpriority="high" decoding="async" alt="Medicinska radnica razgovara sa pacijentkinjom o narednim koracima" /></picture></div>
   </div>
 </section>
 
@@ -16,7 +16,7 @@
       <p class="eyebrow">Direktan kontakt</p>
       <h2 id="contact-title">Najbrže telefonom ili Viberom.</h2>
       <div class="contact-links">
-        <a class="phone-link" [href]="site.phoneHref"><span>Pozovite odmah</span><strong>{{ site.phoneDisplay }}</strong><b aria-hidden="true">→</b></a>
+        <a class="phone-link" [href]="site.phoneHref"><span>Pozovite odmah</span><strong>{{ site.phoneDisplay }}</strong><app-icon name="arrow-right" /></a>
         <a [href]="site.viberHref"><span>Viber</span><strong>Pošaljite poruku</strong></a>
         <a [href]="site.emailHref"><span>E-pošta</span><strong>{{ site.email }}</strong></a>
       </div>
@@ -65,6 +65,6 @@
 <section class="social-section section-compact">
   <div class="container social-grid">
     <div><p class="eyebrow">Pratite nas</p><h2>HydraBoost na Instagramu.</h2></div>
-    <a [href]="site.instagramHref" target="_blank" rel="noopener noreferrer"><span>{{ site.instagramLabel }}</span><span aria-hidden="true">↗</span></a>
+    <a [href]="site.instagramHref" target="_blank" rel="noopener noreferrer"><span>{{ site.instagramLabel }}</span><app-icon name="arrow-up-right" /></a>
   </div>
 </section>

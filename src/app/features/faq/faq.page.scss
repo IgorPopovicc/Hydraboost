@@ -1,7 +1,6 @@
 .faq-hero { padding-block: clamp(3rem, 6vw, 5.5rem); background: var(--surface-base); }
 .faq-hero-grid { display: grid; grid-template-columns: 1fr 0.62fr; gap: clamp(2.5rem, 8vw, 8rem); align-items: center; }
-.faq-hero-image { aspect-ratio: 4 / 3; border-radius: 0.5rem 5rem 0.5rem 0.5rem; }
-.faq-hero-image picture { display: block; height: 100%; }
+.faq-hero-image { align-self: center; border-radius: 0.5rem 5rem 0.5rem 0.5rem; }
 .faq-section { border-bottom: 1px solid var(--border-soft); background: var(--surface-soft); }
 .faq-layout { display: grid; grid-template-columns: 0.55fr 1fr; gap: clamp(3rem, 8vw, 8rem); align-items: start; }
 .faq-layout aside { position: sticky; top: 7rem; }

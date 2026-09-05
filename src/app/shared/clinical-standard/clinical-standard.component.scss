@@ -1,0 +1,19 @@
+:host { display: block; }
+.care-promise { background: var(--color-slate-mist); }
+.promise-wrap { display: grid; max-width: 68rem; grid-template-columns: minmax(11rem, 0.42fr) minmax(0, 1.2fr); gap: clamp(2rem, 5vw, 5rem); align-items: center; }
+.promise-visual { align-self: stretch; padding-right: clamp(1.5rem, 3vw, 3rem); border-right: 1px solid var(--border-default); }
+.promise-visual .eyebrow { margin: 0; color: var(--color-navy); }
+.clinical-illustration { display: block; width: min(100%, 13rem); height: auto; margin-top: 1.5rem; overflow: visible; }
+.clinical-illustration path, .clinical-illustration circle { vector-effect: non-scaling-stroke; }
+.clinical-line { fill: none; stroke: var(--color-blue-deep); stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5; }
+.clinical-fluid { fill: rgb(39 184 195 / 11%); stroke: var(--color-aqua); stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5; }
+.clinical-guide { fill: none; stroke: var(--border-accent); stroke-linecap: round; stroke-width: 1; }
+.clinical-dot { fill: var(--color-aqua); stroke: none; }
+.promise-copy h2 { margin: 0; color: var(--color-navy); font-size: clamp(1.75rem, 3.4vw, 3rem); line-height: 1.15; }
+.promise-copy p { max-width: 45rem; margin: 1rem 0 0; color: #405660; }
+
+@media (max-width: 48rem) {
+  .promise-wrap { grid-template-columns: 1fr; }
+  .promise-visual { display: grid; grid-template-columns: auto minmax(7rem, 1fr); align-items: center; gap: 1rem; padding: 0 0 1.25rem; border-right: 0; border-bottom: 1px solid var(--border-default); }
+  .clinical-illustration { width: min(100%, 8.5rem); margin: 0; justify-self: end; }
+}

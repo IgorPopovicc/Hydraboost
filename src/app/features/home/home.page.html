@@ -36,7 +36,7 @@
           <span class="service-number">0{{ index + 1 }}</span>
           <span class="service-name">{{ service.name }}</span>
           <span class="service-description">{{ service.shortDescription }}</span>
-          <span class="service-arrow" aria-hidden="true">↗</span>
+          <app-icon class="service-arrow" name="arrow-up-right" />
         </a>
       }
     </div>
@@ -62,13 +62,13 @@
 
 <section class="care-section section section-muted" aria-labelledby="care-title">
   <div class="container care-grid">
-    <div class="image-frame care-image"><picture><source type="image/avif" srcset="/assets/images/about/profesionalna-medicinska-njega-480.avif 480w, /assets/images/about/profesionalna-medicinska-njega-720.avif 720w, /assets/images/about/profesionalna-medicinska-njega-1000.avif 1000w" sizes="(max-width: 768px) 92vw, 48vw" /><img src="/assets/images/about/profesionalna-medicinska-njega.webp" width="1000" height="700" loading="lazy" decoding="async" alt="Medicinski radnik pruža infuzionu terapiju pacijentu kod kuće" /></picture></div>
+    <div class="image-frame image-frame--wide care-image"><picture><source type="image/avif" srcset="/assets/images/about/profesionalna-medicinska-njega-480.avif 480w, /assets/images/about/profesionalna-medicinska-njega-720.avif 720w, /assets/images/about/profesionalna-medicinska-njega-1000.avif 1000w" sizes="(max-width: 768px) 92vw, 48vw" /><img src="/assets/images/about/profesionalna-medicinska-njega.webp" width="1000" height="700" loading="lazy" decoding="async" alt="Medicinski radnik pruža infuzionu terapiju pacijentu kod kuće" /></picture></div>
     <div class="care-copy">
       <p class="eyebrow">Profesionalna nega</p>
       <h2 id="care-title">Bezbednost pre brzine. Pažnja pre rutine.</h2>
       <p class="lead">Pre primene terapije proveravaju se osnovni vitalni parametri i obavlja kratka konsultacija. Koristimo sterilnu opremu i svakom dolasku pristupamo individualno.</p>
       <ul><li>Licencirano medicinsko osoblje</li><li>Kompletna sterilna oprema</li><li>Diskretan dolazak na dogovorenu lokaciju</li></ul>
-      <a class="text-link" routerLink="/o-nama">Saznajte više o našem pristupu <span aria-hidden="true">→</span></a>
+      <a class="text-link" routerLink="/o-nama">Saznajte više o našem pristupu <app-icon name="arrow-right" /></a>
     </div>
   </div>
 </section>
@@ -84,17 +84,11 @@
   </div>
 </section>
 
-<section class="care-promise section-compact" aria-labelledby="care-promise-title">
-  <div class="container promise-wrap">
-    <p class="eyebrow">Naš standard</p>
-    <h2 id="care-promise-title">Dovoljno vremena za procenu, razgovor i pažljivu primenu.</h2>
-    <p>Termin se organizuje tek kada su poznate osnovne informacije o zdravstvenom stanju, lokaciji i vrsti usluge.</p>
-  </div>
-</section>
+<app-clinical-standard />
 
 <section class="faq-preview section" aria-labelledby="faq-title">
   <div class="container faq-grid">
-    <div class="faq-heading"><p class="eyebrow">Česta pitanja</p><h2 id="faq-title">Pre nego što zakažete.</h2><p>Najvažnije informacije o proceni, trajanju, zakazivanju i području dolaska.</p><a routerLink="/faq">Sva pitanja i odgovori →</a></div>
+    <div class="faq-heading"><p class="eyebrow">Česta pitanja</p><h2 id="faq-title">Pre nego što zakažete.</h2><p>Najvažnije informacije o proceni, trajanju, zakazivanju i području dolaska.</p><a routerLink="/faq">Sva pitanja i odgovori <app-icon name="arrow-right" /></a></div>
     <app-faq-list [items]="faqs" />
   </div>
 </section>

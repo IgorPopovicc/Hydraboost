@@ -5,11 +5,13 @@ import { PRICING } from '../../core/data/pricing.data';
 import { PROCESS_STEPS, SITE_INFO } from '../../core/data/site.data';
 import { SERVICES } from '../../core/data/services.data';
 import { AppointmentCtaComponent } from '../../shared/appointment-cta/appointment-cta.component';
+import { ClinicalStandardComponent } from '../../shared/clinical-standard/clinical-standard.component';
 import { FaqListComponent } from '../../shared/faq-list/faq-list.component';
+import { IconComponent } from '../../shared/icon/icon.component';
 
 @Component({
   selector: 'app-home-page',
-  imports: [RouterLink, AppointmentCtaComponent, FaqListComponent],
+  imports: [RouterLink, AppointmentCtaComponent, ClinicalStandardComponent, FaqListComponent, IconComponent],
   templateUrl: './home.page.html',
   styleUrl: './home.page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

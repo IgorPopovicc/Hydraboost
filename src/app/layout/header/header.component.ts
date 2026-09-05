@@ -4,16 +4,16 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { filter } from 'rxjs';
 import { NAVIGATION, SITE_INFO } from '../../core/data/site.data';
+import { IconComponent } from '../../shared/icon/icon.component';
 
 @Component({
   selector: 'app-header',
-  imports: [RouterLink, RouterLinkActive, NgOptimizedImage],
+  imports: [RouterLink, RouterLinkActive, NgOptimizedImage, IconComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent {
-  @ViewChild('firstMobileLink') private firstMobileLink?: ElementRef<HTMLAnchorElement>;
   @ViewChild('menuButton') private menuButton?: ElementRef<HTMLButtonElement>;
 
   protected readonly navigation = NAVIGATION;
@@ -29,7 +29,7 @@ export class HeaderComponent {
     this.router.events
       .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd), takeUntilDestroyed(this.destroyRef))
       .subscribe(() => this.closeMenu());
-    this.destroyRef.onDestroy(() => this.document.body.classList.remove('menu-locked'));
+    this.destroyRef.onDestroy(() => this.setScrollLock(false));
   }
 
   @HostListener('window:scroll')
@@ -46,7 +46,10 @@ export class HeaderComponent {
   protected onTab(event: Event): void {
     if (!this.menuOpen()) return;
     const keyboardEvent = event as KeyboardEvent;
-    const focusable = Array.from(this.document.querySelectorAll<HTMLElement>('#mobile-navigation a:not([tabindex="-1"])'));
+    const focusable = [
+      this.menuButton?.nativeElement,
+      ...this.document.querySelectorAll<HTMLElement>('#mobile-navigation a:not([tabindex="-1"])'),
+    ].filter((element): element is HTMLElement => element !== undefined);
     if (!focusable.length) return;
     const first = focusable[0];
     const last = focusable[focusable.length - 1];
@@ -62,16 +65,18 @@ export class HeaderComponent {
   protected toggleMenu(): void {
     const nextState = !this.menuOpen();
     this.menuOpen.set(nextState);
-    this.document.body.classList.toggle('menu-locked', nextState);
-    if (nextState && this.document.defaultView) {
-      this.document.defaultView.setTimeout(() => this.firstMobileLink?.nativeElement.focus(), 220);
-    }
+    this.setScrollLock(nextState);
   }
 
   protected closeMenu(restoreFocus = false): void {
-    if (!this.menuOpen()) return;
+    const wasOpen = this.menuOpen();
     this.menuOpen.set(false);
-    this.document.body.classList.remove('menu-locked');
-    if (restoreFocus) this.menuButton?.nativeElement.focus();
+    this.setScrollLock(false);
+    if (wasOpen && restoreFocus) this.menuButton?.nativeElement.focus({ preventScroll: true });
+  }
+
+  private setScrollLock(locked: boolean): void {
+    this.document.documentElement.classList.toggle('menu-locked', locked);
+    this.document.body.classList.toggle('menu-locked', locked);
   }
 }

@@ -3,10 +3,11 @@ import { ChangeDetectionStrategy, Component, PLATFORM_ID, inject, signal } from 
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { SITE_INFO } from '../../core/data/site.data';
+import { IconComponent } from '../../shared/icon/icon.component';
 
 @Component({
   selector: 'app-contact-page',
-  imports: [RouterLink, ReactiveFormsModule],
+  imports: [RouterLink, ReactiveFormsModule, IconComponent],
   templateUrl: './contact.page.html',
   styleUrl: './contact.page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

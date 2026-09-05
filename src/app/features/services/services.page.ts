@@ -3,10 +3,11 @@ import { RouterLink } from '@angular/router';
 import { PROCESS_STEPS, SITE_INFO } from '../../core/data/site.data';
 import { SERVICES } from '../../core/data/services.data';
 import { AppointmentCtaComponent } from '../../shared/appointment-cta/appointment-cta.component';
+import { IconComponent } from '../../shared/icon/icon.component';
 
 @Component({
   selector: 'app-services-page',
-  imports: [RouterLink, AppointmentCtaComponent],
+  imports: [RouterLink, AppointmentCtaComponent, IconComponent],
   templateUrl: './services.page.html',
   styleUrl: './services.page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

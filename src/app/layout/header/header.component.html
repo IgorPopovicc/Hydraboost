@@ -13,25 +13,25 @@
 
     <a class="header-cta button button-primary" [href]="site.phoneHref">Zakažite termin</a>
 
-    <button #menuButton class="menu-toggle" type="button" (click)="toggleMenu()" [attr.aria-expanded]="menuOpen()" aria-controls="mobile-navigation" [attr.aria-label]="menuOpen() ? 'Zatvorite meni' : 'Otvorite meni'">
+    <button #menuButton class="menu-toggle" type="button" (click)="toggleMenu()" [attr.aria-expanded]="menuOpen()" aria-controls="mobile-navigation" [attr.aria-label]="menuOpen() ? 'Zatvori navigaciju' : 'Otvorite meni'">
       <span></span><span></span>
     </button>
   </div>
 </header>
 
-<div class="menu-backdrop" [class.is-open]="menuOpen()" (click)="closeMenu(true)"></div>
+<div class="menu-backdrop" [class.is-open]="menuOpen()" (click)="closeMenu(true)" aria-hidden="true"></div>
 <nav id="mobile-navigation" class="mobile-nav" [class.is-open]="menuOpen()" [attr.aria-hidden]="!menuOpen()" aria-label="Mobilna navigacija">
   <p class="mobile-nav-label">Navigacija</p>
-  @for (item of navigation; track item.path; let first = $first) {
-    <a #firstMobileLink [routerLink]="item.path" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: item.path === '/' }" [tabIndex]="menuOpen() ? 0 : -1">
-      <span>{{ item.label }}</span><span aria-hidden="true">↗</span>
+  @for (item of navigation; track item.path) {
+    <a [routerLink]="item.path" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: item.path === '/' }" [tabIndex]="menuOpen() ? 0 : -1" (click)="closeMenu()">
+      <span>{{ item.label }}</span><app-icon name="arrow-up-right" />
     </a>
   }
-  <a class="mobile-appointment" [href]="site.phoneHref" [tabIndex]="menuOpen() ? 0 : -1">
-    <span>Zakažite termin</span><span aria-hidden="true">→</span>
+  <a class="mobile-appointment" [href]="site.phoneHref" [tabIndex]="menuOpen() ? 0 : -1" (click)="closeMenu()">
+    <span>Zakažite termin</span><app-icon name="arrow-right" />
   </a>
   <div class="mobile-contact">
     <span>Zakazivanje i konsultacije</span>
-    <a [href]="site.phoneHref" [tabIndex]="menuOpen() ? 0 : -1">{{ site.phoneDisplay }}</a>
+    <a [href]="site.phoneHref" [tabIndex]="menuOpen() ? 0 : -1" (click)="closeMenu()">{{ site.phoneDisplay }}</a>
   </div>
 </nav>

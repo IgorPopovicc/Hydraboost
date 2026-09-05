@@ -6,7 +6,7 @@
       <h1>Nega prilagođena Vašim potrebama.</h1>
       <p class="lead">Hidratacija, vitaminska podrška i individualno sastavljene terapije na dogovorenoj adresi u Beogradu — nakon konsultacije i procene.</p>
     </div>
-    <div class="services-hero-image image-frame">
+    <div class="services-hero-image image-frame image-frame--landscape">
       <picture>
         <source type="image/avif" srcset="/assets/images/editorial/usluge-konsultacija-480.avif 480w, /assets/images/editorial/usluge-konsultacija-800.avif 800w, /assets/images/editorial/usluge-konsultacija-1200.avif 1200w" sizes="(max-width: 800px) 92vw, 42vw" />
         <img src="/assets/images/editorial/usluge-konsultacija-1200.webp" srcset="/assets/images/editorial/usluge-konsultacija-480.webp 480w, /assets/images/editorial/usluge-konsultacija-800.webp 800w, /assets/images/editorial/usluge-konsultacija-1200.webp 1200w" sizes="(max-width: 800px) 92vw, 42vw" width="1200" height="900" fetchpriority="high" decoding="async" alt="Medicinska radnica razgovara sa pacijentkinjom pre pružanja usluge" />
@@ -23,26 +23,64 @@
   </div>
 </section>
 
-<section class="service-list section-compact" aria-label="Pregled usluga">
-  <div class="container">
-    @for (service of services; track service.id; let index = $index) {
-      <article class="service-row" [id]="service.id">
-        <div class="service-image image-frame">
-          <picture>
-            @if (service.imageAvifSrcset) { <source type="image/avif" [srcset]="service.imageAvifSrcset" sizes="(max-width: 800px) 92vw, 42vw" /> }
-            <img [src]="service.image" [attr.srcset]="service.imageSrcset ?? null" sizes="(max-width: 800px) 92vw, 42vw" width="760" height="570" loading="lazy" decoding="async" [alt]="service.imageAlt" />
-          </picture>
-        </div>
-        <div class="service-copy">
-          <span class="service-number">0{{ index + 1 }}</span>
-          <h2>{{ service.name }}</h2>
-          <p>{{ service.description }}</p>
-          <p class="service-context">{{ service.context }}</p>
-          <a class="text-link" routerLink="/kontakt">Proverite dostupnost <span aria-hidden="true">→</span></a>
-        </div>
-      </article>
-    }
+<section class="service-catalog" aria-label="Pregled usluga">
+  <article class="service-feature" [id]="services[0].id">
+    <div class="container service-feature-grid">
+      <div class="service-image service-feature-image image-frame image-frame--landscape">
+        <picture>
+          @if (services[0].imageAvifSrcset) { <source type="image/avif" [srcset]="services[0].imageAvifSrcset" sizes="(max-width: 800px) 92vw, 52vw" /> }
+          <img [src]="services[0].image" [attr.srcset]="services[0].imageSrcset ?? null" sizes="(max-width: 800px) 92vw, 52vw" width="760" height="570" loading="lazy" decoding="async" [alt]="services[0].imageAlt" />
+        </picture>
+      </div>
+      <div class="service-copy">
+        <span class="service-number">01</span>
+        <h2>{{ services[0].name }}</h2>
+        <p>{{ services[0].description }}</p>
+        <p class="service-context">{{ services[0].context }}</p>
+        <a class="text-link" routerLink="/kontakt">Proverite dostupnost <app-icon name="arrow-right" /></a>
+      </div>
+    </div>
+  </article>
+
+  <div class="service-pair-section">
+    <div class="container service-pair-grid">
+      @for (service of services.slice(1, 3); track service.id; let index = $index) {
+        <article class="service-panel" [id]="service.id">
+          <div class="service-image image-frame image-frame--landscape">
+            <picture>
+              @if (service.imageAvifSrcset) { <source type="image/avif" [srcset]="service.imageAvifSrcset" sizes="(max-width: 800px) 92vw, 38vw" /> }
+              <img [src]="service.image" [attr.srcset]="service.imageSrcset ?? null" sizes="(max-width: 800px) 92vw, 38vw" width="760" height="570" loading="lazy" decoding="async" [alt]="service.imageAlt" />
+            </picture>
+          </div>
+          <div class="service-copy">
+            <span class="service-number">0{{ index + 2 }}</span>
+            <h2>{{ service.name }}</h2>
+            <p>{{ service.description }}</p>
+            <p class="service-context">{{ service.context }}</p>
+            <a class="text-link" routerLink="/kontakt">Proverite dostupnost <app-icon name="arrow-right" /></a>
+          </div>
+        </article>
+      }
+    </div>
   </div>
+
+  <article class="service-final" [id]="services[3].id">
+    <div class="container service-final-grid">
+      <div class="service-copy">
+        <span class="service-number">04</span>
+        <h2>{{ services[3].name }}</h2>
+        <p>{{ services[3].description }}</p>
+        <p class="service-context">{{ services[3].context }}</p>
+        <a class="text-link" routerLink="/kontakt">Proverite dostupnost <app-icon name="arrow-right" /></a>
+      </div>
+      <div class="service-image service-final-image image-frame image-frame--landscape">
+        <picture>
+          @if (services[3].imageAvifSrcset) { <source type="image/avif" [srcset]="services[3].imageAvifSrcset" sizes="(max-width: 800px) 92vw, 46vw" /> }
+          <img [src]="services[3].image" [attr.srcset]="services[3].imageSrcset ?? null" sizes="(max-width: 800px) 92vw, 46vw" width="760" height="570" loading="lazy" decoding="async" [alt]="services[3].imageAlt" />
+        </picture>
+      </div>
+    </div>
+  </article>
 </section>
 
 <section class="standards section section-muted" aria-labelledby="standards-title">
