@@ -78,7 +78,7 @@
     <div class="pricing-copy"><p class="eyebrow">Cenovnik</p><h2 id="pricing-title">Jasna cena pre nego što potvrdite termin.</h2><p>Cena zavisi od sastava terapije, medicinske procene i lokacije. Tačan iznos saopštavamo tokom konsultacije — unapred i bez skrivenih troškova.</p><a class="button button-secondary" routerLink="/cenovnik">Pogledajte cenovnik</a></div>
     <div class="price-list">
       @for (item of pricing.slice(0, 4); track item.id) {
-        <div><span>{{ item.name }}</span><strong>{{ item.priceLabel }}</strong></div>
+        <div><span>{{ item.name }}</span><strong>{{ item.price }}</strong></div>
       }
     </div>
   </div>

@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { JSDOM } from 'jsdom';
 
 const routes = ['/', '/usluge', '/cenovnik', '/o-nama', '/faq', '/kontakt'];
 const widths = [320, 360, 375, 390, 430, 768, 1024, 1280, 1440, 1920];
@@ -11,6 +12,51 @@ const mobileViewports = [
   { width: 430, height: 932 },
   { width: 768, height: 844 },
 ];
+
+const seoRoutes = [
+  {
+    path: '/',
+    title: 'Mobilne infuzije Beograd | HydraBoost Infuzije',
+    description: 'Mobilne vitaminske i IV infuzije na kućnoj adresi, u kancelariji ili hotelu u Beogradu. Konsultacija, individualna procena i stručni nadzor.',
+    image: 'https://hydraboost.vercel.app/assets/social/og-home.jpg',
+    imageAlt: 'HydraBoost Infuzije — mobilne infuzije Beograd',
+  },
+  {
+    path: '/usluge',
+    title: 'Mobilne infuzione terapije Beograd | HydraBoost',
+    description: 'HydraBoost infuzione terapije dolaze na Vašu adresu u Beogradu, uz prethodnu konsultaciju, individualnu procenu i medicinski nadzor.',
+    image: 'https://hydraboost.vercel.app/assets/social/og-usluge.jpg',
+    imageAlt: 'HydraBoost mobilne infuzione terapije',
+  },
+  {
+    path: '/cenovnik',
+    title: 'Cenovnik mobilnih medicinskih usluga | HydraBoost',
+    description: 'Cenovnik infuzione terapije, primene lekova i previjanja na terenu u Beogradu, uz mogućnost HydraBoost personalizovanog paketa.',
+    image: 'https://hydraboost.vercel.app/assets/social/og-cenovnik.jpg',
+    imageAlt: 'HydraBoost cenovnik mobilnih medicinskih usluga',
+  },
+  {
+    path: '/o-nama',
+    title: 'O nama | HydraBoost mobilna medicinska usluga',
+    description: 'Upoznajte HydraBoost individualni pristup profesionalnoj medicinskoj usluzi i nezi na dogovorenoj adresi u Beogradu.',
+    image: 'https://hydraboost.vercel.app/assets/social/og-o-nama.jpg',
+    imageAlt: 'HydraBoost profesionalna medicinska usluga',
+  },
+  {
+    path: '/faq',
+    title: 'Česta pitanja o mobilnim infuzijama | HydraBoost',
+    description: 'Odgovori na česta pitanja o infuzionim terapijama, konsultaciji, zakazivanju i dolasku HydraBoost medicinske usluge na Vašu adresu.',
+    image: 'https://hydraboost.vercel.app/assets/social/og-faq.jpg',
+    imageAlt: 'Konsultacija o HydraBoost uslugama',
+  },
+  {
+    path: '/kontakt',
+    title: 'HydraBoost kontakt i zakazivanje | Beograd',
+    description: 'Kontaktirajte HydraBoost u Beogradu radi konsultacije i zakazivanja mobilne medicinske usluge na dogovorenoj adresi.',
+    image: 'https://hydraboost.vercel.app/assets/social/og-kontakt.jpg',
+    imageAlt: 'HydraBoost kontakt i zakazivanje',
+  },
+] as const;
 
 test('homepage has no horizontal overflow at all target widths', async ({ page }) => {
   for (const width of widths) {
@@ -70,6 +116,92 @@ test('public routes load without browser console or runtime errors', async ({ pa
     await expect(page.locator('h1')).toBeVisible();
   }
   expect(errors).toEqual([]);
+});
+
+test('prerendered HTML exposes complete route-specific metadata without JavaScript', async ({ request }) => {
+  const images = new Set<string>();
+  const titles = new Set<string>();
+  const descriptions = new Set<string>();
+
+  for (const config of seoRoutes) {
+    const response = await request.get(config.path);
+    expect(response.status(), `${config.path} response`).toBe(200);
+    const document = new JSDOM(await response.text()).window.document;
+    const canonical = `https://hydraboost.vercel.app${config.path}`;
+
+    const expectSingleAttribute = (selector: string, attribute: string, value: string) => {
+      const elements = document.querySelectorAll(selector);
+      expect(elements.length, `${config.path} ${selector} count`).toBe(1);
+      expect(elements.item(0).getAttribute(attribute), `${config.path} ${selector}`).toBe(value);
+    };
+
+    expect(document.querySelectorAll('title')).toHaveLength(1);
+    expect(document.title).toBe(config.title);
+    expectSingleAttribute('meta[name="description"]', 'content', config.description);
+    expectSingleAttribute('meta[name="robots"]', 'content', 'index, follow');
+    expectSingleAttribute('link[rel="canonical"]', 'href', canonical);
+    expectSingleAttribute('meta[property="og:type"]', 'content', 'website');
+    expectSingleAttribute('meta[property="og:site_name"]', 'content', 'HydraBoost Infuzije');
+    expectSingleAttribute('meta[property="og:title"]', 'content', config.title);
+    expectSingleAttribute('meta[property="og:description"]', 'content', config.description);
+    expectSingleAttribute('meta[property="og:url"]', 'content', canonical);
+    expectSingleAttribute('meta[property="og:image"]', 'content', config.image);
+    expectSingleAttribute('meta[property="og:image:secure_url"]', 'content', config.image);
+    expectSingleAttribute('meta[property="og:image:type"]', 'content', 'image/jpeg');
+    expectSingleAttribute('meta[property="og:image:width"]', 'content', '1200');
+    expectSingleAttribute('meta[property="og:image:height"]', 'content', '630');
+    expectSingleAttribute('meta[property="og:image:alt"]', 'content', config.imageAlt);
+    expectSingleAttribute('meta[property="og:locale"]', 'content', 'sr_RS');
+    expectSingleAttribute('meta[name="twitter:card"]', 'content', 'summary_large_image');
+    expectSingleAttribute('meta[name="twitter:title"]', 'content', config.title);
+    expectSingleAttribute('meta[name="twitter:description"]', 'content', config.description);
+    expectSingleAttribute('meta[name="twitter:image"]', 'content', config.image);
+    expectSingleAttribute('meta[name="twitter:image:alt"]', 'content', config.imageAlt);
+
+    const schema = document.querySelectorAll('script[data-hydraboost-schema]');
+    expect(schema, `${config.path} JSON-LD count`).toHaveLength(1);
+    expect(schema.item(0).textContent).toContain('https://hydraboost.vercel.app/#business');
+    expect(schema.item(0).textContent).toContain('https://hydraboost.vercel.app/assets/brand/logo-112.webp');
+    expect(schema.item(0).textContent).not.toContain('www.hydraboostinfuzije.com');
+
+    const imageResponse = await request.get(new URL(config.image).pathname);
+    expect(imageResponse.status(), `${config.image} response`).toBe(200);
+    expect(imageResponse.headers()['content-type']).toContain('image/jpeg');
+    expect((await imageResponse.body()).byteLength).toBeGreaterThan(40_000);
+    images.add(config.image);
+    titles.add(config.title);
+    descriptions.add(config.description);
+  }
+
+  expect(images.size).toBe(seoRoutes.length);
+  expect(titles.size).toBe(seoRoutes.length);
+  expect(descriptions.size).toBe(seoRoutes.length);
+
+  const sitemap = await (await request.get('/sitemap.xml')).text();
+  for (const config of seoRoutes) expect(sitemap).toContain(`https://hydraboost.vercel.app${config.path}`);
+  expect(sitemap).not.toContain('www.hydraboostinfuzije.com');
+  const robots = await (await request.get('/robots.txt')).text();
+  expect(robots).toContain('Sitemap: https://hydraboost.vercel.app/sitemap.xml');
+  expect(robots).toContain('Allow: /');
+});
+
+test('client-side route changes replace social metadata without stale duplicates', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('/');
+
+  for (const config of seoRoutes.slice(1, 3)) {
+    const linkName = config.path === '/usluge' ? 'Usluge' : 'Cenovnik';
+    await page.locator('.desktop-nav').getByRole('link', { name: linkName, exact: true }).click();
+    await expect(page).toHaveURL(new RegExp(`${config.path}$`));
+    await expect(page.locator('meta[property="og:title"]')).toHaveCount(1);
+    await expect(page.locator('meta[property="og:title"]')).toHaveAttribute('content', config.title);
+    await expect(page.locator('meta[property="og:image"]')).toHaveCount(1);
+    await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', config.image);
+    await expect(page.locator('meta[name="twitter:image"]')).toHaveCount(1);
+    await expect(page.locator('meta[name="twitter:image"]')).toHaveAttribute('content', config.image);
+    await expect(page.locator('link[rel="canonical"]')).toHaveCount(1);
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', `https://hydraboost.vercel.app${config.path}`);
+  }
 });
 
 test('SVG icons, social links, and secondary buttons use stable accessible rendering', async ({ page }) => {
@@ -141,6 +273,63 @@ test('clinical standard and service composition remain responsive and distinct',
   await expect(page.locator('.service-catalog .image-frame')).toHaveCount(4);
   const sectionBackgrounds = await page.locator('.service-feature, .service-pair-section, .service-final').evaluateAll((sections) => sections.map((section) => getComputedStyle(section).backgroundColor));
   expect(new Set(sectionBackgrounds).size).toBe(3);
+});
+
+test('Cenovnik presents the exact service catalog and one personalized package at every target width', async ({ page }) => {
+  const expectedPrices = [
+    ['Vitaminska infuzija', '5.000 RSD'],
+    ['Detoksikacija', '6.000 RSD'],
+    ['Infuzija za mamurluk', '6.000 RSD'],
+    ['Infuzija za imunitet', '5.500 RSD'],
+    ['Glutation infuzija', '6.000 RSD'],
+    ['Infuzija gvožđa', '6.000 RSD'],
+    ['Infuzija nakon hemoterapije', '5.000 RSD'],
+    ['Prilagođena infuziona terapija', 'Cena zavisi od preporučene terapije i doze'],
+    ['Intramuskularna primena leka', '2.500 RSD'],
+    ['Subkutana primena leka', '2.500 RSD'],
+    ['Malo previjanje na terenu', '2.500 RSD'],
+    ['Veliko previjanje na terenu', '3.500 RSD'],
+  ];
+
+  for (const width of widths) {
+    await page.setViewportSize({ width, height: width < 768 ? 820 : 900 });
+    await page.goto('/cenovnik');
+
+    await expect(page.locator('.price-category')).toHaveCount(3);
+    await expect(page.locator('.pricing-item')).toHaveCount(expectedPrices.length);
+    await expect(page.locator('.personalized-package')).toHaveCount(1);
+    await expect(page.getByRole('heading', { name: 'HydraBoost personalizovani paket' })).toHaveCount(1);
+    await expect(page.locator('.personalized-action strong')).toHaveText('Cena na upit');
+
+    const rows = await page.locator('.pricing-item').evaluateAll((items) =>
+      items.map((item) => {
+        const name = item.querySelector('dt');
+        const price = item.querySelector('dd');
+        const nameBox = name?.getBoundingClientRect();
+        const priceBox = price?.getBoundingClientRect();
+        return {
+          name: name?.textContent?.trim(),
+          price: price?.textContent?.trim(),
+          fits: item.scrollWidth <= item.clientWidth,
+          overlaps: Boolean(nameBox && priceBox) && nameBox!.right > priceBox!.left + 1 && nameBox!.bottom > priceBox!.top + 1 && priceBox!.bottom > nameBox!.top + 1,
+        };
+      }),
+    );
+    expect(rows.map(({ name, price }) => [name, price])).toEqual(expectedPrices);
+    expect(
+      rows.every((row) => row.fits && !row.overlaps),
+      `${width}px pricing row geometry`,
+    ).toBe(true);
+
+    const personalizedBox = await page.locator('.personalized-package').boundingBox();
+    expect(personalizedBox?.x).toBeGreaterThanOrEqual(0);
+    expect((personalizedBox?.x ?? width) + (personalizedBox?.width ?? 0)).toBeLessThanOrEqual(width);
+  }
+
+  const body = await page.locator('body').innerText();
+  expect(body).not.toContain('HydraBoost vitaminski paket');
+  expect(body).not.toContain('Preporučeni paket');
+  await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', /cenovnik infuzione terapije/i);
 });
 
 test('mobile navigation exposes every link and remains operable at phone widths', async ({ page }) => {

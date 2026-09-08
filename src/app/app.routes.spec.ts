@@ -10,7 +10,7 @@ describe('Public routes', () => {
     const harness = await RouterTestingHarness.create();
     await harness.navigateByUrl('/cenovnik');
     const element = harness.routeNativeElement as HTMLElement;
-    expect(element.querySelector('h1')?.textContent).toContain('Paketi prilagođeni');
+    expect(element.querySelector('h1')?.textContent).toContain('Cenovnik usluga');
   });
 
   it('redirects the former Ijekavian pricing URL to the Ekavian route', async () => {

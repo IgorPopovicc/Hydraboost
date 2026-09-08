@@ -1,55 +1,79 @@
-import { PricingItem } from '../models/content.models';
+import { PersonalizedPricingPackage, PricingCategory, PricingItem } from '../models/content.models';
 
-// Jedinstveno mesto za buduće odobrene cene i izmene paketa.
-export const PRICING: readonly PricingItem[] = [
+// Jedinstveno mesto za izmene svih javno prikazanih usluga i cena.
+export const PRICING_CATEGORIES: readonly PricingCategory[] = [
   {
-    id: 'osnovna-hidratacija',
-    name: 'Osnovna hidratacija',
-    description: 'Podrška nadoknadi tečnosti i elektrolita kada za to postoji odgovarajuća medicinska indikacija.',
-    features: ['Prethodna telefonska konsultacija', 'Dolazak na dogovorenu adresu', 'Procena i stručni nadzor'],
-    priceLabel: 'Cena na upit',
-    recommended: false,
-    combo: false,
-    cta: 'Proverite dostupnost',
+    id: 'infuzione-terapije',
+    title: 'Infuzione terapije',
+    description:
+      'Infuzione terapije na dogovorenoj adresi, uz prethodnu konsultaciju i medicinsku procenu.',
+    items: [
+      { id: 'vitaminska-infuzija', name: 'Vitaminska infuzija', price: '5.000 RSD' },
+      { id: 'detoksikacija', name: 'Detoksikacija', price: '6.000 RSD' },
+      { id: 'infuzija-za-mamurluk', name: 'Infuzija za mamurluk', price: '6.000 RSD' },
+      { id: 'infuzija-za-imunitet', name: 'Infuzija za imunitet', price: '5.500 RSD' },
+      { id: 'glutation-infuzija', name: 'Glutation infuzija', price: '6.000 RSD' },
+      { id: 'infuzija-gvozdja', name: 'Infuzija gvožđa', price: '6.000 RSD' },
+      {
+        id: 'infuzija-nakon-hemoterapije',
+        name: 'Infuzija nakon hemoterapije',
+        price: '5.000 RSD',
+      },
+      {
+        id: 'prilagodjena-infuziona-terapija',
+        name: 'Prilagođena infuziona terapija',
+        price: 'Cena zavisi od preporučene terapije i doze',
+        priceType: 'descriptive',
+      },
+    ],
   },
   {
-    id: 'hydraboost-vitaminski',
-    name: 'HydraBoost vitaminski paket',
-    description: 'Individualno razmotrena vitaminska podrška, prema potrebama, stanju i medicinskoj proceni.',
-    features: ['Konsultacija pre terapije', 'Individualno dogovoren sastav', 'Primena uz medicinski nadzor'],
-    priceLabel: 'Cena na upit',
-    recommended: true,
-    combo: false,
-    cta: 'Dogovorite konsultaciju',
+    id: 'primena-lekova',
+    title: 'Primena lekova',
+    description: 'Stručna primena propisane terapije na dogovorenoj adresi.',
+    items: [
+      {
+        id: 'intramuskularna-primena-leka',
+        name: 'Intramuskularna primena leka',
+        price: '2.500 RSD',
+      },
+      { id: 'subkutana-primena-leka', name: 'Subkutana primena leka', price: '2.500 RSD' },
+    ],
   },
   {
-    id: 'energija-i-oporavak',
-    name: 'Energija i oporavak',
-    description: 'Pristup prilagođen periodima pojačanog napora i iscrpljenosti, nakon odgovarajuće procene.',
-    features: ['Procena trenutnog stanja', 'Sastav prema indikaciji', 'Termin na Vašoj adresi'],
-    priceLabel: 'Cena na upit',
-    recommended: false,
-    combo: false,
-    cta: 'Saznajte više',
-  },
-  {
-    id: 'individualni-premium',
-    name: 'Individualni premium paket',
-    description: 'Posebno razmatran plan za potrebe koje zahtevaju individualni sastav i organizaciju termina.',
-    features: ['Detaljnija prethodna konsultacija', 'Individualno definisan pristup', 'Dogovor termina i lokacije'],
-    priceLabel: 'Cena na upit',
-    recommended: false,
-    combo: false,
-    cta: 'Pošaljite upit',
-  },
-  {
-    id: 'kombo-paket',
-    name: 'Kombo paket',
-    description: 'Kombinacija odabranih usluga uz posebne uslove za povezane pakete, prema medicinskoj proceni.',
-    features: ['Izbor usluga tokom konsultacije', 'Usklađen raspored termina', 'Jasan dogovor pre potvrde'],
-    priceLabel: 'Cena na upit',
-    recommended: false,
-    combo: true,
-    cta: 'Kreirajte svoj paket',
+    id: 'previjanje-na-terenu',
+    title: 'Previjanje na terenu',
+    description: 'Previjanje uz odgovarajući materijal i profesionalnu negu na terenu.',
+    items: [
+      { id: 'malo-previjanje-na-terenu', name: 'Malo previjanje na terenu', price: '2.500 RSD' },
+      {
+        id: 'veliko-previjanje-na-terenu',
+        name: 'Veliko previjanje na terenu',
+        price: '3.500 RSD',
+      },
+    ],
   },
 ] as const;
+
+// Ravan pregled koristi Početna; vrednosti se i dalje menjaju samo u kategorijama iznad.
+export const PRICING: readonly PricingItem[] = PRICING_CATEGORIES.flatMap(
+  (category) => category.items,
+);
+
+export const PERSONALIZED_PACKAGE: PersonalizedPricingPackage = {
+  id: 'hydraboost-personalizovani-paket',
+  label: 'Personalizovano',
+  name: 'HydraBoost personalizovani paket',
+  introduction:
+    'Individualno osmišljen paket prema Vašim potrebama, zdravstvenom stanju i medicinskoj proceni.',
+  description:
+    'HydraBoost personalizovani paket formira se nakon konsultacije i individualne procene. Sastav i vrsta terapije prilagođavaju se potrebama klijenta i medicinskoj indikaciji.',
+  features: [
+    'Konsultacija pre terapije',
+    'Individualna procena',
+    'Personalizovan izbor terapije',
+    'Primena uz stručni medicinski nadzor',
+  ],
+  price: 'Cena na upit',
+  cta: 'Dogovorite konsultaciju',
+} as const;

@@ -1,6 +1,6 @@
 import { NavigationItem } from '../models/content.models';
 
-export const SITE_URL = 'https://www.hydraboostinfuzije.com';
+export const SITE_URL = 'https://hydraboost.vercel.app';
 
 export const SITE_INFO = {
   name: 'HydraBoost Infuzije',

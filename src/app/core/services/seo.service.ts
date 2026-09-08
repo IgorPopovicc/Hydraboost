@@ -13,32 +13,44 @@ const SEO_BY_PATH: Readonly<Record<string, SeoConfig>> = {
     title: 'Mobilne infuzije Beograd | HydraBoost Infuzije',
     description: 'Mobilne vitaminske i IV infuzije na kućnoj adresi, u kancelariji ili hotelu u Beogradu. Konsultacija, individualna procena i stručni nadzor.',
     path: '/',
+    socialImage: '/assets/social/og-home.jpg',
+    socialImageAlt: 'HydraBoost Infuzije — mobilne infuzije Beograd',
   },
   '/usluge': {
-    title: 'Usluge mobilne IV terapije | HydraBoost Beograd',
-    description: 'Hidratacija, vitaminska podrška i individualno prilagođene infuzione terapije na adresi u Beogradu, uz prethodnu medicinsku procenu.',
+    title: 'Mobilne infuzione terapije Beograd | HydraBoost',
+    description: 'HydraBoost infuzione terapije dolaze na Vašu adresu u Beogradu, uz prethodnu konsultaciju, individualnu procenu i medicinski nadzor.',
     path: '/usluge',
+    socialImage: '/assets/social/og-usluge.jpg',
+    socialImageAlt: 'HydraBoost mobilne infuzione terapije',
   },
   '/cenovnik': {
-    title: 'Cenovnik mobilnih infuzija | HydraBoost',
-    description: 'Saznajte kako se formira cena HydraBoost mobilne infuzione terapije u Beogradu. Transparentna procena troškova pre potvrde termina.',
+    title: 'Cenovnik mobilnih medicinskih usluga | HydraBoost',
+    description: 'Cenovnik infuzione terapije, primene lekova i previjanja na terenu u Beogradu, uz mogućnost HydraBoost personalizovanog paketa.',
     path: '/cenovnik',
+    socialImage: '/assets/social/og-cenovnik.jpg',
+    socialImageAlt: 'HydraBoost cenovnik mobilnih medicinskih usluga',
   },
   '/o-nama': {
-    title: 'O nama | HydraBoost mobilne infuzije Beograd',
-    description: 'Upoznajte pristup HydraBoost tima: licencirano medicinsko osoblje, sterilna oprema i individualna nega na Vašoj adresi u Beogradu.',
+    title: 'O nama | HydraBoost mobilna medicinska usluga',
+    description: 'Upoznajte HydraBoost individualni pristup profesionalnoj medicinskoj usluzi i nezi na dogovorenoj adresi u Beogradu.',
     path: '/o-nama',
+    socialImage: '/assets/social/og-o-nama.jpg',
+    socialImageAlt: 'HydraBoost profesionalna medicinska usluga',
   },
   '/faq': {
     title: 'Česta pitanja o mobilnim infuzijama | HydraBoost',
-    description: 'Odgovori o zakazivanju, trajanju, proceni, kontraindikacijama, ceni i području dolaska HydraBoost mobilne IV terapije u Beogradu.',
+    description: 'Odgovori na česta pitanja o infuzionim terapijama, konsultaciji, zakazivanju i dolasku HydraBoost medicinske usluge na Vašu adresu.',
     path: '/faq',
+    socialImage: '/assets/social/og-faq.jpg',
+    socialImageAlt: 'Konsultacija o HydraBoost uslugama',
     faq: true,
   },
   '/kontakt': {
-    title: 'Kontakt i zakazivanje | HydraBoost Infuzije',
-    description: 'Kontaktirajte HydraBoost za konsultaciju i zakazivanje mobilne infuzione terapije na adresi u Beogradu i okolini.',
+    title: 'HydraBoost kontakt i zakazivanje | Beograd',
+    description: 'Kontaktirajte HydraBoost u Beogradu radi konsultacije i zakazivanja mobilne medicinske usluge na dogovorenoj adresi.',
     path: '/kontakt',
+    socialImage: '/assets/social/og-kontakt.jpg',
+    socialImageAlt: 'HydraBoost kontakt i zakazivanje',
   },
 };
 
@@ -46,6 +58,8 @@ const NOT_FOUND_SEO: SeoConfig = {
   title: 'Stranica nije pronađena | HydraBoost Infuzije',
   description: 'Tražena stranica nije pronađena. Vratite se na početnu stranicu HydraBoost Infuzija.',
   path: '/404',
+  socialImage: '/assets/social/og-home.jpg',
+  socialImageAlt: 'HydraBoost Infuzije',
   robots: 'noindex, nofollow',
 };
 
@@ -67,7 +81,7 @@ export class SeoService {
     const path = rawUrl.split('?')[0].split('#')[0].replace(/\/$/, '') || '/';
     const config = SEO_BY_PATH[path] ?? NOT_FOUND_SEO;
     const canonicalUrl = `${SITE_URL}${config.path === '/' ? '/' : config.path}`;
-    const socialImage = `${SITE_URL}/assets/images/og/hydraboost-social-preview.jpg`;
+    const socialImage = `${SITE_URL}${config.socialImage}`;
 
     this.title.setTitle(config.title);
     this.setMeta('name', 'description', config.description);
@@ -75,25 +89,34 @@ export class SeoService {
     this.setMeta('property', 'og:title', config.title);
     this.setMeta('property', 'og:description', config.description);
     this.setMeta('property', 'og:type', 'website');
+    this.setMeta('property', 'og:site_name', SITE_INFO.name);
     this.setMeta('property', 'og:url', canonicalUrl);
     this.setMeta('property', 'og:image', socialImage);
+    this.setMeta('property', 'og:image:secure_url', socialImage);
+    this.setMeta('property', 'og:image:type', 'image/jpeg');
     this.setMeta('property', 'og:image:width', '1200');
     this.setMeta('property', 'og:image:height', '630');
+    this.setMeta('property', 'og:image:alt', config.socialImageAlt);
     this.setMeta('property', 'og:locale', 'sr_RS');
     this.setMeta('name', 'twitter:card', 'summary_large_image');
     this.setMeta('name', 'twitter:title', config.title);
     this.setMeta('name', 'twitter:description', config.description);
     this.setMeta('name', 'twitter:image', socialImage);
+    this.setMeta('name', 'twitter:image:alt', config.socialImageAlt);
     this.updateCanonical(canonicalUrl);
     this.updateStructuredData(path, canonicalUrl, Boolean(config.faq));
   }
 
   private setMeta(attribute: 'name' | 'property', key: string, content: string): void {
+    const duplicates = this.document.head.querySelectorAll<HTMLMetaElement>(`meta[${attribute}="${key}"]`);
+    for (const duplicate of Array.from(duplicates).slice(1)) duplicate.remove();
     this.meta.updateTag({ [attribute]: key, content }, `${attribute}='${key}'`);
   }
 
   private updateCanonical(url: string): void {
-    let canonical = this.document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+    const canonicalLinks = this.document.head.querySelectorAll<HTMLLinkElement>('link[rel="canonical"]');
+    let canonical = canonicalLinks.item(0);
+    for (const duplicate of Array.from(canonicalLinks).slice(1)) duplicate.remove();
     if (!canonical) {
       canonical = this.document.createElement('link');
       canonical.rel = 'canonical';
@@ -110,8 +133,8 @@ export class SeoService {
         '@id': `${SITE_URL}/#business`,
         name: SITE_INFO.name,
         url: SITE_URL,
-        image: `${SITE_URL}/assets/images/og/hydraboost-social-preview.jpg`,
-        logo: `${SITE_URL}/assets/brand/logo-96.png`,
+        image: `${SITE_URL}/assets/social/og-home.jpg`,
+        logo: `${SITE_URL}/assets/brand/logo-112.webp`,
         telephone: SITE_INFO.phoneInternational,
         email: SITE_INFO.email,
         areaServed: { '@type': 'City', name: 'Beograd' },

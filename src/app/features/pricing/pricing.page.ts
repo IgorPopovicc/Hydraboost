@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { PRICING } from '../../core/data/pricing.data';
-import { SITE_INFO } from '../../core/data/site.data';
+import { PERSONALIZED_PACKAGE, PRICING_CATEGORIES } from '../../core/data/pricing.data';
 import { AppointmentCtaComponent } from '../../shared/appointment-cta/appointment-cta.component';
 
 @Component({
@@ -12,6 +11,6 @@ import { AppointmentCtaComponent } from '../../shared/appointment-cta/appointmen
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PricingPage {
-  protected readonly pricing = PRICING;
-  protected readonly site = SITE_INFO;
+  protected readonly categories = PRICING_CATEGORIES;
+  protected readonly personalizedPackage = PERSONALIZED_PACKAGE;
 }

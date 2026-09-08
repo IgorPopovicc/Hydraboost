@@ -18,11 +18,25 @@ export interface ServiceItem {
 export interface PricingItem {
   readonly id: string;
   readonly name: string;
+  readonly price: string;
+  readonly priceType?: 'fixed' | 'descriptive';
+}
+
+export interface PricingCategory {
+  readonly id: string;
+  readonly title: string;
+  readonly description?: string;
+  readonly items: readonly PricingItem[];
+}
+
+export interface PersonalizedPricingPackage {
+  readonly id: string;
+  readonly label: string;
+  readonly name: string;
+  readonly introduction: string;
   readonly description: string;
   readonly features: readonly string[];
-  readonly priceLabel: string;
-  readonly recommended: boolean;
-  readonly combo: boolean;
+  readonly price: string;
   readonly cta: string;
 }
 
@@ -35,6 +49,8 @@ export interface SeoConfig {
   readonly title: string;
   readonly description: string;
   readonly path: string;
+  readonly socialImage: string;
+  readonly socialImageAlt: string;
   readonly robots?: string;
   readonly faq?: boolean;
 }

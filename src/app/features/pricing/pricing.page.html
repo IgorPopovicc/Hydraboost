@@ -1,65 +1,131 @@
 <section class="page-hero pricing-hero">
   <div class="container pricing-hero-grid">
     <div>
-      <nav class="breadcrumbs" aria-label="Putanja"><a routerLink="/">Početna</a><span>/</span><span>Cenovnik</span></nav>
-      <p class="eyebrow">Jasan dogovor pre dolaska</p>
-      <h1>Paketi prilagođeni razlogu Vašeg poziva.</h1>
-      <p class="lead">Tačnu cenu potvrđujemo pre termina, kada znamo vrstu terapije, medicinske potrebe i lokaciju dolaska.</p>
+      <nav class="breadcrumbs" aria-label="Putanja">
+        <a routerLink="/">Početna</a><span>/</span><span>Cenovnik</span>
+      </nav>
+      <p class="eyebrow">Jasan cenovnik pre dolaska</p>
+      <h1>Cenovnik usluga na Vašoj adresi.</h1>
+      <p class="lead">
+        Pregledajte cene mobilnih medicinskih usluga i saznajte šta je uključeno pre nego što
+        potvrdite termin.
+      </p>
     </div>
+
     <div class="pricing-hero-visual">
       <picture>
-        <source type="image/avif" srcset="/assets/images/editorial/cenovnik-konsultacija-480.avif 480w, /assets/images/editorial/cenovnik-konsultacija-800.avif 800w, /assets/images/editorial/cenovnik-konsultacija-1200.avif 1200w" sizes="(max-width: 832px) 92vw, 37vw" />
-        <img src="/assets/images/editorial/cenovnik-konsultacija-1200.webp" srcset="/assets/images/editorial/cenovnik-konsultacija-480.webp 480w, /assets/images/editorial/cenovnik-konsultacija-800.webp 800w, /assets/images/editorial/cenovnik-konsultacija-1200.webp 1200w" sizes="(max-width: 832px) 92vw, 37vw" width="1200" height="800" fetchpriority="high" decoding="async" alt="Lekar objašnjava pacijentkinji naredne korake tokom konsultacije" />
+        <source
+          type="image/avif"
+          srcset="
+            /assets/images/editorial/cenovnik-konsultacija-480.avif   480w,
+            /assets/images/editorial/cenovnik-konsultacija-800.avif   800w,
+            /assets/images/editorial/cenovnik-konsultacija-1200.avif 1200w
+          "
+          sizes="(max-width: 832px) 92vw, 37vw"
+        />
+        <img
+          src="/assets/images/editorial/cenovnik-konsultacija-1200.webp"
+          srcset="
+            /assets/images/editorial/cenovnik-konsultacija-480.webp   480w,
+            /assets/images/editorial/cenovnik-konsultacija-800.webp   800w,
+            /assets/images/editorial/cenovnik-konsultacija-1200.webp 1200w
+          "
+          sizes="(max-width: 832px) 92vw, 37vw"
+          width="1200"
+          height="800"
+          fetchpriority="high"
+          decoding="async"
+          alt="Lekar objašnjava pacijentkinji naredne korake tokom konsultacije"
+        />
       </picture>
-      <aside class="pricing-hero-note" aria-label="Napomena o cenama">
-        <span>Važno</span>
-        <strong>Sve cene su trenutno na upit.</strong>
-        <p>Ne prikazujemo neodobrene iznose. Konačan dogovor zavisi od procene i sastava usluge.</p>
+      <aside class="pricing-hero-note" aria-label="Informacije o cenama">
+        <span>Cene u RSD</span>
+        <strong>Jasno definisano pre dolaska.</strong>
+        <p>Za svaku navedenu uslugu unapred vidite cenu ili način njenog formiranja.</p>
       </aside>
     </div>
   </div>
 </section>
 
-<section class="packages-section section" aria-labelledby="packages-title">
+<section class="pricing-catalog section" aria-labelledby="pricing-title">
   <div class="container">
-    <div class="packages-heading">
-      <div><p class="eyebrow">Pregled paketa</p><h2 id="packages-title">Polazna tačka za razgovor, ne univerzalna terapija.</h2></div>
-      <p>Paketi olakšavaju pregled ponude. Konačan sastav se ne bira samo preko sajta, već se dogovara nakon konsultacije i provere mogućih kontraindikacija.</p>
-    </div>
+    <header class="pricing-heading">
+      <div>
+        <p class="eyebrow">Cenovnik usluga</p>
+        <h2 id="pricing-title">Pregled usluga i cena.</h2>
+      </div>
+      <p>
+        Cene su izražene u dinarima (RSD). U cenu su uračunati dolazak na kućnu adresu na teritoriji
+        Beograda, materijal i lekovi za izabranu terapiju.
+      </p>
+    </header>
 
-    <div class="package-grid">
-      @for (item of pricing; track item.id) {
-        <article class="package" [class.recommended]="item.recommended" [class.combo]="item.combo">
-          @if (item.recommended) { <p class="package-label">Preporučeni paket</p> }
-          @if (item.combo) { <p class="package-label">Kombinovane usluge</p> }
-          <div class="package-top">
-            <h3>{{ item.name }}</h3>
-            <p>{{ item.description }}</p>
-          </div>
-          <ul>
-            @for (feature of item.features; track feature) { <li>{{ feature }}</li> }
-          </ul>
-          <div class="package-bottom">
-            <strong>{{ item.priceLabel }}</strong>
-            <a class="button" [class.button-light]="item.recommended" [class.button-primary]="!item.recommended" routerLink="/kontakt">{{ item.cta }}</a>
-          </div>
-        </article>
+    <aside class="pricing-travel-note" aria-label="Dodatne informacije o formiranju cene">
+      <span>Napomena</span>
+      <p>
+        Za udaljenija mesta cena se koriguje u zavisnosti od troškova puta, kao i u slučaju
+        dodavanja lekova ukoliko je to potrebno i u skladu sa dogovorenom terapijom.
+      </p>
+    </aside>
+
+    <div class="pricing-categories">
+      @for (category of categories; track category.id; let index = $index) {
+        <section
+          class="price-category"
+          [class]="'price-category price-category--' + (index + 1)"
+          [attr.aria-labelledby]="'pricing-category-' + category.id"
+        >
+          <header class="category-heading">
+            <span class="category-number" aria-hidden="true">0{{ index + 1 }}</span>
+            <div>
+              <p>Kategorija</p>
+              <h3 [id]="'pricing-category-' + category.id">{{ category.title }}</h3>
+              @if (category.description) {
+                <p class="category-description">{{ category.description }}</p>
+              }
+            </div>
+          </header>
+
+          <dl class="pricing-list">
+            @for (item of category.items; track item.id) {
+              <div
+                class="pricing-item"
+                [class.pricing-item--descriptive]="item.priceType === 'descriptive'"
+              >
+                <dt>{{ item.name }}</dt>
+                <dd>{{ item.price }}</dd>
+              </div>
+            }
+          </dl>
+        </section>
       }
     </div>
   </div>
 </section>
 
-<section class="price-factors section section-muted" aria-labelledby="factors-title">
-  <div class="container factors-layout">
-    <div class="section-header"><p class="eyebrow">Kako se formira cena</p><h2 id="factors-title">Tri informacije daju tačan iznos.</h2></div>
-    <div>
-      <div class="factor-grid">
-        <article><span>01</span><h3>Vrsta i sastav terapije</h3><p>Potrebni preparati i količina određuju se prema dogovorenoj terapiji.</p></article>
-        <article><span>02</span><h3>Medicinska procena</h3><p>Individualne potrebe i indikacija mogu uticati na sastav i trajanje usluge.</p></article>
-        <article><span>03</span><h3>Lokacija dolaska</h3><p>Dolazak van standardne zone u Beogradu i okolini dogovara se posebno.</p></article>
+<section class="personalized-section section section-muted" aria-labelledby="personalized-title">
+  <div class="container">
+    <article class="personalized-package">
+      <div class="personalized-copy">
+        <p class="personalized-label">{{ personalizedPackage.label }}</p>
+        <h2 id="personalized-title">{{ personalizedPackage.name }}</h2>
+        <p class="personalized-introduction">{{ personalizedPackage.introduction }}</p>
+        <p>{{ personalizedPackage.description }}</p>
       </div>
-      <p class="price-assurance"><strong>Pre dolaska znate tačan iznos.</strong> Procenu troškova saopštavamo u razgovoru, a termin potvrđujete tek nakon toga.</p>
-    </div>
+
+      <div class="personalized-details">
+        <ul aria-label="Šta personalizovani paket obuhvata">
+          @for (feature of personalizedPackage.features; track feature) {
+            <li>{{ feature }}</li>
+          }
+        </ul>
+        <div class="personalized-action">
+          <span>Cena paketa</span>
+          <strong>{{ personalizedPackage.price }}</strong>
+          <a class="button button-light" routerLink="/kontakt">{{ personalizedPackage.cta }}</a>
+        </div>
+      </div>
+    </article>
   </div>
 </section>
 
