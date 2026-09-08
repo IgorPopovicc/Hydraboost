@@ -95,7 +95,7 @@ export class SeoService {
     this.setMeta('property', 'og:image:secure_url', socialImage);
     this.setMeta('property', 'og:image:type', 'image/jpeg');
     this.setMeta('property', 'og:image:width', '1200');
-    this.setMeta('property', 'og:image:height', '630');
+    this.setMeta('property', 'og:image:height', '1200');
     this.setMeta('property', 'og:image:alt', config.socialImageAlt);
     this.setMeta('property', 'og:locale', 'sr_RS');
     this.setMeta('name', 'twitter:card', 'summary_large_image');

@@ -149,7 +149,7 @@ test('prerendered HTML exposes complete route-specific metadata without JavaScri
     expectSingleAttribute('meta[property="og:image:secure_url"]', 'content', config.image);
     expectSingleAttribute('meta[property="og:image:type"]', 'content', 'image/jpeg');
     expectSingleAttribute('meta[property="og:image:width"]', 'content', '1200');
-    expectSingleAttribute('meta[property="og:image:height"]', 'content', '630');
+    expectSingleAttribute('meta[property="og:image:height"]', 'content', '1200');
     expectSingleAttribute('meta[property="og:image:alt"]', 'content', config.imageAlt);
     expectSingleAttribute('meta[property="og:locale"]', 'content', 'sr_RS');
     expectSingleAttribute('meta[name="twitter:card"]', 'content', 'summary_large_image');
@@ -204,6 +204,94 @@ test('client-side route changes replace social metadata without stale duplicates
   }
 });
 
+test('route loader follows real client navigation without flashing on initial hydration', async ({ page }) => {
+  await page.addInitScript(() => {
+    const state = window as Window & { __routeLoaderActivated?: boolean };
+    state.__routeLoaderActivated = false;
+    new MutationObserver(() => {
+      if (document.querySelector('.route-loader.is-active')) state.__routeLoaderActivated = true;
+    }).observe(document, { attributes: true, attributeFilter: ['class'], childList: true, subtree: true });
+  });
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/');
+
+  const loader = page.locator('.route-loader');
+  await expect(loader).not.toHaveClass(/is-active/);
+  expect(await page.evaluate(() => (window as Window & { __routeLoaderActivated?: boolean }).__routeLoaderActivated)).toBe(false);
+
+  let releaseChunk = () => {};
+  let markChunkRequested = () => {};
+  const holdChunk = new Promise<void>((resolve) => { releaseChunk = resolve; });
+  const chunkRequested = new Promise<void>((resolve) => { markChunkRequested = resolve; });
+  await page.route(/\/chunk-.*\.js$/, async (route) => {
+    markChunkRequested();
+    await holdChunk;
+    await route.continue();
+  });
+
+  await page.locator('.menu-toggle').click();
+  await page.locator('#mobile-navigation').getByRole('link', { name: 'O nama', exact: true }).click({ noWaitAfter: true });
+  await chunkRequested;
+  await expect(loader).toHaveClass(/is-active/);
+  await expect(loader).toHaveCSS('pointer-events', 'auto');
+  releaseChunk();
+
+  await expect(page).toHaveURL(/\/o-nama$/);
+  await expect(loader).not.toHaveClass(/is-active/);
+  await expect(page.locator('html')).not.toHaveClass(/menu-locked/);
+  await expect(page.locator('body')).not.toHaveClass(/menu-locked/);
+});
+
+test('route loader remains centered and compact across target sizes', async ({ page }) => {
+  const viewports = [
+    { width: 320, height: 568 },
+    { width: 360, height: 640 },
+    { width: 375, height: 667 },
+    { width: 390, height: 844 },
+    { width: 430, height: 932 },
+    { width: 768, height: 844 },
+    { width: 1024, height: 900 },
+    { width: 1280, height: 900 },
+    { width: 1440, height: 900 },
+    { width: 1920, height: 1080 },
+  ];
+  await page.goto('/');
+
+  for (const viewport of viewports) {
+    await page.setViewportSize(viewport);
+    const metrics = await page.locator('.route-loader').evaluate((element) => {
+      element.classList.add('is-active');
+      const overlay = element.getBoundingClientRect();
+      const content = element.querySelector('.route-loader__content')!.getBoundingClientRect();
+      const logo = element.querySelector('img')!.getBoundingClientRect();
+      const track = element.querySelector('.route-loader__track')!.getBoundingClientRect();
+      element.classList.remove('is-active');
+      return {
+        overlay: { width: overlay.width, height: overlay.height },
+        centerOffsetX: Math.abs(content.left + content.width / 2 - overlay.width / 2),
+        centerOffsetY: Math.abs(content.top + content.height / 2 - overlay.height / 2),
+        logoWidth: logo.width,
+        trackWidth: track.width,
+      };
+    });
+
+    expect.soft(metrics.overlay.width, `${viewport.width}px overlay width`).toBe(viewport.width);
+    expect.soft(metrics.overlay.height, `${viewport.width}px overlay height`).toBe(viewport.height);
+    expect.soft(metrics.centerOffsetX, `${viewport.width}px horizontal center`).toBeLessThan(1);
+    expect.soft(metrics.centerOffsetY, `${viewport.width}px vertical center`).toBeLessThan(1);
+    expect.soft(metrics.logoWidth, `${viewport.width}px logo width`).toBeLessThanOrEqual(112);
+    expect.soft(metrics.trackWidth, `${viewport.width}px track minimum`).toBeGreaterThanOrEqual(120);
+    expect.soft(metrics.trackWidth, `${viewport.width}px track maximum`).toBeLessThanOrEqual(192);
+  }
+
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  const animationName = await page.locator('.route-loader').evaluate((element) => {
+    element.classList.add('is-active');
+    return getComputedStyle(element.querySelector('.route-loader__track span')!).animationName;
+  });
+  expect(animationName).toBe('none');
+});
+
 test('SVG icons, social links, and secondary buttons use stable accessible rendering', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/');
@@ -253,6 +341,107 @@ test('SVG icons, social links, and secondary buttons use stable accessible rende
     expect(icon.svgDisplay).toBe('block');
     expect(icon.viewBox).toBe('0 0 24 24');
   }
+});
+
+test('homepage pricing preview contains every mobile row before the next section', async ({ page }) => {
+  const expectedRows = [
+    ['Vitaminska infuzija', '5.000 RSD'],
+    ['Detoksikacija', '6.000 RSD'],
+    ['Infuzija za mamurluk', '6.000 RSD'],
+    ['Infuzija za imunitet', '5.500 RSD'],
+  ];
+  let heightAt390 = 0;
+
+  for (const viewport of mobileViewports) {
+    await page.setViewportSize(viewport);
+    await page.goto('/');
+    const layout = await page.locator('.pricing-preview').evaluate((section) => {
+      const grid = section.querySelector('.pricing-grid')!;
+      const copy = section.querySelector('.pricing-copy')!;
+      const list = section.querySelector('.price-list')!;
+      const heading = copy.querySelector('h2')!;
+      const description = copy.querySelector('p:not(.eyebrow)')!;
+      const cta = copy.querySelector('a')!;
+      const rows = Array.from(list.children);
+      const sectionBox = section.getBoundingClientRect();
+      const gridBox = grid.getBoundingClientRect();
+      const listBox = list.getBoundingClientRect();
+      const nextBox = section.nextElementSibling!.getBoundingClientRect();
+      const rect = (element: Element) => {
+        const box = element.getBoundingClientRect();
+        return { top: box.top, right: box.right, bottom: box.bottom, left: box.left, width: box.width, height: box.height };
+      };
+      const sectionStyle = getComputedStyle(section);
+      const gridStyle = getComputedStyle(grid);
+      const listStyle = getComputedStyle(list);
+      return {
+        section: { ...rect(section), clientHeight: section.clientHeight, scrollHeight: section.scrollHeight },
+        grid: { ...rect(grid), display: gridStyle.display, flexDirection: gridStyle.flexDirection, overflow: gridStyle.overflow, position: gridStyle.position, maxHeight: gridStyle.maxHeight },
+        copy: rect(copy),
+        heading: rect(heading),
+        description: rect(description),
+        cta: rect(cta),
+        list: { ...rect(list), clientHeight: list.clientHeight, scrollHeight: list.scrollHeight, overflow: listStyle.overflow, position: listStyle.position, maxHeight: listStyle.maxHeight },
+        rows: rows.map((row) => {
+          const price = row.querySelector('strong')!;
+          return {
+            name: row.querySelector('span')!.textContent?.trim(),
+            price: price.textContent?.trim(),
+            row: rect(row),
+            priceBox: rect(price),
+            priceDisplay: getComputedStyle(price).display,
+            priceVisibility: getComputedStyle(price).visibility,
+          };
+        }),
+        nextTop: nextBox.top,
+        bottomSpace: sectionBox.bottom - rows.at(-1)!.getBoundingClientRect().bottom,
+        sectionOverflow: sectionStyle.overflow,
+        sectionPosition: sectionStyle.position,
+        sectionMaxHeight: sectionStyle.maxHeight,
+        scrollWidth: document.documentElement.scrollWidth,
+        boundaries: {
+          headingInside: heading.getBoundingClientRect().top >= sectionBox.top,
+          gridInside: gridBox.bottom <= sectionBox.bottom + 0.5,
+          listInside: listBox.bottom <= gridBox.bottom + 0.5,
+        },
+      };
+    });
+
+    if (viewport.width === 390) heightAt390 = layout.section.height;
+    expect.soft(layout.rows.map((row) => [row.name, row.price]), `${viewport.width}px preview rows`).toEqual(expectedRows);
+    expect.soft(layout.grid.display, `${viewport.width}px mobile flow`).toBe('flex');
+    expect.soft(layout.grid.flexDirection, `${viewport.width}px mobile direction`).toBe('column');
+    expect.soft(layout.section.scrollHeight - layout.section.clientHeight, `${viewport.width}px section clipping`).toBeLessThanOrEqual(1);
+    expect.soft(layout.list.scrollHeight - layout.list.clientHeight, `${viewport.width}px list clipping`).toBeLessThanOrEqual(1);
+    expect.soft(layout.sectionOverflow, `${viewport.width}px section overflow`).toBe('visible');
+    expect.soft(layout.grid.overflow, `${viewport.width}px grid overflow`).toBe('visible');
+    expect.soft(layout.list.overflow, `${viewport.width}px list overflow`).toBe('visible');
+    expect.soft(layout.sectionMaxHeight, `${viewport.width}px section maximum`).toBe('none');
+    expect.soft(layout.grid.maxHeight, `${viewport.width}px grid maximum`).toBe('none');
+    expect.soft(layout.list.maxHeight, `${viewport.width}px list maximum`).toBe('none');
+    expect.soft(layout.sectionPosition, `${viewport.width}px section flow`).toBe('static');
+    expect.soft(layout.grid.position, `${viewport.width}px grid flow`).toBe('static');
+    expect.soft(layout.list.position, `${viewport.width}px list flow`).toBe('static');
+    expect.soft(layout.heading.bottom, `${viewport.width}px heading order`).toBeLessThan(layout.description.top);
+    expect.soft(layout.description.bottom, `${viewport.width}px description order`).toBeLessThan(layout.cta.top);
+    expect.soft(layout.cta.bottom, `${viewport.width}px CTA order`).toBeLessThan(layout.list.top);
+    expect.soft(layout.rows.at(-1)!.row.bottom, `${viewport.width}px last row containment`).toBeLessThanOrEqual(layout.section.bottom);
+    expect.soft(layout.bottomSpace, `${viewport.width}px bottom spacing`).toBeGreaterThanOrEqual(44);
+    expect.soft(Math.abs(layout.nextTop - layout.section.bottom), `${viewport.width}px next-section boundary`).toBeLessThan(1);
+    expect.soft(layout.boundaries, `${viewport.width}px content containment`).toEqual({ headingInside: true, gridInside: true, listInside: true });
+    expect.soft(layout.scrollWidth, `${viewport.width}px horizontal overflow`).toBe(viewport.width);
+    for (const row of layout.rows) {
+      expect.soft(row.priceDisplay, `${viewport.width}px ${row.name} price display`).not.toBe('none');
+      expect.soft(row.priceVisibility, `${viewport.width}px ${row.name} price visibility`).toBe('visible');
+      expect.soft(row.priceBox.right, `${viewport.width}px ${row.name} price right edge`).toBeLessThanOrEqual(row.row.right + 0.5);
+      expect.soft(row.priceBox.bottom, `${viewport.width}px ${row.name} price bottom edge`).toBeLessThanOrEqual(row.row.bottom + 0.5);
+    }
+  }
+
+  await page.setViewportSize({ width: 390, height: 568 });
+  await page.goto('/');
+  const shortViewportHeight = await page.locator('.pricing-preview').evaluate((section) => section.getBoundingClientRect().height);
+  expect(shortViewportHeight).toBeCloseTo(heightAt390, 0);
 });
 
 test('clinical standard and service composition remain responsive and distinct', async ({ page }) => {

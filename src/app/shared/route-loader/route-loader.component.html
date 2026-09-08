@@ -1,0 +1,15 @@
+<div
+  class="route-loader"
+  [class.is-active]="loading()"
+  [attr.aria-hidden]="!loading()"
+  role="status"
+  aria-live="polite"
+  aria-label="Učitavanje stranice"
+>
+  <div class="route-loader__content">
+    <img src="/assets/brand/logo-112.webp" width="112" height="112" decoding="async" alt="" />
+    <div class="route-loader__track" aria-hidden="true">
+      <span></span>
+    </div>
+  </div>
+</div>

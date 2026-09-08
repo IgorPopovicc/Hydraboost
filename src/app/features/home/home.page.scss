@@ -52,6 +52,7 @@
 .text-link app-icon { width: 0.95rem; height: 0.95rem; }
 
 .pricing-grid { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: clamp(3rem, 9vw, 9rem); align-items: start; }
+.pricing-copy, .price-list { min-width: 0; }
 .pricing-copy h2 { margin: 0 0 1.25rem; font-size: clamp(2.2rem, 4.6vw, 4rem); line-height: 1.05; }
 .pricing-copy > p:not(.eyebrow) { margin-bottom: 1.8rem; color: var(--color-text-soft); line-height: 1.75; }
 .price-list { border-top: 1px solid var(--color-line-strong); }
@@ -97,10 +98,16 @@
   .process-shell { padding: 1.4rem; }
   .process-shell::after { top: 1rem; right: 1rem; width: 1.6rem; height: 1.6rem; }
   .process-heading { margin-bottom: 2rem; }
+  .pricing-preview { height: auto; overflow: visible; }
+  .pricing-grid { display: flex; flex-direction: column; gap: clamp(2.5rem, 8vw, 3rem); overflow: visible; }
+  .pricing-copy, .price-list { width: 100%; overflow: visible; }
+  .price-list { flex: 0 0 auto; }
+  .price-list div { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; }
+  .price-list span { min-width: 0; }
+  .price-list strong { justify-self: end; }
   .faq-heading { position: static; }
 }
 
 @media (max-width: 30rem) {
   .hero-caption { right: 0; }
-  .price-list div { align-items: flex-start; flex-direction: column; }
 }
