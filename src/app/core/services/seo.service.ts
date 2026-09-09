@@ -141,6 +141,14 @@ export class SeoService {
         sameAs: [SITE_INFO.instagramHref],
       },
       {
+        '@type': 'WebSite',
+        '@id': `${SITE_URL}/#website`,
+        url: SITE_URL,
+        name: SITE_INFO.name,
+        inLanguage: 'sr-Latn',
+        publisher: { '@id': `${SITE_URL}/#business` },
+      },
+      {
         '@type': 'Service',
         '@id': `${SITE_URL}/#mobile-iv-service`,
         name: 'Mobilna infuziona terapija',

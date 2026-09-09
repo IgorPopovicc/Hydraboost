@@ -11,5 +11,6 @@ export const routes: Routes = [
   { path: 'our-services', redirectTo: 'usluge', pathMatch: 'full' },
   { path: 'about-us', redirectTo: 'o-nama', pathMatch: 'full' },
   { path: 'contact', redirectTo: 'kontakt', pathMatch: 'full' },
+  { path: '404', loadComponent: () => import('./features/not-found/not-found.page').then((module) => module.NotFoundPage) },
   { path: '**', loadComponent: () => import('./features/not-found/not-found.page').then((module) => module.NotFoundPage) },
 ];

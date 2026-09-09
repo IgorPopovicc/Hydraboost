@@ -2,6 +2,7 @@ import { expect, test } from '@playwright/test';
 import { JSDOM } from 'jsdom';
 
 const routes = ['/', '/usluge', '/cenovnik', '/o-nama', '/faq', '/kontakt'];
+const productionOrigin = 'https://hydraboost-infuzije.rs';
 const widths = [320, 360, 375, 390, 430, 768, 1024, 1280, 1440, 1920];
 const mobileViewports = [
   { width: 320, height: 568 },
@@ -18,42 +19,42 @@ const seoRoutes = [
     path: '/',
     title: 'Mobilne infuzije Beograd | HydraBoost Infuzije',
     description: 'Mobilne vitaminske i IV infuzije na kućnoj adresi, u kancelariji ili hotelu u Beogradu. Konsultacija, individualna procena i stručni nadzor.',
-    image: 'https://hydraboost.vercel.app/assets/social/og-home.jpg',
+    image: `${productionOrigin}/assets/social/og-home.jpg`,
     imageAlt: 'HydraBoost Infuzije — mobilne infuzije Beograd',
   },
   {
     path: '/usluge',
     title: 'Mobilne infuzione terapije Beograd | HydraBoost',
     description: 'HydraBoost infuzione terapije dolaze na Vašu adresu u Beogradu, uz prethodnu konsultaciju, individualnu procenu i medicinski nadzor.',
-    image: 'https://hydraboost.vercel.app/assets/social/og-usluge.jpg',
+    image: `${productionOrigin}/assets/social/og-usluge.jpg`,
     imageAlt: 'HydraBoost mobilne infuzione terapije',
   },
   {
     path: '/cenovnik',
     title: 'Cenovnik mobilnih medicinskih usluga | HydraBoost',
     description: 'Cenovnik infuzione terapije, primene lekova i previjanja na terenu u Beogradu, uz mogućnost HydraBoost personalizovanog paketa.',
-    image: 'https://hydraboost.vercel.app/assets/social/og-cenovnik.jpg',
+    image: `${productionOrigin}/assets/social/og-cenovnik.jpg`,
     imageAlt: 'HydraBoost cenovnik mobilnih medicinskih usluga',
   },
   {
     path: '/o-nama',
     title: 'O nama | HydraBoost mobilna medicinska usluga',
     description: 'Upoznajte HydraBoost individualni pristup profesionalnoj medicinskoj usluzi i nezi na dogovorenoj adresi u Beogradu.',
-    image: 'https://hydraboost.vercel.app/assets/social/og-o-nama.jpg',
+    image: `${productionOrigin}/assets/social/og-o-nama.jpg`,
     imageAlt: 'HydraBoost profesionalna medicinska usluga',
   },
   {
     path: '/faq',
     title: 'Česta pitanja o mobilnim infuzijama | HydraBoost',
     description: 'Odgovori na česta pitanja o infuzionim terapijama, konsultaciji, zakazivanju i dolasku HydraBoost medicinske usluge na Vašu adresu.',
-    image: 'https://hydraboost.vercel.app/assets/social/og-faq.jpg',
+    image: `${productionOrigin}/assets/social/og-faq.jpg`,
     imageAlt: 'Konsultacija o HydraBoost uslugama',
   },
   {
     path: '/kontakt',
     title: 'HydraBoost kontakt i zakazivanje | Beograd',
     description: 'Kontaktirajte HydraBoost u Beogradu radi konsultacije i zakazivanja mobilne medicinske usluge na dogovorenoj adresi.',
-    image: 'https://hydraboost.vercel.app/assets/social/og-kontakt.jpg',
+    image: `${productionOrigin}/assets/social/og-kontakt.jpg`,
     imageAlt: 'HydraBoost kontakt i zakazivanje',
   },
 ] as const;
@@ -127,7 +128,7 @@ test('prerendered HTML exposes complete route-specific metadata without JavaScri
     const response = await request.get(config.path);
     expect(response.status(), `${config.path} response`).toBe(200);
     const document = new JSDOM(await response.text()).window.document;
-    const canonical = `https://hydraboost.vercel.app${config.path}`;
+    const canonical = `${productionOrigin}${config.path}`;
 
     const expectSingleAttribute = (selector: string, attribute: string, value: string) => {
       const elements = document.querySelectorAll(selector);
@@ -160,9 +161,14 @@ test('prerendered HTML exposes complete route-specific metadata without JavaScri
 
     const schema = document.querySelectorAll('script[data-hydraboost-schema]');
     expect(schema, `${config.path} JSON-LD count`).toHaveLength(1);
-    expect(schema.item(0).textContent).toContain('https://hydraboost.vercel.app/#business');
-    expect(schema.item(0).textContent).toContain('https://hydraboost.vercel.app/assets/brand/logo-112.webp');
-    expect(schema.item(0).textContent).not.toContain('www.hydraboostinfuzije.com');
+    const structuredData = JSON.parse(schema.item(0).textContent ?? '{}') as { '@graph': Record<string, unknown>[] };
+    const serializedSchema = JSON.stringify(structuredData);
+    expect(serializedSchema).toContain(`${productionOrigin}/#business`);
+    expect(serializedSchema).toContain(`${productionOrigin}/#website`);
+    expect(serializedSchema).toContain(`${productionOrigin}/assets/brand/logo-112.webp`);
+    expect(serializedSchema).not.toContain('hydraboost.vercel.app');
+    expect(serializedSchema).not.toContain('www.hydraboostinfuzije.com');
+    expect(structuredData['@graph'].some((entry) => entry['@type'] === 'WebSite')).toBe(true);
 
     const imageResponse = await request.get(new URL(config.image).pathname);
     expect(imageResponse.status(), `${config.image} response`).toBe(200);
@@ -178,10 +184,15 @@ test('prerendered HTML exposes complete route-specific metadata without JavaScri
   expect(descriptions.size).toBe(seoRoutes.length);
 
   const sitemap = await (await request.get('/sitemap.xml')).text();
-  for (const config of seoRoutes) expect(sitemap).toContain(`https://hydraboost.vercel.app${config.path}`);
+  for (const config of seoRoutes) expect(sitemap).toContain(`${productionOrigin}${config.path}`);
+  const sitemapDocument = new JSDOM(sitemap, { contentType: 'text/xml' }).window.document;
+  expect(Array.from(sitemapDocument.querySelectorAll('loc'), (location) => location.textContent)).toEqual(
+    seoRoutes.map((config) => `${productionOrigin}${config.path}`),
+  );
+  expect(sitemap).not.toContain('hydraboost.vercel.app');
   expect(sitemap).not.toContain('www.hydraboostinfuzije.com');
   const robots = await (await request.get('/robots.txt')).text();
-  expect(robots).toContain('Sitemap: https://hydraboost.vercel.app/sitemap.xml');
+  expect(robots).toContain(`Sitemap: ${productionOrigin}/sitemap.xml`);
   expect(robots).toContain('Allow: /');
 });
 
@@ -200,7 +211,7 @@ test('client-side route changes replace social metadata without stale duplicates
     await expect(page.locator('meta[name="twitter:image"]')).toHaveCount(1);
     await expect(page.locator('meta[name="twitter:image"]')).toHaveAttribute('content', config.image);
     await expect(page.locator('link[rel="canonical"]')).toHaveCount(1);
-    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', `https://hydraboost.vercel.app${config.path}`);
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', `${productionOrigin}${config.path}`);
   }
 });
 

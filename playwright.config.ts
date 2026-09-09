@@ -10,7 +10,7 @@ export default defineConfig({
     trace: 'retain-on-failure',
   },
   webServer: {
-    command: 'npm run serve:ssr',
+    command: 'npm run preview:static',
     url: 'http://127.0.0.1:4000',
     reuseExistingServer: true,
     timeout: 30_000,

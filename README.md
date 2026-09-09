@@ -33,10 +33,13 @@ npm test           # testovi
 npx playwright install chromium  # jednokratna priprema E2E pregledača
 npm run test:e2e   # produkcijski build + responsive, navigacioni i validacioni E2E testovi
 npm run build      # optimizovan SSR/prerender produkcijski build
+npm run build:static # potpuno statički DreamWeb Lite build
+npm run audit:static # provera sirovog HTML-a i deploy artefakta
+npm run preview:static # lokalni pregled DreamWeb builda na http://localhost:4000
 npm run serve:ssr  # lokalno pokretanje već izgrađenog SSR servera
 ```
 
-Produkcijski izlaz se generiše u `dist/Hydraboost/`. Statičke stranice nalaze se u `dist/Hydraboost/browser/`, a Node SSR server u `dist/Hydraboost/server/`.
+SSR izlaz se generiše u `dist/Hydraboost/`. DreamWeb Lite paket se generiše u `dist/Hydraboost-static/browser/`, a sadržaj spreman za upload u `deploy/public_html/`. VS Code Live Server (`Go Live`) prikazuje finalni `public_html` folder.
 
 ## Stranice
 
@@ -85,13 +88,13 @@ Projekat ne glumi backend potvrdu. Ispravno popunjena forma priprema naslov i sa
 
 ## SEO i prerender
 
-Svaka javna ruta ima jedinstven naslov, opis, canonical URL, Open Graph i Twitter metadata. `SeoService` u prerenderovanu HTML stranicu upisuje validne `MedicalBusiness`, `Service`, `BreadcrumbList` i, samo na FAQ ruti, `FAQPage` JSON-LD podatke.
+Svaka javna ruta ima jedinstven naslov, opis, canonical URL, Open Graph i Twitter metadata. `SeoService` u prerenderovanu HTML stranicu upisuje validne `MedicalBusiness`, `WebSite`, `Service`, `BreadcrumbList` i, samo na FAQ ruti, `FAQPage` JSON-LD podatke.
 
 Sajt uključuje:
 
 - `public/robots.txt`
 - `public/sitemap.xml`
-- lokalnu OG sliku dimenzija 1200 × 630
+- lokalne brendirane OG slike dimenzija 1200 × 1200
 - semantičku hijerarhiju naslova i sadržaj dostupan bez klijentskog JavaScripta
 - prerender za svih šest indeksabilnih javnih ruta
 
@@ -102,16 +105,25 @@ Sajt uključuje:
 - hero slika ima visoki prioritet i nije lenjo učitana; slike ispod prevoja jesu
 - jedan lokalni varijabilni font i jedan preload
 - lenjo učitavanje svake stranice na nivou rute
-- gzip kompresiju HTML-a, CSS-a, JavaScripta i drugih tekstualnih resursa na Node serveru
+- gzip kompresiju HTML-a, CSS-a, JavaScripta i drugih tekstualnih resursa preko Apache konfiguracije
 - semantički elementi, vidljiv fokus, tastaturna navigacija i pristupačna FAQ harmonika
 - mobilni meni sa zaključavanjem skrola, Escape komandom i upravljanjem fokusa
 - podrška za `prefers-reduced-motion`
 
-## Deploy
+## DreamWeb Lite deploy
 
-Za statički hosting objaviti sadržaj `dist/Hydraboost/browser/` i podesiti fallback na odgovarajući prerenderovani `index.html`. Za Node hosting pokrenuti `dist/Hydraboost/server/server.mjs` iza HTTPS reverse proxyja.
+Zvanični produkcijski origin je `https://hydraboost-infuzije.rs`, bez `www`. Produkcija koristi isključivo statički/prerenderovani Angular izlaz i ne zahteva Node.js proces.
 
-Produkcijski domen treba da ostane `https://www.hydraboostinfuzije.com`, jer su canonical, sitemap i Open Graph URL-ovi pripremljeni za taj domen. Prilikom migracije DNS-a podesiti trajna preusmerenja sa starih ruta i proveriti da hosting vraća stvarni HTTP 404 status za nepostojeće adrese.
+1. Aktivirati besplatan SSL sertifikat za `hydraboost-infuzije.rs` i `www.hydraboost-infuzije.rs` u cPanel-u.
+2. Pokrenuti `npm run build:static` sa Node.js 24.15.0.
+3. U DreamWeb File Manager-u otvoriti `public_html`, ukloniti samo prethodnu verziju sajta i preneti **sadržaj** lokalnog direktorijuma `deploy/public_html/`.
+4. Proveriti da je skrivena datoteka `.htaccess` preneta zajedno sa `index.html`, rutama, assetima, `robots.txt` i `sitemap.xml`.
+5. Ne prenositi `deploy` kao roditeljski direktorijum, `node_modules`, `src`, testove, `.git` niti `dist/Hydraboost/server`.
+6. Proveriti `/`, `/usluge`, `/cenovnik`, `/o-nama`, `/faq`, `/kontakt`, legacy preusmerenja i nepostojeću adresu koja mora vratiti 404.
+
+`.htaccess` normalizuje HTTP i `www` na `https://hydraboost-infuzije.rs`, služi stvarni prerenderovani HTML svake rute, komprimuje tekstualne resurse, daje dug cache heširanim JS/CSS datotekama i kraći cache slikama/fontovima. HTML, sitemap i robots nisu immutable keširani.
+
+Ako Cloudflare Free stoji ispred DreamWeb-a, DNS zapisi za root i `www` treba da budu proxied, a SSL/TLS režim **Full (strict)** nakon aktivacije origin sertifikata. Ne koristiti Flexible. Posle svakog produkcijskog deploya očistiti Cloudflare cache, a nakon prvog objavljivanja poslati `https://hydraboost-infuzije.rs/sitemap.xml` u Google Search Console i povezati isti URL sa Google Business profilom.
 
 ## Autor
 

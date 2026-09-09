@@ -36,8 +36,8 @@
               "allowedHosts": [
                 "localhost",
                 "127.0.0.1",
-                "hydraboostinfuzije.com",
-                "www.hydraboostinfuzije.com"
+                "hydraboost-infuzije.rs",
+                "www.hydraboost-infuzije.rs"
               ]
             },
             "ssr": {
@@ -59,6 +59,16 @@
                 }
               ],
               "outputHashing": "all"
+            },
+            "static": {
+              "outputMode": "static",
+              "outputPath": "dist/Hydraboost-static",
+              "fileReplacements": [
+                {
+                  "replace": "src/app/app.routes.server.ts",
+                  "with": "src/app/app.routes.static.ts"
+                }
+              ]
             },
             "development": {
               "optimization": false,

@@ -1,6 +1,6 @@
 import { FAQS } from './faq.data';
 import { PERSONALIZED_PACKAGE, PRICING, PRICING_CATEGORIES } from './pricing.data';
-import { SITE_INFO } from './site.data';
+import { SITE_INFO, SITE_URL } from './site.data';
 import { SERVICES } from './services.data';
 
 describe('Centralized public content', () => {
@@ -28,8 +28,11 @@ describe('Centralized public content', () => {
   });
 
   it('uses one verified contact source and preserves the emergency guidance', () => {
+    expect(SITE_URL).toBe('https://hydraboost-infuzije.rs');
     expect(SITE_INFO.phoneInternational).toBe('+381653698376');
     expect(SITE_INFO.email).toBe('info@hydraboostinfuzije.com');
+    expect(SITE_INFO.whatsappHref).toBe('https://wa.me/381653698376');
+    expect(SITE_INFO.instagramHref).toBe('https://instagram.com/hydraboost_infuzije');
     expect(FAQS.at(-1)?.answer).toContain('194');
   });
 });
