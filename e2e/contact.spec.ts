@@ -27,7 +27,7 @@ test('success waits for acceptance, prevents duplicates, resets after acknowledg
   let requests = 0;
   let release!: () => void;
   const gate = new Promise<void>(resolve => release = resolve);
-  await page.route('**/api/contact', async route => {
+  await page.route('**/api/contact{,.php}', async route => {
     requests++;
     expect(route.request().postDataJSON()).toMatchObject({ fullName: 'Ana Anić', email: fields.email, website: '' });
     await gate;
@@ -57,7 +57,7 @@ test('success waits for acceptance, prevents duplicates, resets after acknowledg
 
 test('invalid and empty forms never send a request; focus moves to first error', async ({ page }) => {
   let requests = 0;
-  page.on('request', request => { if (request.url().endsWith('/api/contact')) requests++; });
+  page.on('request', request => { if (/\/api\/contact(?:\.php)?$/.test(request.url())) requests++; });
   await page.goto('/kontakt'); await send(page).click();
   await expect(page.locator('.error')).toHaveCount(4);
   await expect(page.locator('#fullName')).toBeFocused();
@@ -70,7 +70,7 @@ test('invalid and empty forms never send a request; focus moves to first error',
 for (const status of [403, 422, 429, 502, 503]) {
   test(`HTTP ${status} preserves values, displays error, and allows a safe retry`, async ({ page }) => {
     const keys: string[] = [];
-    await page.route('**/api/contact', route => {
+    await page.route('**/api/contact{,.php}', route => {
       keys.push(route.request().headers()['idempotency-key']);
       return keys.length === 1 ? route.fulfill({ status, json: { ok: false } }) : route.fulfill({ json: { ok: true, status: 'accepted' } });
     });
@@ -90,10 +90,10 @@ for (const mode of ['offline', 'malformed', 'timeout']) {
   test(`${mode} recovers without erasing the message`, async ({ page, context }) => {
     await page.goto('/kontakt'); await fill(page);
     if (mode === 'offline') await context.setOffline(true);
-    else if (mode === 'malformed') await page.route('**/api/contact', route => route.fulfill({ json: { ok: true } }));
+    else if (mode === 'malformed') await page.route('**/api/contact{,.php}', route => route.fulfill({ json: { ok: true } }));
     else {
       await page.clock.install();
-      await page.route('**/api/contact', async () => { /* intentionally unanswered */ });
+      await page.route('**/api/contact{,.php}', async () => { /* intentionally unanswered */ });
     }
     await send(page).click();
     if (mode === 'timeout') await page.clock.fastForward(26_000);
@@ -109,7 +109,7 @@ for (const width of [320, 360, 375, 390, 414, 768, 1024, 1440, 1920]) {
   test(`contact and both result states fit ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 800 });
     let count = 0;
-    await page.route('**/api/contact', route => ++count === 1
+    await page.route('**/api/contact{,.php}', route => ++count === 1
       ? route.fulfill({ status: 502, json: { ok: false } })
       : route.fulfill({ json: { ok: true, status: 'accepted' } }));
     await page.goto('/kontakt'); await fill(page); await bounds(page); await send(page).click();
@@ -132,7 +132,7 @@ for (const width of [320, 360, 375, 390, 414, 768, 1024, 1440, 1920]) {
 test('reduced motion, short mobile viewport and dialog focus trap', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.setViewportSize({ width: 320, height: 480 });
-  await page.route('**/api/contact', route => route.fulfill({ status: 502, json: { ok: false } }));
+  await page.route('**/api/contact{,.php}', route => route.fulfill({ status: 502, json: { ok: false } }));
   await page.goto('/kontakt'); await fill(page); await send(page).click();
   await expect(modal(page)).toBeVisible(); await bounds(page);
   await expect(modal(page)).toHaveCSS('animation-name', 'none');

@@ -4,6 +4,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideRouter } from '@angular/router';
 import { ContactPage } from './contact.page';
+import { CONTACT_CONFIG } from '../../core/config/contact.config';
 
 const values = { fullName: '  Ana Anić  ', phone: '+381 (65) 369-8376', email: ' ana@example.com ', location: ' Vračar ', message: ' Molim Vas za termin sutra. ' };
 
@@ -11,6 +12,7 @@ describe('ContactPage', () => {
   let fixture: ComponentFixture<ContactPage>;
   let http: HttpTestingController;
   let root: HTMLElement;
+  let endpoint: string;
   const fill = (data = values) => {
     for (const [id, value] of Object.entries(data)) {
       const input = root.querySelector<HTMLInputElement>(`#${id}`)!;
@@ -27,6 +29,7 @@ describe('ContactPage', () => {
     }).compileComponents();
     fixture = TestBed.createComponent(ContactPage);
     http = TestBed.inject(HttpTestingController);
+    endpoint = TestBed.inject(CONTACT_CONFIG).endpoint;
     fixture.detectChanges();
     root = fixture.nativeElement;
   });
@@ -35,17 +38,17 @@ describe('ContactPage', () => {
   it('shows localized errors without sending an empty request', () => {
     submit();
     expect(root.querySelectorAll('.error').length).toBe(4);
-    http.expectNone('/api/contact');
+    http.expectNone(endpoint);
   });
   it('rejects whitespace-only required fields and invalid email', () => {
     fill({ ...values, fullName: '   ', email: 'bad@', message: '            ' });
     submit();
     expect(root.querySelectorAll('.error').length).toBe(3);
-    http.expectNone('/api/contact');
+    http.expectNone(endpoint);
   });
   it('trims data, sends once, and waits for acceptance before success', () => {
     fill(); submit(); submit();
-    const request = http.expectOne('/api/contact');
+    const request = http.expectOne(endpoint);
     expect(request.request.body.fullName).toBe('Ana Anić');
     expect(request.request.body.email).toBe('ana@example.com');
     expect(root.querySelector<HTMLButtonElement>('button[type="submit"]')!.disabled).toBe(true);
@@ -58,7 +61,7 @@ describe('ContactPage', () => {
   });
   it('preserves values and restores the button on a server failure', () => {
     fill(); submit();
-    http.expectOne('/api/contact').flush({}, { status: 503, statusText: 'Unavailable' });
+    http.expectOne(endpoint).flush({}, { status: 503, statusText: 'Unavailable' });
     fixture.detectChanges();
     expect(root.querySelector('#contact-result-title')!.textContent).toContain('nije poslata');
     expect(root.querySelector<HTMLInputElement>('#message')!.value).toBe('Molim Vas za termin sutra.');

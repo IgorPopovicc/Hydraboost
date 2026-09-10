@@ -23,8 +23,8 @@ export const SEO_BY_PATH: Readonly<Record<string, SeoConfig>> = {
     socialImageAlt: 'HydraBoost cenovnik mobilnih medicinskih usluga',
   },
   '/o-nama': {
-    title: 'O nama – medicinska nega na adresi | HydraBoost Beograd',
-    description: 'Upoznajte način rada HydraBoost mobilne medicinske usluge u Beogradu: konsultacija pre dolaska, individualna procena i primena terapije uz nadzor.',
+    title: 'O nama – Stefan Marković | HydraBoost infuzije Beograd',
+    description: 'Upoznajte Stefana Markovića, njegovo iskustvo u intenzivnoj nezi, anesteziji i reanimaciji i HydraBoost uslugu infuzije na adresi u Beogradu.',
     path: '/o-nama',
     socialImage: '/assets/social/og-o-nama.jpg',
     socialImageAlt: 'HydraBoost profesionalna medicinska usluga',

@@ -5,6 +5,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SERVICES } from '../data/services.data';
+import { STEFAN_PROFILE } from '../data/about.data';
 import { NAVIGATION, SITE_INFO, SITE_URL } from '../data/site.data';
 import { NOT_FOUND_SEO, SEO_BY_PATH } from '../data/seo.data';
 import { SeoConfig } from '../models/content.models';
@@ -143,6 +144,23 @@ export class SeoService {
         ...(config.path !== '/' ? { breadcrumb: { '@id': `${canonicalUrl}#breadcrumb` } } : {}),
       },
     ];
+
+    if (config.path === '/o-nama') {
+      const personId = `${SITE_URL}/o-nama#stefan-markovic`;
+      graph.push({
+        '@type': 'Person',
+        '@id': personId,
+        name: STEFAN_PROFILE.name,
+        url: personId,
+        description: [STEFAN_PROFILE.introduction, STEFAN_PROFILE.overview,
+          ...STEFAN_PROFILE.hospitalExperience.map((experience) => experience.description),
+          STEFAN_PROFILE.additionalExperience].join(' '),
+        image: `${SITE_URL}/assets/images/about/stefan-markovic-hydraboost.webp`,
+        affiliation: { '@id': businessId },
+        mainEntityOfPage: { '@id': pageId },
+      });
+      graph[2]['mainEntity'] = { '@id': personId };
+    }
 
     if (config.path === '/' || config.path === '/usluge') {
       graph.push({

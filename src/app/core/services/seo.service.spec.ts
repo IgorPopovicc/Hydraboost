@@ -38,3 +38,28 @@ describe('SEO navigation lifecycle', () => {
     expect(graph.some((entity: Record<string, unknown>) => entity['@type'] === 'Service')).toBe(false);
   });
 });
+
+describe('About page person schema', () => {
+  it('connects the approved biography and portrait without inventing credentials, and clears it on navigation', async () => {
+    TestBed.configureTestingModule({ providers: [provideRouter(routes)] });
+    TestBed.inject(SeoService);
+    const harness = await RouterTestingHarness.create();
+    const document = TestBed.inject(DOCUMENT);
+    await harness.navigateByUrl('/o-nama');
+    const readGraph = () => JSON.parse(document.querySelector('script[data-hydraboost-schema]')!.textContent!)['@graph'];
+    const graph = readGraph();
+    const person = graph.find((entity: Record<string, unknown>) => entity['@type'] === 'Person');
+    expect(person.name).toBe('Stefan Marković');
+    expect(person.affiliation).toEqual({ '@id': `${SITE_URL}/#business` });
+    expect(person.image).toBe(`${SITE_URL}/assets/images/about/stefan-markovic-hydraboost.webp`);
+    expect(person.description).toContain('Četiri godine');
+    expect(person.description).toContain('Dve godine');
+    expect(person.description).toContain('privatnoj bolnici');
+    for (const unsupported of ['jobTitle', 'alumniOf', 'hasCredential', 'sameAs', 'medicalSpecialty', 'award']) {
+      expect(person[unsupported]).toBeUndefined();
+    }
+    expect(graph.find((entity: Record<string, unknown>) => entity['@type'] === 'AboutPage').mainEntity).toEqual({ '@id': person['@id'] });
+    await harness.navigateByUrl('/usluge');
+    expect(readGraph().some((entity: Record<string, unknown>) => entity['@type'] === 'Person')).toBe(false);
+  });
+});

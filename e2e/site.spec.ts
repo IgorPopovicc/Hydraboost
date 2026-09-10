@@ -38,8 +38,8 @@ const seoRoutes = [
   },
   {
     path: '/o-nama',
-    title: 'O nama – medicinska nega na adresi | HydraBoost Beograd',
-    description: 'Upoznajte način rada HydraBoost mobilne medicinske usluge u Beogradu: konsultacija pre dolaska, individualna procena i primena terapije uz nadzor.',
+    title: 'O nama – Stefan Marković | HydraBoost infuzije Beograd',
+    description: 'Upoznajte Stefana Markovića, njegovo iskustvo u intenzivnoj nezi, anesteziji i reanimaciji i HydraBoost uslugu infuzije na adresi u Beogradu.',
     image: `${productionOrigin}/assets/social/og-o-nama.jpg`,
     imageAlt: 'HydraBoost profesionalna medicinska usluga',
   },
