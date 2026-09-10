@@ -66,5 +66,5 @@
 }
 
 @media (max-width: 24rem) {
-  .brand span { display: none; }
+  .brand span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 }

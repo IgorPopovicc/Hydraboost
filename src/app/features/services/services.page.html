@@ -3,13 +3,14 @@
     <div class="services-hero-copy">
       <nav class="breadcrumbs" aria-label="Putanja"><a routerLink="/">Početna</a><span>/</span><span>Usluge</span></nav>
       <p class="eyebrow">Mobilna IV terapija</p>
-      <h1>Nega prilagođena Vašim potrebama.</h1>
+      <h1>Vitaminske infuzije i IV terapija u Beogradu.</h1>
       <p class="lead">Hidratacija, vitaminska podrška i individualno sastavljene terapije na dogovorenoj adresi u Beogradu — nakon konsultacije i procene.</p>
+      <a class="button button-primary services-hero-cta" [href]="site.phoneHref">Dogovorite konsultaciju</a>
     </div>
     <div class="services-hero-image image-frame image-frame--landscape">
       <picture>
         <source type="image/avif" srcset="/assets/images/editorial/usluge-konsultacija-480.avif 480w, /assets/images/editorial/usluge-konsultacija-800.avif 800w, /assets/images/editorial/usluge-konsultacija-1200.avif 1200w" sizes="(max-width: 800px) 92vw, 42vw" />
-        <img src="/assets/images/editorial/usluge-konsultacija-1200.webp" srcset="/assets/images/editorial/usluge-konsultacija-480.webp 480w, /assets/images/editorial/usluge-konsultacija-800.webp 800w, /assets/images/editorial/usluge-konsultacija-1200.webp 1200w" sizes="(max-width: 800px) 92vw, 42vw" width="1200" height="900" fetchpriority="high" decoding="async" alt="Medicinska radnica razgovara sa pacijentkinjom pre pružanja usluge" />
+        <img src="/assets/images/editorial/usluge-konsultacija-1200.webp" srcset="/assets/images/editorial/usluge-konsultacija-480.webp 480w, /assets/images/editorial/usluge-konsultacija-800.webp 800w, /assets/images/editorial/usluge-konsultacija-1200.webp 1200w" sizes="(max-width: 800px) 92vw, 42vw" width="1200" height="900" fetchpriority="high" decoding="async" alt="Razgovor dve osobe u medicinskim uniformama" />
       </picture>
       <p>Procena prethodi svakom dogovoru o terapiji.</p>
     </div>
@@ -19,7 +20,7 @@
 <section class="services-overview section" aria-labelledby="overview-title">
   <div class="container overview-grid">
     <div><p class="eyebrow">Naše usluge</p><h2 id="overview-title">Nema univerzalne infuzije za svakoga.</h2></div>
-    <div><p class="lead">Izbor i sastav terapije zavise od zdravstvenog stanja, anamneze, postojećih terapija i medicinske indikacije. Zato svaki termin počinje razgovorom.</p><p class="note">Informacije na sajtu služe upoznavanju sa uslugom i ne predstavljaju medicinski savet, dijagnozu ili zamenu za pregled lekara.</p></div>
+    <div><p class="lead">Infuziona, odnosno intravenska (IV) terapija podrazumeva primenu rastvora kroz venu. Izbor i sastav zavise od zdravstvenog stanja, postojećih terapija i medicinske indikacije. Zato svaki termin počinje razgovorom.</p><p class="note">Informacije na sajtu služe upoznavanju sa uslugom i ne predstavljaju medicinski savet, dijagnozu ili zamenu za pregled lekara.</p></div>
   </div>
 </section>
 
@@ -37,7 +38,7 @@
         <h2>{{ services[0].name }}</h2>
         <p>{{ services[0].description }}</p>
         <p class="service-context">{{ services[0].context }}</p>
-        <a class="text-link" routerLink="/kontakt">Proverite dostupnost <app-icon name="arrow-right" /></a>
+        <a class="text-link" routerLink="/kontakt">Dogovorite konsultaciju <app-icon name="arrow-right" /></a>
       </div>
     </div>
   </article>
@@ -57,7 +58,7 @@
             <h2>{{ service.name }}</h2>
             <p>{{ service.description }}</p>
             <p class="service-context">{{ service.context }}</p>
-            <a class="text-link" routerLink="/kontakt">Proverite dostupnost <app-icon name="arrow-right" /></a>
+            <a class="text-link" routerLink="/kontakt">Dogovorite konsultaciju <app-icon name="arrow-right" /></a>
           </div>
         </article>
       }
@@ -71,7 +72,7 @@
         <h2>{{ services[3].name }}</h2>
         <p>{{ services[3].description }}</p>
         <p class="service-context">{{ services[3].context }}</p>
-        <a class="text-link" routerLink="/kontakt">Proverite dostupnost <app-icon name="arrow-right" /></a>
+        <a class="text-link" routerLink="/kontakt">Dogovorite konsultaciju <app-icon name="arrow-right" /></a>
       </div>
       <div class="service-image service-final-image image-frame image-frame--landscape">
         <picture>
@@ -81,6 +82,16 @@
       </div>
     </div>
   </article>
+</section>
+
+<section class="services-overview section" aria-labelledby="additional-services-title">
+  <div class="container overview-grid">
+    <div><p class="eyebrow">Dodatne usluge</p><h2 id="additional-services-title">Medicinske usluge na adresi.</h2></div>
+    <div>
+      <p>Pored infuzionih terapija, postojeći cenovnik obuhvata <a routerLink="/cenovnik" fragment="primena-lekova">intramuskularnu i subkutanu primenu propisanih lekova</a> i <a routerLink="/cenovnik" fragment="previjanje-na-terenu">previjanje na terenu</a>.</p>
+      <p>Vrsta usluge dogovara se prema potrebama i medicinskoj proceni. <a routerLink="/cenovnik" fragment="infuzione-terapije">Pogledajte cene infuzija</a> i uslove dolaska pre zakazivanja.</p>
+    </div>
+  </div>
 </section>
 
 <section class="standards section section-muted" aria-labelledby="standards-title">

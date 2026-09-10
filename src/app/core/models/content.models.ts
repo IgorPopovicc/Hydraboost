@@ -52,5 +52,4 @@ export interface SeoConfig {
   readonly socialImage: string;
   readonly socialImageAlt: string;
   readonly robots?: string;
-  readonly faq?: boolean;
 }

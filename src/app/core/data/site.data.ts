@@ -1,14 +1,14 @@
 import { NavigationItem } from '../models/content.models';
 
-export const SITE_URL = 'https://hydraboost-infuzije.rs';
+export const SITE_URL = 'https://www.hydraboost-infuzije.rs';
 
 export const SITE_INFO = {
   name: 'HydraBoost Infuzije',
   phoneDisplay: '065/369-8376',
   phoneInternational: '+381653698376',
   phoneHref: 'tel:+381653698376',
-  email: 'info@hydraboostinfuzije.com',
-  emailHref: 'mailto:info@hydraboostinfuzije.com',
+  email: 'info@hydraboost-infuzije.rs',
+  emailHref: 'mailto:info@hydraboost-infuzije.rs',
   viberHref: 'viber://chat?number=%2B381653698376',
   whatsappHref: 'https://wa.me/381653698376',
   instagramHref: 'https://instagram.com/hydraboost_infuzije',

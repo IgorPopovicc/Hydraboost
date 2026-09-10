@@ -1,14 +1,8 @@
 <div class="faq-list">
   @for (item of items(); track item.question; let index = $index) {
-    <article class="faq-item" [class.is-open]="openIndex() === index">
-      <h3>
-        <button type="button" (click)="toggle(index)" [attr.aria-expanded]="openIndex() === index" [attr.aria-controls]="'faq-answer-' + index">
-          <span>{{ item.question }}</span><span class="faq-icon" aria-hidden="true"></span>
-        </button>
-      </h3>
-      <div class="faq-answer" [id]="'faq-answer-' + index" role="region" [attr.aria-hidden]="openIndex() !== index">
-        <div><p>{{ item.answer }}</p></div>
-      </div>
-    </article>
+    <details class="faq-item" name="hydraboost-faq" [attr.open]="index === 0 ? '' : null">
+      <summary><h3>{{ item.question }}</h3><span class="faq-icon" aria-hidden="true"></span></summary>
+      <div class="faq-answer"><p>{{ item.answer }}</p></div>
+    </details>
   }
 </div>

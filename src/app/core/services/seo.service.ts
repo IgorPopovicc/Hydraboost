@@ -1,67 +1,13 @@
 import { DOCUMENT } from '@angular/common';
-import { inject, Injectable } from '@angular/core';
+import { DestroyRef, inject, Injectable } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
-import { FAQS } from '../data/faq.data';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SERVICES } from '../data/services.data';
-import { SITE_INFO, SITE_URL } from '../data/site.data';
+import { NAVIGATION, SITE_INFO, SITE_URL } from '../data/site.data';
+import { NOT_FOUND_SEO, SEO_BY_PATH } from '../data/seo.data';
 import { SeoConfig } from '../models/content.models';
-
-const SEO_BY_PATH: Readonly<Record<string, SeoConfig>> = {
-  '/': {
-    title: 'Mobilne infuzije Beograd | HydraBoost Infuzije',
-    description: 'Mobilne vitaminske i IV infuzije na kućnoj adresi, u kancelariji ili hotelu u Beogradu. Konsultacija, individualna procena i stručni nadzor.',
-    path: '/',
-    socialImage: '/assets/social/og-home.jpg',
-    socialImageAlt: 'HydraBoost Infuzije — mobilne infuzije Beograd',
-  },
-  '/usluge': {
-    title: 'Mobilne infuzione terapije Beograd | HydraBoost',
-    description: 'HydraBoost infuzione terapije dolaze na Vašu adresu u Beogradu, uz prethodnu konsultaciju, individualnu procenu i medicinski nadzor.',
-    path: '/usluge',
-    socialImage: '/assets/social/og-usluge.jpg',
-    socialImageAlt: 'HydraBoost mobilne infuzione terapije',
-  },
-  '/cenovnik': {
-    title: 'Cenovnik mobilnih medicinskih usluga | HydraBoost',
-    description: 'Cenovnik infuzione terapije, primene lekova i previjanja na terenu u Beogradu, uz mogućnost HydraBoost personalizovanog paketa.',
-    path: '/cenovnik',
-    socialImage: '/assets/social/og-cenovnik.jpg',
-    socialImageAlt: 'HydraBoost cenovnik mobilnih medicinskih usluga',
-  },
-  '/o-nama': {
-    title: 'O nama | HydraBoost mobilna medicinska usluga',
-    description: 'Upoznajte HydraBoost individualni pristup profesionalnoj medicinskoj usluzi i nezi na dogovorenoj adresi u Beogradu.',
-    path: '/o-nama',
-    socialImage: '/assets/social/og-o-nama.jpg',
-    socialImageAlt: 'HydraBoost profesionalna medicinska usluga',
-  },
-  '/faq': {
-    title: 'Česta pitanja o mobilnim infuzijama | HydraBoost',
-    description: 'Odgovori na česta pitanja o infuzionim terapijama, konsultaciji, zakazivanju i dolasku HydraBoost medicinske usluge na Vašu adresu.',
-    path: '/faq',
-    socialImage: '/assets/social/og-faq.jpg',
-    socialImageAlt: 'Konsultacija o HydraBoost uslugama',
-    faq: true,
-  },
-  '/kontakt': {
-    title: 'HydraBoost kontakt i zakazivanje | Beograd',
-    description: 'Kontaktirajte HydraBoost u Beogradu radi konsultacije i zakazivanja mobilne medicinske usluge na dogovorenoj adresi.',
-    path: '/kontakt',
-    socialImage: '/assets/social/og-kontakt.jpg',
-    socialImageAlt: 'HydraBoost kontakt i zakazivanje',
-  },
-};
-
-const NOT_FOUND_SEO: SeoConfig = {
-  title: 'Stranica nije pronađena | HydraBoost Infuzije',
-  description: 'Tražena stranica nije pronađena. Vratite se na početnu stranicu HydraBoost Infuzija.',
-  path: '/404',
-  socialImage: '/assets/social/og-home.jpg',
-  socialImageAlt: 'HydraBoost Infuzije',
-  robots: 'noindex, nofollow',
-};
 
 @Injectable({ providedIn: 'root' })
 export class SeoService {
@@ -70,9 +16,11 @@ export class SeoService {
   private readonly title = inject(Title);
   private readonly router = inject(Router);
 
+  private readonly destroyRef = inject(DestroyRef);
+
   constructor() {
-    this.apply(this.router.url);
-    this.router.events.pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd)).subscribe((event) => {
+    if (this.router.navigated) this.apply(this.router.url);
+    this.router.events.pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd), takeUntilDestroyed(this.destroyRef)).subscribe((event) => {
       this.apply(event.urlAfterRedirects);
     });
   }
@@ -85,7 +33,7 @@ export class SeoService {
 
     this.title.setTitle(config.title);
     this.setMeta('name', 'description', config.description);
-    this.setMeta('name', 'robots', config.robots ?? 'index, follow');
+    this.setMeta('name', 'robots', config.robots ?? 'index, follow, max-image-preview:large');
     this.setMeta('property', 'og:title', config.title);
     this.setMeta('property', 'og:description', config.description);
     this.setMeta('property', 'og:type', 'website');
@@ -103,8 +51,9 @@ export class SeoService {
     this.setMeta('name', 'twitter:description', config.description);
     this.setMeta('name', 'twitter:image', socialImage);
     this.setMeta('name', 'twitter:image:alt', config.socialImageAlt);
-    this.updateCanonical(canonicalUrl);
-    this.updateStructuredData(path, canonicalUrl, Boolean(config.faq));
+    this.updateCanonical(config === NOT_FOUND_SEO ? null : canonicalUrl);
+    this.updateHeroPreload(path);
+    this.updateStructuredData(config, canonicalUrl);
   }
 
   private setMeta(attribute: 'name' | 'property', key: string, content: string): void {
@@ -113,8 +62,12 @@ export class SeoService {
     this.meta.updateTag({ [attribute]: key, content }, `${attribute}='${key}'`);
   }
 
-  private updateCanonical(url: string): void {
+  private updateCanonical(url: string | null): void {
     const canonicalLinks = this.document.head.querySelectorAll<HTMLLinkElement>('link[rel="canonical"]');
+    if (!url) {
+      canonicalLinks.forEach((link) => link.remove());
+      return;
+    }
     let canonical = canonicalLinks.item(0);
     for (const duplicate of Array.from(canonicalLinks).slice(1)) duplicate.remove();
     if (!canonical) {
@@ -125,69 +78,114 @@ export class SeoService {
     canonical.href = url;
   }
 
-  private updateStructuredData(path: string, canonicalUrl: string, includeFaq: boolean): void {
-    this.document.head.querySelector('script[data-hydraboost-schema]')?.remove();
+  private updateHeroPreload(path: string): void {
+    this.document.head.querySelector('link[data-hydraboost-hero]')?.remove();
+    if (path !== '/') return;
+    const link = this.document.createElement('link');
+    link.rel = 'preload';
+    link.setAttribute('data-hydraboost-hero', 'true');
+    link.setAttribute('as', 'image');
+    link.type = 'image/avif';
+    link.href = '/assets/images/hero/mobile-iv-care-672.avif';
+    link.setAttribute('imagesrcset', '/assets/images/hero/mobile-iv-care-448.avif 448w, /assets/images/hero/mobile-iv-care-672.avif 672w, /assets/images/hero/mobile-iv-care-896.avif 896w');
+    link.setAttribute('imagesizes', '(max-width: 768px) min(92vw, 480px), 42vw');
+    link.setAttribute('fetchpriority', 'high');
+    this.document.head.appendChild(link);
+  }
+
+  private updateStructuredData(config: SeoConfig, canonicalUrl: string): void {
+    this.document.head.querySelectorAll('script[data-hydraboost-schema]').forEach((script) => script.remove());
+    if (config === NOT_FOUND_SEO) return;
+
+    const businessId = `${SITE_URL}/#business`;
+    const websiteId = `${SITE_URL}/#website`;
+    const pageId = `${canonicalUrl}#webpage`;
+    const areaServed = [{ '@type': 'City', name: 'Beograd', containedInPlace: { '@type': 'Country', name: 'Srbija' } }, SITE_INFO.serviceArea];
     const graph: Record<string, unknown>[] = [
       {
-        '@type': ['MedicalBusiness', 'LocalBusiness'],
-        '@id': `${SITE_URL}/#business`,
+        '@type': 'MedicalBusiness',
+        '@id': businessId,
         name: SITE_INFO.name,
-        url: SITE_URL,
+        url: `${SITE_URL}/`,
         image: `${SITE_URL}/assets/social/og-home.jpg`,
         logo: `${SITE_URL}/assets/brand/logo-112.webp`,
         telephone: SITE_INFO.phoneInternational,
         email: SITE_INFO.email,
-        areaServed: { '@type': 'City', name: 'Beograd' },
+        areaServed,
         sameAs: [SITE_INFO.instagramHref],
+        contactPoint: {
+          '@type': 'ContactPoint',
+          telephone: SITE_INFO.phoneInternational,
+          email: SITE_INFO.email,
+          contactType: 'Zakazivanje i konsultacije',
+          availableLanguage: 'sr',
+          areaServed,
+          url: `${SITE_URL}/kontakt`,
+        },
       },
       {
         '@type': 'WebSite',
-        '@id': `${SITE_URL}/#website`,
-        url: SITE_URL,
+        '@id': websiteId,
+        url: `${SITE_URL}/`,
         name: SITE_INFO.name,
         inLanguage: 'sr-Latn',
-        publisher: { '@id': `${SITE_URL}/#business` },
+        publisher: { '@id': businessId },
       },
       {
-        '@type': 'Service',
-        '@id': `${SITE_URL}/#mobile-iv-service`,
-        name: 'Mobilna infuziona terapija',
-        serviceType: 'Mobilna infuziona terapija na zakazanoj adresi',
-        provider: { '@id': `${SITE_URL}/#business` },
-        areaServed: { '@type': 'City', name: 'Beograd' },
-        hasOfferCatalog: {
-          '@type': 'OfferCatalog',
-          name: 'HydraBoost usluge',
-          itemListElement: SERVICES.map((service) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: service.name } })),
-        },
+        '@type': config.path === '/kontakt' ? 'ContactPage' : config.path === '/o-nama' ? 'AboutPage' : 'WebPage',
+        '@id': pageId,
+        url: canonicalUrl,
+        name: config.title,
+        description: config.description,
+        inLanguage: 'sr-Latn',
+        isPartOf: { '@id': websiteId },
+        about: { '@id': businessId },
+        ...(config.path !== '/' ? { breadcrumb: { '@id': `${canonicalUrl}#breadcrumb` } } : {}),
       },
     ];
 
-    if (path !== '/') {
+    if (config.path === '/' || config.path === '/usluge') {
       graph.push({
-        '@type': 'BreadcrumbList',
-        itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Početna', item: `${SITE_URL}/` },
-          { '@type': 'ListItem', position: 2, name: SEO_BY_PATH[path]?.title.split('|')[0].trim() ?? 'Stranica', item: canonicalUrl },
-        ],
+        '@type': 'Service',
+        '@id': `${SITE_URL}/#mobile-iv-service`,
+        name: 'Mobilna infuziona terapija',
+        serviceType: 'Infuziona terapija na dogovorenoj adresi',
+        description: 'Infuzije u domu, kancelariji ili hotelu u Beogradu i okolini, uz prethodnu konsultaciju, medicinsku procenu i stručni nadzor.',
+        url: `${SITE_URL}/usluge`,
+        provider: { '@id': businessId },
+        areaServed,
       });
+      graph[2]['mainEntity'] = { '@id': `${SITE_URL}/#mobile-iv-service` };
     }
 
-    if (includeFaq) {
+    if (config.path === '/usluge') {
+      graph.push(...SERVICES.map((service) => ({
+        '@type': 'Service',
+        '@id': `${SITE_URL}/usluge#${service.id}`,
+        name: service.name,
+        description: `${service.description} ${service.context}`,
+        url: `${SITE_URL}/usluge#${service.id}`,
+        provider: { '@id': businessId },
+        areaServed,
+        mainEntityOfPage: { '@id': pageId },
+      })));
+    }
+
+    if (config.path !== '/') {
       graph.push({
-        '@type': 'FAQPage',
-        mainEntity: FAQS.map((item) => ({
-          '@type': 'Question',
-          name: item.question,
-          acceptedAnswer: { '@type': 'Answer', text: item.answer },
-        })),
+        '@type': 'BreadcrumbList',
+        '@id': `${canonicalUrl}#breadcrumb`,
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Početna', item: `${SITE_URL}/` },
+          { '@type': 'ListItem', position: 2, name: NAVIGATION.find((item) => item.path === config.path)?.label, item: canonicalUrl },
+        ],
       });
     }
 
     const script = this.document.createElement('script');
     script.type = 'application/ld+json';
     script.setAttribute('data-hydraboost-schema', 'true');
-    script.textContent = JSON.stringify({ '@context': 'https://schema.org', '@graph': graph });
+    script.textContent = JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }).replace(/</g, '\\u003c');
     this.document.head.appendChild(script);
   }
 }

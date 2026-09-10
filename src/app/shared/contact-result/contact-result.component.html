@@ -1,0 +1,20 @@
+<dialog #dialog class="contact-result" aria-modal="true" aria-labelledby="contact-result-title" aria-describedby="contact-result-description" (close)="onClose()" (keydown)="keepFocus($event)">
+  <div class="result-content" [class.is-error]="result() === 'error'">
+    <button class="close-result" type="button" aria-label="Zatvorite obaveštenje" (click)="close()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" /></svg>
+    </button>
+    <div class="result-icon" aria-hidden="true">
+      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        @if (result() === 'success') { <path d="m12 24 8 8 16-17" /> }
+        @else { <path d="m15 15 18 18M33 15 15 33" /> }
+      </svg>
+    </div>
+    <p class="eyebrow">HydraBoost podrška</p>
+    <h2 id="contact-result-title">{{ result() === 'success' ? 'Poruka je uspešno poslata' : 'Poruka nije poslata' }}</h2>
+    <p id="contact-result-description">{{ result() === 'success'
+      ? 'Hvala što ste nas kontaktirali. Javićemo Vam se u najkraćem roku radi dogovora.'
+      : 'Nismo uspeli da potvrdimo slanje. Proverite internet vezu i pokušajte ponovo za nekoliko trenutaka. Vaši podaci su sačuvani u formi.' }}</p>
+    <button class="button button-primary result-action" type="button" autofocus (click)="close()">{{ result() === 'success' ? 'U redu' : 'Vratite se na poruku' }}</button>
+    @if (result() === 'error') { <a class="fallback-phone" [href]="site.phoneHref">Pozovite {{ site.phoneDisplay }}</a> }
+  </div>
+</dialog>

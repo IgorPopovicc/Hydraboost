@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://hydraboost-infuzije.rs/sitemap.xml
+Sitemap: https://www.hydraboost-infuzije.rs/sitemap.xml

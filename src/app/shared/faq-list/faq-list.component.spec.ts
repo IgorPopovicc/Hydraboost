@@ -12,16 +12,12 @@ describe('FaqListComponent', () => {
     fixture.detectChanges();
   });
 
-  it('updates accessible expanded state when another question is opened', () => {
+  it('prerenders every answer and opens the first native disclosure', () => {
     const root = fixture.nativeElement as HTMLElement;
-    const buttons = root.querySelectorAll<HTMLButtonElement>('button');
-    expect(buttons[0].getAttribute('aria-expanded')).toBe('true');
-    expect(buttons[1].getAttribute('aria-expanded')).toBe('false');
-
-    buttons[1].click();
-    fixture.detectChanges();
-
-    expect(buttons[0].getAttribute('aria-expanded')).toBe('false');
-    expect(buttons[1].getAttribute('aria-expanded')).toBe('true');
+    const disclosures = root.querySelectorAll<HTMLDetailsElement>('details');
+    expect(disclosures[0].open).toBe(true);
+    expect(disclosures[1].open).toBe(false);
+    expect(disclosures[1].querySelector('summary')?.textContent).toContain(FAQS[1].question);
+    expect(disclosures[1].textContent).toContain(FAQS[1].answer);
   });
 });

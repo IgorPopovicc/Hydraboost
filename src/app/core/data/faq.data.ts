@@ -7,9 +7,9 @@ export const FAQS: readonly FaqItem[] = [
   { question: 'Ko može da primi infuzionu terapiju?', answer: 'Odluka se donosi nakon procene zdravstvenog stanja i anamneze, u skladu sa preporukom i medicinskom indikacijom. Terapija nije odgovarajuća za svakoga.' },
   { question: 'Da li dolazite na kućnu adresu?', answer: 'Da. HydraBoost pruža uslugu na dogovorenoj adresi u Beogradu i okolini — kod kuće, u kancelariji ili hotelu.' },
   { question: 'Da li je potrebna prethodna konsultacija?', answer: 'Da. Pre svake terapije procenjujemo zdravstveno stanje, alergije na lekove, postojeću terapiju i moguće kontraindikacije. Početna konsultacija obavlja se telefonom.' },
-  { question: 'Da li terapiju mogu primiti svi pacijenti?', answer: 'Ne. Postoje zdravstvena stanja i kontraindikacije zbog kojih pojedine terapije možda nisu odgovarajuće. Svaki slučaj procenjuje se individualno.' },
+  { question: 'Da li dolazite i u okolinu Beograda?', answer: 'Da, usluga je dostupna u Beogradu i okolini uz prethodni dogovor. Za udaljenija mesta proverite dostupnost termina i eventualne troškove puta tokom razgovora, pre potvrde dolaska.' },
   { question: 'Kolika je cena usluge?', answer: 'Cena zavisi od vrste i sastava infuzije, individualnih medicinskih potreba i lokacije dolaska. Tačnu cenu dobijate tokom telefonskog razgovora, pre potvrde termina i bez skrivenih troškova.' },
-  { question: 'Kako mogu da zakažem termin?', answer: 'Termin možete dogovoriti telefonom, putem Vibera, WhatsAppa ili e-pošte. Kontakt forma na sajtu priprema poruku za slanje iz Vaše aplikacije za e-poštu.' },
+  { question: 'Kako mogu da zakažem termin?', answer: 'Termin možete dogovoriti telefonom, putem Vibera, WhatsAppa ili e-pošte. Kontakt formom šaljete poruku direktno našem timu, a potvrda slanja prikazuje se na sajtu.' },
   { question: 'Da li je potreban uput lekara?', answer: 'To zavisi od zdravstvenog stanja i vrste terapije. Za neke terapije može biti potrebna prethodna preporuka lekara, dok se ostale sprovode nakon odgovarajuće procene i medicinske indikacije.' },
   { question: 'Da li pružate uslugu hitne medicinske pomoći?', answer: 'Ne. HydraBoost nije hitna medicinska služba. U slučaju naglog pogoršanja zdravstvenog stanja ili hitnog medicinskog problema pozovite Hitnu pomoć na broj 194.' },
 ] as const;

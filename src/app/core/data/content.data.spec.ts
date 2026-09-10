@@ -28,9 +28,9 @@ describe('Centralized public content', () => {
   });
 
   it('uses one verified contact source and preserves the emergency guidance', () => {
-    expect(SITE_URL).toBe('https://hydraboost-infuzije.rs');
+    expect(SITE_URL).toBe('https://www.hydraboost-infuzije.rs');
     expect(SITE_INFO.phoneInternational).toBe('+381653698376');
-    expect(SITE_INFO.email).toBe('info@hydraboostinfuzije.com');
+    expect(SITE_INFO.email).toBe('info@hydraboost-infuzije.rs');
     expect(SITE_INFO.whatsappHref).toBe('https://wa.me/381653698376');
     expect(SITE_INFO.instagramHref).toBe('https://instagram.com/hydraboost_infuzije');
     expect(FAQS.at(-1)?.answer).toContain('194');

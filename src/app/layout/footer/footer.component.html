@@ -19,13 +19,15 @@
       @for (service of services; track service.id) { <a routerLink="/usluge" [fragment]="service.id">{{ service.name }}</a> }
     </div>
 
-    <address class="footer-column">
+    <div class="footer-column">
       <h2>Kontakt</h2>
+      <address class="footer-contact">
       <span>{{ site.serviceArea }}</span>
       <span>{{ site.workingHours }}</span>
       <a [href]="site.phoneHref">{{ site.phoneDisplay }}</a>
       <a [href]="site.emailHref">{{ site.email }}</a>
-    </address>
+      </address>
+    </div>
   </div>
 
   <div class="emergency container">
@@ -35,6 +37,6 @@
 
   <div class="footer-bottom container">
     <span>© {{ year }} HydraBoost Infuzije</span>
-    <span>Dizajn i razvoj: Igor Popovic</span>
+    <span>Dizajn i razvoj: <a class="sign" href="https://www.linkedin.com/in/igpopovic" target="_blank" rel="noopener noreferrer">Igor Popović</a></span>
   </div>
 </footer>

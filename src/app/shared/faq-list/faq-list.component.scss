@@ -1,17 +1,16 @@
 .faq-list { border-top: 1px solid var(--color-line); }
 .faq-item { border-bottom: 1px solid var(--color-line); }
-.faq-item h3 { margin: 0; }
-.faq-item button { display: flex; width: 100%; align-items: center; justify-content: space-between; gap: 2rem; padding: 1.45rem 0; border: 0; background: transparent; color: var(--color-navy); font: inherit; font-size: clamp(1rem, 2vw, 1.2rem); font-weight: 650; text-align: left; }
+.faq-item h3 { margin: 0; font: inherit; letter-spacing: normal; }
+.faq-item summary { list-style: none; cursor: pointer; }
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary { display: flex; width: 100%; align-items: center; justify-content: space-between; gap: 2rem; padding: 1.45rem 0; border: 0; background: transparent; color: var(--color-navy); font: inherit; font-size: clamp(1rem, 2vw, 1.2rem); font-weight: 650; text-align: left; }
 .faq-icon { position: relative; width: 1.8rem; height: 1.8rem; flex: 0 0 1.8rem; border: 1px solid var(--color-line-strong); border-radius: 50%; }
 .faq-icon::before, .faq-icon::after { position: absolute; top: 50%; left: 50%; width: 0.65rem; height: 1px; background: var(--color-navy); content: ''; transform: translate(-50%, -50%); transition: transform var(--duration); }
 .faq-icon::after { transform: translate(-50%, -50%) rotate(90deg); }
-.is-open .faq-icon::after { transform: translate(-50%, -50%) rotate(0deg); }
-.faq-answer { display: grid; grid-template-rows: 0fr; visibility: hidden; transition: grid-template-rows 260ms ease, visibility 260ms; }
-.faq-answer > div { overflow: hidden; }
+.faq-item[open] .faq-icon::after { transform: translate(-50%, -50%) rotate(0deg); }
 .faq-answer p { max-width: 52rem; margin: 0; padding: 0 3.5rem 1.5rem 0; color: var(--color-text-soft); line-height: 1.75; }
-.is-open .faq-answer { grid-template-rows: 1fr; visibility: visible; }
 
 @media (max-width: 36rem) {
-  .faq-item button { gap: 1rem; padding: 1.2rem 0; }
+  .faq-item summary { gap: 1rem; padding: 1.2rem 0; }
   .faq-answer p { padding-right: 0; }
 }

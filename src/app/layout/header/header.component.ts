@@ -32,6 +32,11 @@ export class HeaderComponent {
     this.destroyRef.onDestroy(() => this.setScrollLock(false));
   }
 
+  @HostListener('window:resize')
+  protected onResize(): void {
+    if (this.menuOpen() && (this.document.defaultView?.innerWidth ?? 0) > 1088) this.closeMenu();
+  }
+
   @HostListener('window:scroll')
   protected onScroll(): void {
     this.compact.set((this.document.defaultView?.scrollY ?? 0) > 18);

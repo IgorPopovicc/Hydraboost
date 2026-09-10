@@ -2,8 +2,8 @@
   <div class="container hero-grid">
     <div class="hero-copy">
       <p class="kicker-line">Mobilna IV terapija · Beograd</p>
-      <h1>Medicinska nega, tamo gde se osećate najudobnije.</h1>
-      <p class="lead">Vitaminske i infuzione terapije u Vašem domu, kancelariji ili hotelu — uz prethodnu konsultaciju, individualnu procenu i stručni nadzor.</p>
+      <h1>Infuzije u Beogradu, na Vašoj adresi.</h1>
+      <p class="lead">Vitaminske infuzije i individualna IV terapija u Vašem domu, kancelariji ili hotelu. Svakom dolasku prethode konsultacija i medicinska procena, a terapija se sprovodi uz stručni nadzor.</p>
       <div class="button-row">
         <a class="button button-primary" [href]="site.phoneHref">Zakažite termin</a>
         <a class="button button-secondary" routerLink="/usluge">Pogledajte usluge</a>
@@ -11,10 +11,10 @@
     </div>
     <div class="hero-visual">
       <picture>
-        <source type="image/avif" srcset="/assets/images/hero/mobile-iv-care-448.avif 448w, /assets/images/hero/mobile-iv-care-672.avif 672w, /assets/images/hero/mobile-iv-care-896.avif 896w" sizes="(max-width: 800px) 92vw, 42vw" />
-        <img src="/assets/images/hero/mobile-iv-care-896.webp" srcset="/assets/images/hero/mobile-iv-care-448.webp 448w, /assets/images/hero/mobile-iv-care-672.webp 672w, /assets/images/hero/mobile-iv-care-896.webp 896w" sizes="(max-width: 800px) 92vw, 42vw" width="896" height="1200" fetchpriority="high" decoding="async" alt="Medicinska radnica priprema mobilnu infuziju u kućnom ambijentu" />
+        <source type="image/avif" srcset="/assets/images/hero/mobile-iv-care-448.avif 448w, /assets/images/hero/mobile-iv-care-672.avif 672w, /assets/images/hero/mobile-iv-care-896.avif 896w" sizes="(max-width: 768px) min(92vw, 480px), 42vw" />
+        <img src="/assets/images/hero/mobile-iv-care-896.webp" srcset="/assets/images/hero/mobile-iv-care-448.webp 448w, /assets/images/hero/mobile-iv-care-672.webp 672w, /assets/images/hero/mobile-iv-care-896.webp 896w" sizes="(max-width: 768px) min(92vw, 480px), 42vw" width="896" height="1200" fetchpriority="high" decoding="async" alt="Medicinska radnica priprema mobilnu infuziju u kućnom ambijentu" />
       </picture>
-      <div class="hero-caption"><span>Dolazak na adresu</span><strong>Beograd i okolina</strong></div>
+      <div class="hero-caption"><span>Dolazak na adresu</span><strong>{{ site.serviceArea }}</strong></div>
     </div>
   </div>
   <div class="trust-rail container" aria-label="Osnovne informacije o usluzi">
@@ -27,7 +27,7 @@
 <section class="services-intro section section-dark" aria-labelledby="services-title">
   <div class="container">
     <div class="services-heading">
-      <div><p class="eyebrow">Naše usluge</p><h2 id="services-title">Pristup prilagođen čoveku, ne paketu.</h2></div>
+      <div><p class="eyebrow">Naše usluge</p><h2 id="services-title">Infuzione terapije prema individualnoj proceni.</h2></div>
       <p>Svaka terapija počinje razgovorom. Sastav se određuje prema potrebama, zdravstvenom stanju i medicinskoj indikaciji — bez univerzalnih obećanja.</p>
     </div>
     <div class="service-index">

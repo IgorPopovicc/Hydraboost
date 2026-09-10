@@ -50,3 +50,7 @@ __screenshots__/
 # System files
 .DS_Store
 Thumbs.db
+
+# Private contact API configuration and rate-limit state
+/server/contact/config.php
+/server/contact/state/

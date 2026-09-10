@@ -1,0 +1,19 @@
+:host { display: contents; }
+.contact-result { width: min(29rem, calc(100vw - 2rem)); max-width: none; max-height: calc(100dvh - 2rem); margin: auto; padding: 0; overflow: auto; border: 1px solid var(--border-soft); border-radius: var(--radius-lg); background: var(--surface-white); color: var(--color-ink); box-shadow: var(--shadow-soft); }
+.contact-result[open] { animation: result-in 220ms ease-out; }
+.contact-result::backdrop { background: rgb(7 31 44 / 58%); animation: backdrop-in 180ms ease-out; }
+.result-content { position: relative; display: flex; flex-direction: column; align-items: center; padding: 3rem clamp(1.25rem, 5vw, 2.5rem) 2rem; text-align: center; overflow-wrap: anywhere; }
+.close-result { position: absolute; top: .5rem; right: .5rem; display: grid; place-items: center; width: 2.75rem; height: 2.75rem; padding: .75rem; border: 0; border-radius: 50%; background: transparent; color: var(--color-text-soft); cursor: pointer; }
+.close-result:hover { background: var(--surface-base); }
+.close-result svg { width: 1.25rem; height: 1.25rem; }
+.result-icon { display: grid; place-items: center; width: 5rem; height: 5rem; margin-bottom: 1.5rem; border: 1px solid #b5decc; border-radius: 50%; background: #edf8f2; color: #177547; }
+.result-icon svg { width: 3rem; height: 3rem; }
+.is-error .result-icon { border-color: #edc8c8; background: #fdf0f0; color: var(--color-danger); }
+.eyebrow { margin-bottom: .75rem; }
+h2 { margin: 0; color: var(--color-navy); font-size: clamp(1.4rem, 4vw, 1.85rem); line-height: 1.25; }
+#contact-result-description { margin: 1rem 0 1.5rem; color: var(--color-text-soft); font-size: .9rem; line-height: 1.7; }
+.result-action { width: 100%; white-space: normal; }
+.fallback-phone { display: grid; place-items: center; min-height: 2.75rem; margin-top: .5rem; color: var(--color-navy); font-size: .85rem; }
+@keyframes result-in { from { opacity: 0; transform: translateY(.5rem) scale(.97); } to { opacity: 1; transform: none; } }
+@keyframes backdrop-in { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .contact-result[open], .contact-result::backdrop { animation: none; } }

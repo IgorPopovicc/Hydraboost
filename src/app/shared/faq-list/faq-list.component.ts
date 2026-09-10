@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { FaqItem } from '../../core/models/content.models';
 
 @Component({
@@ -9,9 +9,4 @@ import { FaqItem } from '../../core/models/content.models';
 })
 export class FaqListComponent {
   readonly items = input.required<readonly FaqItem[]>();
-  protected readonly openIndex = signal<number | null>(0);
-
-  protected toggle(index: number): void {
-    this.openIndex.update((current) => current === index ? null : index);
-  }
 }

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --proxy-config proxy.conf.json",
     "build": "ng build --configuration production",
     "build:static": "ng build --configuration production,static",
     "postbuild:static": "node tools/prepare-static-build.mjs",
@@ -14,7 +14,11 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "test:e2e": "npm run build:static && npm run audit:static && playwright test",
-    "serve:ssr": "node dist/Hydraboost/server/server.mjs"
+    "serve:ssr": "node dist/Hydraboost/server/server.mjs",
+    "audit:http": "node tools/audit-http.mjs",
+    "serve:contact": "php -S 127.0.0.1:8081 tools/contact-router.php",
+    "test:contact": "php tests/contact/handler.test.php",
+    "test:contact:http": "node --test tests/contact/http.test.mjs"
   },
   "private": true,
   "packageManager": "npm@11.12.1",

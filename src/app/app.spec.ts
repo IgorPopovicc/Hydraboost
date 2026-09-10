@@ -18,6 +18,6 @@ describe('App shell', () => {
 
     expect(navigation).toContain('Početna');
     expect(navigation).toContain('Cenovnik');
-    expect(root.textContent).toContain('Dizajn i razvoj: Igor Popovic');
+    expect(root.textContent).toContain('Dizajn i razvoj: Igor Popović');
   });
 });

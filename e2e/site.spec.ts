@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 import { JSDOM } from 'jsdom';
 
 const routes = ['/', '/usluge', '/cenovnik', '/o-nama', '/faq', '/kontakt'];
-const productionOrigin = 'https://hydraboost-infuzije.rs';
+const productionOrigin = 'https://www.hydraboost-infuzije.rs';
 const widths = [320, 360, 375, 390, 430, 768, 1024, 1280, 1440, 1920];
 const mobileViewports = [
   { width: 320, height: 568 },
@@ -17,43 +17,43 @@ const mobileViewports = [
 const seoRoutes = [
   {
     path: '/',
-    title: 'Mobilne infuzije Beograd | HydraBoost Infuzije',
-    description: 'Mobilne vitaminske i IV infuzije na kućnoj adresi, u kancelariji ili hotelu u Beogradu. Konsultacija, individualna procena i stručni nadzor.',
+    title: 'Infuzije Beograd na kućnoj adresi | HydraBoost',
+    description: 'Infuzije na kućnoj adresi u Beogradu, u kancelariji ili hotelu, uz prethodnu medicinsku procenu i stručni nadzor. Pozovite HydraBoost i dogovorite termin.',
     image: `${productionOrigin}/assets/social/og-home.jpg`,
     imageAlt: 'HydraBoost Infuzije — mobilne infuzije Beograd',
   },
   {
     path: '/usluge',
-    title: 'Mobilne infuzione terapije Beograd | HydraBoost',
-    description: 'HydraBoost infuzione terapije dolaze na Vašu adresu u Beogradu, uz prethodnu konsultaciju, individualnu procenu i medicinski nadzor.',
+    title: 'Vitaminske infuzije i IV terapija Beograd | HydraBoost',
+    description: 'Vitaminske infuzije, hidratacija i individualna IV terapija na adresi u Beogradu. Saznajte kako se bira terapija i zašto je prethodna procena neophodna.',
     image: `${productionOrigin}/assets/social/og-usluge.jpg`,
     imageAlt: 'HydraBoost mobilne infuzione terapije',
   },
   {
     path: '/cenovnik',
-    title: 'Cenovnik mobilnih medicinskih usluga | HydraBoost',
-    description: 'Cenovnik infuzione terapije, primene lekova i previjanja na terenu u Beogradu, uz mogućnost HydraBoost personalizovanog paketa.',
+    title: 'Cene infuzija u Beogradu – cenovnik | HydraBoost',
+    description: 'Cenovnik infuzione terapije, primene lekova i previjanja u Beogradu. Pogledajte cene u RSD, šta obuhvata dolazak i kada se cena prilagođava.',
     image: `${productionOrigin}/assets/social/og-cenovnik.jpg`,
     imageAlt: 'HydraBoost cenovnik mobilnih medicinskih usluga',
   },
   {
     path: '/o-nama',
-    title: 'O nama | HydraBoost mobilna medicinska usluga',
-    description: 'Upoznajte HydraBoost individualni pristup profesionalnoj medicinskoj usluzi i nezi na dogovorenoj adresi u Beogradu.',
+    title: 'O nama – medicinska nega na adresi | HydraBoost Beograd',
+    description: 'Upoznajte način rada HydraBoost mobilne medicinske usluge u Beogradu: konsultacija pre dolaska, individualna procena i primena terapije uz nadzor.',
     image: `${productionOrigin}/assets/social/og-o-nama.jpg`,
     imageAlt: 'HydraBoost profesionalna medicinska usluga',
   },
   {
     path: '/faq',
-    title: 'Česta pitanja o mobilnim infuzijama | HydraBoost',
-    description: 'Odgovori na česta pitanja o infuzionim terapijama, konsultaciji, zakazivanju i dolasku HydraBoost medicinske usluge na Vašu adresu.',
+    title: 'Infuzija kod kuće – česta pitanja | HydraBoost',
+    description: 'Kako se zakazuje infuzija kod kuće, koliko traje i gde dolazimo? Pročitajte odgovore o proceni, ceni i organizaciji termina u Beogradu i okolini.',
     image: `${productionOrigin}/assets/social/og-faq.jpg`,
     imageAlt: 'Konsultacija o HydraBoost uslugama',
   },
   {
     path: '/kontakt',
-    title: 'HydraBoost kontakt i zakazivanje | Beograd',
-    description: 'Kontaktirajte HydraBoost u Beogradu radi konsultacije i zakazivanja mobilne medicinske usluge na dogovorenoj adresi.',
+    title: 'Kontakt i zakazivanje infuzije u Beogradu | HydraBoost',
+    description: 'Zakažite konsultaciju za infuziju na adresi u Beogradu i okolini. Pozovite HydraBoost na 065/369-8376 ili pošaljite upit Viberom, WhatsAppom ili e-poštom.',
     image: `${productionOrigin}/assets/social/og-kontakt.jpg`,
     imageAlt: 'HydraBoost kontakt i zakazivanje',
   },
@@ -139,7 +139,7 @@ test('prerendered HTML exposes complete route-specific metadata without JavaScri
     expect(document.querySelectorAll('title')).toHaveLength(1);
     expect(document.title).toBe(config.title);
     expectSingleAttribute('meta[name="description"]', 'content', config.description);
-    expectSingleAttribute('meta[name="robots"]', 'content', 'index, follow');
+    expectSingleAttribute('meta[name="robots"]', 'content', 'index, follow, max-image-preview:large');
     expectSingleAttribute('link[rel="canonical"]', 'href', canonical);
     expectSingleAttribute('meta[property="og:type"]', 'content', 'website');
     expectSingleAttribute('meta[property="og:site_name"]', 'content', 'HydraBoost Infuzije');
@@ -683,13 +683,13 @@ test('mobile route links release the lock and use normal router scroll restorati
 
 test('FAQ and contact validation expose accessible UI state', async ({ page }) => {
   await page.goto('/faq');
-  const secondQuestion = page.getByRole('button', { name: 'Da li su medicinski radnici licencirani?' });
+  const secondQuestion = page.locator('summary').filter({ hasText: 'Da li su medicinski radnici licencirani?' });
   await secondQuestion.click();
-  await expect(secondQuestion).toHaveAttribute('aria-expanded', 'true');
+  await expect(secondQuestion.locator('..')).toHaveAttribute('open', '');
 
   await page.goto('/kontakt');
-  await page.getByRole('button', { name: 'Otvorite poruku za slanje' }).click();
-  await expect(page.getByText('Unesite ime i prezime.')).toBeVisible();
+  await page.getByRole('button', { name: 'Pošaljite poruku', exact: true }).click();
+  await expect(page.getByText('Unesite ime i prezime (2–100 znakova).')).toBeVisible();
   await expect(page.locator('#fullName')).toHaveAttribute('aria-invalid', 'true');
 });
 
@@ -698,4 +698,58 @@ test('unknown URLs render the branded 404 page with the correct response status'
   expect(response?.status()).toBe(404);
   await expect(page.getByRole('heading', { name: 'Izgleda da ova adresa više nije dostupna.' })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Početna stranica' })).toBeVisible();
+});
+
+test('FAQ, content and contact links work with JavaScript disabled', async ({ browser }) => {
+  const context = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 390, height: 844 } });
+  const page = await context.newPage();
+  for (const route of routes) {
+    await page.goto(route);
+    await expect(page.locator('main h1')).toBeVisible();
+    await expect(page.locator('footer a[href="tel:+381653698376"]')).toBeVisible();
+  }
+  await page.goto('/faq');
+  const question = page.locator('details').nth(1);
+  await question.locator('summary').click();
+  await expect(question.locator('.faq-answer')).toBeVisible();
+  await expect(page.locator('details').first()).not.toHaveAttribute('open', '');
+  await page.goto('/kontakt');
+  await expect(page.locator('form')).toBeHidden();
+  await expect(page.locator('body > noscript p')).toBeVisible();
+  await context.close();
+});
+
+test('canonical variants redirect and error documents stay nonindexable', async ({ request }) => {
+  const variants = [['/index.html', '/'], ['/usluge/index.html', '/usluge'], ['/usluge/', '/usluge'], ['/our-services/index.html', '/usluge'], ['/cjenovnik', '/cenovnik']];
+  for (const [path, target] of variants) {
+    const response = await request.get(`${path}?utm_source=check`, { maxRedirects: 0 });
+    expect(response.status()).toBe(301);
+    expect(response.headers()['location']).toBe(`${target}?utm_source=check`);
+  }
+  for (const path of ['/ne-postoji', '/404', '/404/', '/404/index.html', '/index.csr.html']) {
+    const response = await request.get(path);
+    expect(response.status()).toBe(404);
+    const document = new JSDOM(await response.text()).window.document;
+    expect(document.querySelector('meta[name="robots"]')?.getAttribute('content')).toBe('noindex, follow');
+    expect(document.querySelector('link[rel="canonical"]')).toBeNull();
+    expect(document.querySelector('script[data-hydraboost-schema]')).toBeNull();
+  }
+  for (const path of ['/', '/usluge', '/robots.txt', '/sitemap.xml']) {
+    expect((await request.get(path)).headers()['cache-control']).toBe('no-cache');
+  }
+});
+
+test('secondary pages do not download the homepage hero and menu unlocks on resize', async ({ page }) => {
+  const requests: string[] = [];
+  page.on('request', (request) => requests.push(request.url()));
+  await page.goto('/kontakt');
+  await page.waitForLoadState('networkidle');
+  expect(requests.some((url) => url.includes('/hero/mobile-iv-care-'))).toBe(false);
+  await expect(page.locator('.brand')).toHaveAccessibleName(/hydraboost\s*infuzije/i);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.locator('.menu-toggle').click();
+  await expect(page.locator('html')).toHaveClass(/menu-locked/);
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await expect(page.locator('html')).not.toHaveClass(/menu-locked/);
+  await expect(page.locator('.desktop-nav a[aria-current="page"]')).toHaveText('Kontakt');
 });

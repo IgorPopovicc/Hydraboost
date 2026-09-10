@@ -2,12 +2,12 @@
   <div class="header-inner container">
     <a class="brand" routerLink="/">
       <img ngSrc="/assets/brand/logo-112.webp" width="56" height="56" priority alt="" />
-      <span><strong>HydraBoost</strong><small>Infuzije</small></span>
+      <span><strong>HydraBoost&ngsp;</strong><small>Infuzije</small></span>
     </a>
 
     <nav class="desktop-nav" aria-label="Glavna navigacija">
       @for (item of navigation; track item.path) {
-        <a [routerLink]="item.path" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: item.path === '/' }">{{ item.label }}</a>
+        <a [routerLink]="item.path" routerLinkActive="active" ariaCurrentWhenActive="page" [routerLinkActiveOptions]="{ exact: item.path === '/' }">{{ item.label }}</a>
       }
     </nav>
 
@@ -23,7 +23,7 @@
 <nav id="mobile-navigation" class="mobile-nav" [class.is-open]="menuOpen()" [attr.aria-hidden]="!menuOpen()" aria-label="Mobilna navigacija">
   <p class="mobile-nav-label">Navigacija</p>
   @for (item of navigation; track item.path) {
-    <a [routerLink]="item.path" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: item.path === '/' }" [tabIndex]="menuOpen() ? 0 : -1" (click)="closeMenu()">
+    <a [routerLink]="item.path" routerLinkActive="active" ariaCurrentWhenActive="page" [routerLinkActiveOptions]="{ exact: item.path === '/' }" [tabIndex]="menuOpen() ? 0 : -1" (click)="closeMenu()">
       <span>{{ item.label }}</span><app-icon name="arrow-up-right" />
     </a>
   }

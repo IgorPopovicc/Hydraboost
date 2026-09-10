@@ -5,10 +5,10 @@
         <a routerLink="/">Početna</a><span>/</span><span>Cenovnik</span>
       </nav>
       <p class="eyebrow">Jasan cenovnik pre dolaska</p>
-      <h1>Cenovnik usluga na Vašoj adresi.</h1>
+      <h1>Cenovnik infuzija i usluga u Beogradu.</h1>
       <p class="lead">
         Pregledajte cene mobilnih medicinskih usluga i saznajte šta je uključeno pre nego što
-        potvrdite termin.
+        potvrdite termin. Vrste terapija i način procene opisani su na <a routerLink="/usluge">stranici Usluge</a>.
       </p>
     </div>
 
@@ -68,10 +68,13 @@
       </p>
     </aside>
 
+    <p class="note">Nazivi usluga u cenovniku ne predstavljaju obećanje zdravstvenog rezultata. Izbor terapije, sastav i doza zavise od medicinske indikacije i procene; objavljena cena ne znači da je terapija odgovarajuća za svakoga. <a routerLink="/faq">Pročitajte odgovore pre zakazivanja.</a></p>
+
     <div class="pricing-categories">
       @for (category of categories; track category.id; let index = $index) {
         <section
           class="price-category"
+          [id]="category.id"
           [class]="'price-category price-category--' + (index + 1)"
           [attr.aria-labelledby]="'pricing-category-' + category.id"
         >
@@ -90,6 +93,7 @@
             @for (item of category.items; track item.id) {
               <div
                 class="pricing-item"
+                [id]="item.id"
                 [class.pricing-item--descriptive]="item.priceType === 'descriptive'"
               >
                 <dt>{{ item.name }}</dt>

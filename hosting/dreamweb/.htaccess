@@ -7,30 +7,39 @@ ErrorDocument 404 /404/index.html
   RewriteEngine On
   RewriteOptions AllowNoSlash
 
-  # One canonical host: HTTPS without www.
-  RewriteCond %{HTTP_HOST} !^hydraboost-infuzije\.rs$ [NC]
-  RewriteRule ^ https://hydraboost-infuzije.rs%{REQUEST_URI} [R=301,L,NE]
+  # Normalize established aliases directly to the final production URL.
+  RewriteRule ^cjenovnik(?:/index\.html|/)?$ https://www.hydraboost-infuzije.rs/cenovnik [R=301,L]
+  RewriteRule ^our-services(?:/index\.html|/)?$ https://www.hydraboost-infuzije.rs/usluge [R=301,L]
+  RewriteRule ^about-us(?:/index\.html|/)?$ https://www.hydraboost-infuzije.rs/o-nama [R=301,L]
+  RewriteRule ^contact(?:/index\.html|/)?$ https://www.hydraboost-infuzije.rs/kontakt [R=301,L]
 
-  # X-Forwarded-Proto prevents an HTTPS loop when Cloudflare proxies the request.
+  # THE_REQUEST guards against redirecting our internal HTML rewrites.
+  RewriteCond %{THE_REQUEST} \s/+index\.html(?:[?\s]) [NC]
+  RewriteRule ^index\.html$ https://www.hydraboost-infuzije.rs/ [R=301,L]
+  RewriteCond %{THE_REQUEST} \s/+(usluge|cenovnik|o-nama|faq|kontakt)/index\.html(?:[?\s]) [NC]
+  RewriteRule ^(usluge|cenovnik|o-nama|faq|kontakt)/index\.html$ https://www.hydraboost-infuzije.rs/$1 [R=301,L]
+  RewriteRule ^(usluge|cenovnik|o-nama|faq|kontakt)/$ https://www.hydraboost-infuzije.rs/$1 [R=301,L]
+
+  # One canonical host. Keep Full (strict) TLS on the trusted proxy.
+  RewriteCond %{HTTP_HOST} !^www\.hydraboost-infuzije\.rs$ [NC]
+  RewriteRule ^ https://www.hydraboost-infuzije.rs%{REQUEST_URI} [R=301,L,NE]
   RewriteCond %{HTTPS} !=on
   RewriteCond %{HTTP:X-Forwarded-Proto} !^https$ [NC]
-  RewriteRule ^ https://hydraboost-infuzije.rs%{REQUEST_URI} [R=301,L,NE]
+  RewriteRule ^ https://www.hydraboost-infuzije.rs%{REQUEST_URI} [R=301,L,NE]
 
-  # Preserve the permanent legacy redirects from the Angular router.
-  RewriteRule ^cjenovnik/?$ https://hydraboost-infuzije.rs/cenovnik [R=301,L]
-  RewriteRule ^our-services/?$ https://hydraboost-infuzije.rs/usluge [R=301,L]
-  RewriteRule ^about-us/?$ https://hydraboost-infuzije.rs/o-nama [R=301,L]
-  RewriteRule ^contact/?$ https://hydraboost-infuzije.rs/kontakt [R=301,L]
+  # Same-origin contact API; PHP executes on DreamWeb, never an Angular route.
+  RewriteRule ^api/contact$ api/contact.php [END]
 
-  # Keep canonical route URLs without a trailing slash.
-  RewriteRule ^(usluge|cenovnik|o-nama|faq|kontakt)/$ https://hydraboost-infuzije.rs/$1 [R=301,L]
+  # Direct error-document requests also return 404; allow its internal subrequest.
+  RewriteCond %{ENV:REDIRECT_STATUS} !=404
+  RewriteRule ^(?:404(?:/index\.html|/)?|index\.csr\.html)$ - [R=404,L]
 
-  # Serve each prerendered page without exposing /index.html in its URL.
+  # Serve real prerendered pages. Never rewrite unknown paths to the homepage.
   RewriteRule ^(usluge|cenovnik|o-nama|faq|kontakt)$ $1/index.html [END]
 </IfModule>
 
 <IfModule mod_deflate.c>
-  AddOutputFilterByType DEFLATE text/html text/css text/javascript text/plain text/xml application/javascript application/json image/svg+xml
+  AddOutputFilterByType DEFLATE text/html text/css text/javascript text/plain text/xml application/xml application/javascript application/json image/svg+xml
 </IfModule>
 
 <IfModule mod_headers.c>
@@ -39,7 +48,7 @@ ErrorDocument 404 /404/index.html
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
   Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
 
-  <FilesMatch "\.(?:js|css)$">
+  <FilesMatch "-[A-Za-z0-9_-]{8}\.(?:js|css)$">
     Header set Cache-Control "public, max-age=31536000, immutable"
   </FilesMatch>
 

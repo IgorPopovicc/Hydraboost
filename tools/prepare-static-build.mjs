@@ -46,6 +46,14 @@ const syncDirectory = async (sourceDirectory, targetDirectory) => {
 
 await mkdir(dirname(destination), { recursive: true });
 await copyFile(source, destination);
+await mkdir(resolve(browserOutput, 'api'), { recursive: true });
+await copyFile(resolve(projectRoot, 'hosting/dreamweb/api/contact.php'), resolve(browserOutput, 'api/contact.php'));
+// Private code is deliberately outside public_html; never copy local config.php/state.
+const privateOutput = resolve(projectRoot, 'deploy/hydraboost-private/contact');
+await mkdir(privateOutput, { recursive: true });
+for (const file of ['handler.php', 'config.example.php']) {
+  await copyFile(resolve(projectRoot, 'server/contact', file), resolve(privateOutput, file));
+}
 const removedBuildConflicts = await pruneArtifacts(browserOutput);
 await syncDirectory(browserOutput, deploymentOutput);
 const removedDeploymentArtifacts = await pruneArtifacts(deploymentOutput, true);
@@ -54,3 +62,5 @@ const removedArtifacts = removedBuildConflicts + removedDeploymentArtifacts;
 console.log(`DreamWeb configuration copied to ${destination}`);
 console.log(`Upload-ready public_html created at ${deploymentOutput}`);
 if (removedArtifacts) console.log(`Removed ${removedArtifacts} non-deployable duplicate/CSR artifacts`);
+
+console.log(`Private PHP backend created at ${privateOutput} (upload beside public_html)`);
