@@ -14,7 +14,7 @@
     <p id="contact-result-description">{{ result() === 'success'
       ? 'Hvala što ste nas kontaktirali. Javićemo Vam se u najkraćem roku radi dogovora.'
       : 'Nismo uspeli da potvrdimo slanje. Proverite internet vezu i pokušajte ponovo za nekoliko trenutaka. Vaši podaci su sačuvani u formi.' }}</p>
-    <button class="button button-primary result-action" type="button" autofocus (click)="close()">{{ result() === 'success' ? 'U redu' : 'Vratite se na poruku' }}</button>
+    <button #resultAction class="button button-primary result-action" type="button" (click)="close()">{{ result() === 'success' ? 'U redu' : 'Vratite se na poruku' }}</button>
     @if (result() === 'error') { <a class="fallback-phone" [href]="site.phoneHref">Pozovite {{ site.phoneDisplay }}</a> }
   </div>
 </dialog>

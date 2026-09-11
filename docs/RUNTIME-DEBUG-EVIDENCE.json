@@ -1,0 +1,484 @@
+{
+  "live": [
+    {
+      "url": "https://www.hydraboost-infuzije.rs/main-7K6TKJR6.js",
+      "status": 200,
+      "bytes": 343395,
+      "sha256": "ae069861deb88d497a08eb8da2fcf19c325fb45e0673b440d9fecc7d62f2f009",
+      "markers": []
+    },
+    {
+      "url": "https://www.hydraboost-infuzije.rs/chunk-DR2LFJj3.js",
+      "status": 200,
+      "bytes": 2231,
+      "sha256": "adfc27887687b5a6e2b89a34deb96da7333445c725080c56d05adefa692159fb",
+      "markers": []
+    },
+    {
+      "url": "https://www.hydraboost-infuzije.rs/chunk-C-W-HnDN.js",
+      "status": 200,
+      "bytes": 63852,
+      "sha256": "3256a9086897c158c9e223a1f9f4eb624e9593c2005ea6b29e9594f94aa32c77",
+      "markers": []
+    },
+    {
+      "url": "https://www.hydraboost-infuzije.rs/chunk-Ch9d5TkV.js",
+      "status": 200,
+      "bytes": 5528,
+      "sha256": "62c08b7f032d75117d9101f172911200e2bf70617e69cd1a778b57d85508a7bf",
+      "markers": []
+    },
+    {
+      "url": "https://www.hydraboost-infuzije.rs/chunk-3I-o5LwU.js",
+      "status": 200,
+      "bytes": 4831,
+      "sha256": "d06dc709cba248462be7c9181130051cdf69970e6e8fc92be576be8bf9823b19",
+      "markers": []
+    },
+    {
+      "url": "https://www.hydraboost-infuzije.rs/chunk-BLu42-Yy.js",
+      "status": 200,
+      "bytes": 1679,
+      "sha256": "ef5f91371e4594aeed7934aaf769675e7cd0166091a00510df0027041659f191",
+      "markers": []
+    },
+    {
+      "url": "https://www.hydraboost-infuzije.rs/chunk-DHeP0Ztc.js",
+      "status": 200,
+      "bytes": 14476,
+      "sha256": "0084b69a325635d70dfe2c388bdd8147fd1c5f367b579741a9575e108f48d53f",
+      "markers": []
+    },
+    {
+      "url": "https://www.hydraboost-infuzije.rs/chunk-EPPF1Dqt.js",
+      "status": 200,
+      "bytes": 16103,
+      "sha256": "90629e1fb91a04b5d4c90b9eaab23b4145e4170e3f3094e42128b54c85dcf698",
+      "markers": []
+    },
+    {
+      "url": "https://www.hydraboost-infuzije.rs/chunk-Dp_XKnjr.js",
+      "status": 200,
+      "bytes": 2089,
+      "sha256": "dfe41413601145a7ea441affb1adc65e0c6bc97edfa950ad6cee7f671d258ad8",
+      "markers": []
+    },
+    {
+      "url": "https://www.hydraboost-infuzije.rs/chunk-DWFP5N7Y.js",
+      "status": 200,
+      "bytes": 16532,
+      "sha256": "b7a4ad94b91932dcb1ee2bb83e3d70d1bf5968ce5b428e622a33d7dc6f020dbc",
+      "markers": []
+    },
+    {
+      "url": "https://www.hydraboost-infuzije.rs/chunk-BmZAT7_x.js",
+      "status": 200,
+      "bytes": 21667,
+      "sha256": "00c5a377f6adef19b264aa11808484995c93fe8165031985b63f467ea3aa92ed",
+      "markers": []
+    }
+  ],
+  "local": [
+    {
+      "name": "chunk-B-f4liOl.js",
+      "markers": []
+    },
+    {
+      "name": "chunk-BNstI7cp.js",
+      "markers": []
+    },
+    {
+      "name": "chunk-Boq8s6l9.js",
+      "markers": []
+    },
+    {
+      "name": "chunk-CFZ3bKqT.js",
+      "markers": []
+    },
+    {
+      "name": "chunk-CYng-sJ3.js",
+      "markers": []
+    },
+    {
+      "name": "chunk-CdA9IuUV.js",
+      "markers": []
+    },
+    {
+      "name": "chunk-D0zofIPj.js",
+      "markers": []
+    },
+    {
+      "name": "chunk-DcFJxo8F.js",
+      "markers": []
+    },
+    {
+      "name": "chunk-Dp_XKnjr.js",
+      "markers": []
+    },
+    {
+      "name": "chunk-fZv8jjZ9.js",
+      "markers": []
+    },
+    {
+      "name": "main-55RGAXUZ.js",
+      "markers": []
+    }
+  ],
+  "vm": {
+    "sha256": "0f2eb3b63431416befd0d826255fb1736117e0ddbca120c5c3e54aca03a1810d",
+    "bytes": 20705,
+    "line2column19429": "lay},startTime:t.entries[0].startTime,entryGroupId:t.entries"
+  },
+  "date": "2026-09-11",
+  "baseline_commit": "7bfb30c",
+  "runtime_versions": {
+    "chrome": "152.0.7977.84",
+    "firefox": "153.0",
+    "angular": "22.1.5",
+    "node": "24.15.0"
+  },
+  "devtools_reproduction": {
+    "execution_context": "DevTools Performance Metrics",
+    "original_automatic_injection_errors": 1,
+    "isolated_reproduction_errors": 1,
+    "paused_metrics": [
+      {
+        "entries": [],
+        "value": 8,
+        "navigationType": "soft-navigation",
+        "navigationStartTime": 13319.600000023842
+      }
+    ],
+    "error_description": "TypeError: Cannot read properties of undefined (reading 'startTime')\n    at et.reportAllChanges (<anonymous>:2:19429)\n    at <anonymous>:2:13070\n    at <anonymous>:2:331\n    at d (<anonymous>:2:6141)\n    at <anonymous>:2:6326\n    at <anonymous>:2:2895\n    at n.timeout (<anonymous>:2:5652)"
+  },
+  "memory": {
+    "before": [
+      {
+        "documents": 1,
+        "nodes": 2062,
+        "jsEventListeners": 55,
+        "connected": 283
+      },
+      {
+        "documents": 1,
+        "nodes": 3418,
+        "jsEventListeners": 55,
+        "connected": 283
+      },
+      {
+        "documents": 1,
+        "nodes": 4774,
+        "jsEventListeners": 55,
+        "connected": 283
+      },
+      {
+        "documents": 1,
+        "nodes": 6130,
+        "jsEventListeners": 55,
+        "connected": 283
+      },
+      {
+        "documents": 1,
+        "nodes": 7486,
+        "jsEventListeners": 55,
+        "connected": 283
+      },
+      {
+        "documents": 1,
+        "nodes": 8842,
+        "jsEventListeners": 55,
+        "connected": 283
+      },
+      {
+        "documents": 1,
+        "nodes": 10198,
+        "jsEventListeners": 55,
+        "connected": 283
+      },
+      {
+        "documents": 1,
+        "nodes": 11554,
+        "jsEventListeners": 55,
+        "connected": 283
+      },
+      {
+        "documents": 1,
+        "nodes": 12910,
+        "jsEventListeners": 55,
+        "connected": 283
+      },
+      {
+        "documents": 1,
+        "nodes": 14266,
+        "jsEventListeners": 55,
+        "connected": 283
+      },
+      {
+        "documents": 1,
+        "nodes": 15622,
+        "jsEventListeners": 55,
+        "connected": 283
+      },
+      {
+        "documents": 1,
+        "nodes": 16978,
+        "jsEventListeners": 55,
+        "connected": 283
+      }
+    ],
+    "after": [
+      {
+        "documents": 1,
+        "nodes": 939,
+        "jsEventListeners": 53,
+        "connected": 281
+      },
+      {
+        "documents": 1,
+        "nodes": 939,
+        "jsEventListeners": 53,
+        "connected": 281
+      },
+      {
+        "documents": 1,
+        "nodes": 939,
+        "jsEventListeners": 53,
+        "connected": 281
+      },
+      {
+        "documents": 1,
+        "nodes": 939,
+        "jsEventListeners": 53,
+        "connected": 281
+      },
+      {
+        "documents": 1,
+        "nodes": 939,
+        "jsEventListeners": 53,
+        "connected": 281
+      },
+      {
+        "documents": 1,
+        "nodes": 939,
+        "jsEventListeners": 53,
+        "connected": 281
+      },
+      {
+        "documents": 1,
+        "nodes": 939,
+        "jsEventListeners": 53,
+        "connected": 281
+      },
+      {
+        "documents": 1,
+        "nodes": 939,
+        "jsEventListeners": 53,
+        "connected": 281
+      },
+      {
+        "documents": 1,
+        "nodes": 939,
+        "jsEventListeners": 53,
+        "connected": 281
+      },
+      {
+        "documents": 1,
+        "nodes": 939,
+        "jsEventListeners": 53,
+        "connected": 281
+      },
+      {
+        "documents": 1,
+        "nodes": 939,
+        "jsEventListeners": 53,
+        "connected": 281
+      },
+      {
+        "documents": 1,
+        "nodes": 939,
+        "jsEventListeners": 53,
+        "connected": 281
+      }
+    ]
+  },
+  "chrome_comparison": [
+    {
+      "mode": "regular",
+      "console": [],
+      "errors": [],
+      "logs": [],
+      "worlds": [
+        "",
+        "__playwright_utility_world_page@8cc84e275f54e697d3e2d97a96c5d241"
+      ],
+      "routes": 60
+    },
+    {
+      "mode": "incognito",
+      "console": [],
+      "errors": [],
+      "logs": [],
+      "worlds": [
+        "",
+        "__playwright_utility_world_page@2b683e38126f2d484ae4b213d0ceadb0"
+      ],
+      "routes": 60
+    }
+  ],
+  "routing_http": [
+    {
+      "path": "/",
+      "apache": {
+        "status": 200,
+        "location": null
+      },
+      "live": {
+        "status": 200,
+        "location": null
+      }
+    },
+    {
+      "path": "/usluge",
+      "apache": {
+        "status": 200,
+        "location": null
+      },
+      "live": {
+        "status": 301,
+        "location": "https://www.hydraboost-infuzije.rs/usluge/"
+      }
+    },
+    {
+      "path": "/cenovnik",
+      "apache": {
+        "status": 200,
+        "location": null
+      },
+      "live": {
+        "status": 301,
+        "location": "https://www.hydraboost-infuzije.rs/cenovnik/"
+      }
+    },
+    {
+      "path": "/o-nama",
+      "apache": {
+        "status": 200,
+        "location": null
+      },
+      "live": {
+        "status": 301,
+        "location": "https://www.hydraboost-infuzije.rs/o-nama/"
+      }
+    },
+    {
+      "path": "/faq",
+      "apache": {
+        "status": 200,
+        "location": null
+      },
+      "live": {
+        "status": 301,
+        "location": "https://www.hydraboost-infuzije.rs/faq/"
+      }
+    },
+    {
+      "path": "/kontakt",
+      "apache": {
+        "status": 200,
+        "location": null
+      },
+      "live": {
+        "status": 301,
+        "location": "https://www.hydraboost-infuzije.rs/kontakt/"
+      }
+    },
+    {
+      "path": "/usluge/",
+      "apache": {
+        "status": 301,
+        "location": "https://www.hydraboost-infuzije.rs/usluge"
+      },
+      "live": {
+        "status": 200,
+        "location": null
+      }
+    },
+    {
+      "path": "/usluge/index.html",
+      "apache": {
+        "status": 301,
+        "location": "https://www.hydraboost-infuzije.rs/usluge"
+      },
+      "live": {
+        "status": 200,
+        "location": null
+      }
+    },
+    {
+      "path": "/our-services",
+      "apache": {
+        "status": 301,
+        "location": "https://www.hydraboost-infuzije.rs/usluge"
+      },
+      "live": {
+        "status": 301,
+        "location": "https://www.hydraboost-infuzije.rs/our-services/"
+      }
+    },
+    {
+      "path": "/cjenovnik",
+      "apache": {
+        "status": 301,
+        "location": "https://www.hydraboost-infuzije.rs/cenovnik"
+      },
+      "live": {
+        "status": 301,
+        "location": "https://www.hydraboost-infuzije.rs/cjenovnik/"
+      }
+    },
+    {
+      "path": "/ne-postoji",
+      "apache": {
+        "status": 404,
+        "location": null
+      },
+      "live": {
+        "status": 404,
+        "location": null
+      }
+    },
+    {
+      "path": "/404",
+      "apache": {
+        "status": 404,
+        "location": null
+      },
+      "live": {
+        "status": 301,
+        "location": "https://www.hydraboost-infuzije.rs/404/"
+      }
+    },
+    {
+      "path": "/index.csr.html",
+      "apache": {
+        "status": 404,
+        "location": null
+      },
+      "live": {
+        "status": 200,
+        "location": null
+      }
+    }
+  ],
+  "validation": {
+    "static_production_build": "pass",
+    "typescript": "pass",
+    "unit_tests": 28,
+    "unit_files": 9,
+    "static_audit": "pass",
+    "apache_http_audit": "pass",
+    "playwright_full_passed": 77,
+    "apache_browser_matrix_passed": 81,
+    "apache_browser_matrix_skipped": 1
+  }
+}

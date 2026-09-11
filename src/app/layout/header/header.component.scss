@@ -44,8 +44,8 @@
   .menu-toggle span { display: block; width: 1.15rem; height: 2px; background: var(--color-navy); transition: transform var(--duration); }
   .menu-toggle[aria-expanded='true'] span:first-child { transform: translateY(4px) rotate(45deg); }
   .menu-toggle[aria-expanded='true'] span:last-child { transform: translateY(-4px) rotate(-45deg); }
-  .menu-backdrop { position: fixed; z-index: var(--layer-backdrop); inset: 4.75rem 0 0; display: block; visibility: hidden; overscroll-behavior: none; background: rgb(5 45 66 / 36%); opacity: 0; touch-action: none; transition: opacity var(--duration), visibility var(--duration); }
-  .menu-backdrop.is-open { visibility: visible; opacity: 1; }
+  .menu-backdrop { position: fixed; z-index: var(--layer-backdrop); inset: 4.75rem 0 0; display: block; visibility: hidden; overscroll-behavior: none; background: rgb(5 45 66 / 36%); opacity: 0; pointer-events: none; touch-action: none; transition: opacity var(--duration), visibility var(--duration); }
+  .menu-backdrop.is-open { visibility: visible; opacity: 1; pointer-events: auto; }
   .mobile-nav { position: fixed; z-index: var(--layer-navigation); top: 4.75rem; right: 0; display: flex; visibility: hidden; width: min(26rem, 92vw); height: calc(100vh - 4.75rem); height: calc(100dvh - 4.75rem); flex-direction: column; overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; padding: clamp(1.25rem, 4vh, 2rem) clamp(1.25rem, 5vw, 2.5rem); background: var(--color-navy); color: white; opacity: 0; pointer-events: none; transform: translateX(100%); transition: transform 280ms ease, opacity 180ms ease, visibility 280ms; -webkit-overflow-scrolling: touch; }
   .mobile-nav.is-open { visibility: visible; opacity: 1; pointer-events: auto; transform: translateX(0); }
   .mobile-nav-label { margin: 0 0 1.25rem; color: var(--color-aqua-light); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; }

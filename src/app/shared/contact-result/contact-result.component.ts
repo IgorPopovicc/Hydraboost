@@ -13,6 +13,7 @@ export class ContactResultComponent {
   readonly closed = output<void>();
   protected readonly site = SITE_INFO;
   @ViewChild('dialog', { static: true }) private dialog!: ElementRef<HTMLDialogElement>;
+  @ViewChild('resultAction', { static: true }) private resultAction!: ElementRef<HTMLButtonElement>;
   private readonly document = inject(DOCUMENT);
   private readonly platform = inject(PLATFORM_ID);
   private previousOverflow = '';
@@ -26,10 +27,13 @@ export class ContactResultComponent {
     this.dialog.nativeElement.showModal();
     this.document.body.style.overflow = 'hidden';
     this.opened = true;
+    // Focus belongs to the dialog only after an actual submission result opens it.
+    this.resultAction.nativeElement.focus({ preventScroll: true });
   }
 
   protected close(): void {
     this.dialog.nativeElement.close();
+    this.onClose();
   }
 
   protected keepFocus(event: KeyboardEvent): void {
@@ -47,14 +51,21 @@ export class ContactResultComponent {
   }
 
   protected onClose(): void {
-    if (!this.opened) return;
+    if (!this.opened || this.dialog.nativeElement.open) return;
     this.document.body.style.overflow = this.previousOverflow;
     this.opened = false;
+    const returnFocus = this.returnFocus;
+    this.returnFocus = undefined;
     this.closed.emit();
-    this.returnFocus?.focus({ preventScroll: true });
+    if (returnFocus?.isConnected) returnFocus.focus({ preventScroll: true });
   }
 
   ngOnDestroy(): void {
-    if (this.opened) this.document.body.style.overflow = this.previousOverflow;
+    if (!this.opened) return;
+    // A route change must release the native top layer without refocusing the old page.
+    this.opened = false;
+    this.returnFocus = undefined;
+    this.dialog.nativeElement.close();
+    this.document.body.style.overflow = this.previousOverflow;
   }
 }

@@ -149,6 +149,64 @@ test('reduced motion, short mobile viewport and dialog focus trap', async ({ pag
   expect(await page.evaluate(() => document.body.style.overflow)).toBe('');
 });
 
+for (const result of ['success', 'error']) {
+  test(`${result} dialog releases the top layer and scroll lock when history destroys its page`, async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.route('**/api/contact{,.php}', route => result === 'success'
+      ? route.fulfill({ json: { ok: true, status: 'accepted' } })
+      : route.fulfill({ status: 502, json: { ok: false } }));
+    const errors: string[] = [];
+    page.on('pageerror', error => errors.push(error.message));
+    await page.goto('/');
+    await page.locator('.desktop-nav a[href="/kontakt"]').click();
+    await fill(page); await send(page).click();
+    await expect(modal(page)).toBeVisible();
+    await page.goBack();
+    await expect(page).toHaveURL(/\/$/);
+    await expect(page.locator('dialog')).toHaveCount(0);
+    expect(await page.evaluate(() => document.body.style.overflow)).toBe('');
+    await page.locator('.desktop-nav a[href="/o-nama"]').click();
+    await expect(page).toHaveURL(/\/o-nama$/);
+    await page.keyboard.press('Tab');
+    expect(await page.evaluate(() => !!document.activeElement?.closest('dialog'))).toBe(false);
+    await page.locator('.desktop-nav a[href="/kontakt"]').click();
+    await expect(modal(page)).not.toBeVisible();
+    await expect(page.locator('#fullName')).toHaveValue('');
+    expect(errors).toEqual([]);
+  });
+}
+
+test('leaving contact during submission cannot open a dialog on the next page', async ({ page }) => {
+  let release!: () => void;
+  let requested!: () => void;
+  const gate = new Promise<void>(resolve => release = resolve);
+  const requestStarted = new Promise<void>(resolve => requested = resolve);
+  await page.route('**/api/contact{,.php}', async route => {
+    requested();
+    await gate;
+    await route.fulfill({ json: { ok: true, status: 'accepted' } });
+  });
+  const errors: string[] = [];
+  page.on('pageerror', error => errors.push(error.message));
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('/kontakt');
+  await fill(page); await send(page).click();
+  await requestStarted;
+  try {
+    await page.locator('.desktop-nav a[href="/o-nama"]').click();
+    await expect(page).toHaveURL(/\/o-nama$/);
+  } finally {
+    release();
+    await page.unrouteAll({ behavior: 'wait' });
+  }
+  await expect(page.locator('dialog')).toHaveCount(0);
+  expect(await page.evaluate(() => document.body.style.overflow)).toBe('');
+  await page.locator('.desktop-nav a[href="/kontakt"]').click();
+  await expect(modal(page)).not.toBeVisible();
+  await expect(send(page)).toBeEnabled();
+  expect(errors).toEqual([]);
+});
+
 test('browser → Node preview → real PHP endpoint → injected email transport → success', async ({ page }) => {
   const directory = await mkdtemp(join(tmpdir(), 'hydraboost-browser-api-'));
   const child = spawn('php', ['-S', '127.0.0.1:8081', 'tests/contact/router.php'], {

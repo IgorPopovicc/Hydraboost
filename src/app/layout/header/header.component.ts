@@ -1,7 +1,7 @@
 import { DOCUMENT, NgOptimizedImage } from '@angular/common';
 import { ChangeDetectionStrategy, Component, DestroyRef, ElementRef, HostListener, ViewChild, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { NavigationEnd, NavigationStart, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { filter } from 'rxjs';
 import { NAVIGATION, SITE_INFO } from '../../core/data/site.data';
 import { IconComponent } from '../../shared/icon/icon.component';
@@ -27,7 +27,7 @@ export class HeaderComponent {
 
   constructor() {
     this.router.events
-      .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd), takeUntilDestroyed(this.destroyRef))
+      .pipe(filter((event) => event instanceof NavigationStart || event instanceof NavigationEnd), takeUntilDestroyed(this.destroyRef))
       .subscribe(() => this.closeMenu());
     this.destroyRef.onDestroy(() => this.setScrollLock(false));
   }

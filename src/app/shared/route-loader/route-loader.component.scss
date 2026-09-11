@@ -4,7 +4,8 @@
 
 .route-loader {
   position: fixed;
-  z-index: 400;
+  // Navigation must remain available while a lazy route waits for the network.
+  z-index: var(--layer-route-loader);
   inset: 0;
   display: grid;
   visibility: hidden;
